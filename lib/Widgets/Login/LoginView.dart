@@ -48,6 +48,7 @@ class _LoginViewState extends State<LoginView> {
               //     color: Colors.deepPurple,
               //   ),
               // ),
+
               Image.asset('images/undraw_Designer_by46.png'),
               BeautyTextfield(
                 width: double.infinity,
@@ -149,3 +150,5 @@ class _LoginViewState extends State<LoginView> {
 //   initialActiveIndex: 2, //optional, default as 0
 //   onTap: (int i) => print('click index=$i'),
 // ),
+
+//Checking git
