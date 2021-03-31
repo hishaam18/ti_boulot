@@ -40,36 +40,68 @@ class _LoginViewState extends State<LoginView> {
             child: SingleChildScrollView(
           child: Column(
             children: [
-              // Text(
-              //   'Login',
-              //   style: TextStyle(
-              //     fontWeight: FontWeight.bold,
-              //     fontSize: 25.0,
-              //     color: Colors.deepPurple,
-              //   ),
-              // ),
-
               Image.asset('images/undraw_Designer_by46.png'),
-              BeautyTextfield(
-                width: double.infinity,
-                height: 60.0,
-                backgroundColor: Colors.deepPurple,
-                iconColor: Colors.white,
-                prefixIcon: Icon(Icons.email),
-                inputType: TextInputType.text,
-                textColor: Colors.white,
-                placeholder: 'Email',
+
+              Container(
+                height: 55.0,
+                width: MediaQuery.of(context).size.width * 0.8,
+                child: TextFormField(
+                  keyboardType: TextInputType.emailAddress,
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontFamily: 'StemRegular',
+                  ),
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.only(top: 50.0),
+                    prefixIcon: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                      child: Icon(Icons.email),
+                    ),
+                    labelText: 'Email address',
+                    labelStyle: TextStyle(
+                      fontSize: 16.0,
+                      fontFamily: 'StemRegular',
+                    ),
+                    border: new OutlineInputBorder(
+                      borderRadius: const BorderRadius.all(
+                        const Radius.circular(15.0),
+                      ),
+                    ),
+                  ),
+                ),
+              ), //email
+              SizedBox(
+                height: 15.0,
               ),
-              BeautyTextfield(
-                width: double.infinity,
-                height: 60.0,
-                backgroundColor: Colors.deepPurple,
-                iconColor: Colors.white,
-                prefixIcon: Icon(Icons.lock),
-                inputType: TextInputType.text,
-                textColor: Colors.white,
-                placeholder: 'Password',
+              Container(
+                height: 55.0,
+                width: MediaQuery.of(context).size.width * 0.8,
+                child: TextFormField(
+                  obscureText: true,
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontFamily: 'StemRegular',
+                  ),
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.only(top: 50.0),
+                    prefixIcon: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                      child: Icon(Icons.lock),
+                    ),
+                    labelText: 'Password',
+                    labelStyle: TextStyle(
+                      fontSize: 16.0,
+                      fontFamily: 'StemRegular',
+                    ),
+                    border: new OutlineInputBorder(
+                      borderRadius: const BorderRadius.all(
+                        const Radius.circular(15.0),
+                      ),
+                    ),
+                  ),
+                ),
               ),
+
               InkWell(
                 onTap: () {
                   Navigator.pushNamed(context, '/Login'); //allow back

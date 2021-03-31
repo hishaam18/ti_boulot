@@ -54,9 +54,16 @@ class _GetStartedState extends State<GetStarted> {
                     color: Colors.deepPurple,
                   ),
                 ),
+                SizedBox(
+                  height: 50.0,
+                ),
                 Container(
                   // height: 400.0,
                   child: Image.asset('images/undraw_coffee_break_h3uu (1).png'),
+                ),
+
+                SizedBox(
+                  height: 85.0,
                 ),
                 //pushing from main page to Login Pa
                 InkWell(
@@ -78,7 +85,7 @@ class _GetStartedState extends State<GetStarted> {
                       title: Padding(
                         padding: const EdgeInsets.only(left: 30.0),
                         child: Text(
-                          'Customer',
+                          'Get Started',
                           style: TextStyle(
                             fontSize: 20.0,
                             color: Colors.deepPurple,
@@ -88,35 +95,36 @@ class _GetStartedState extends State<GetStarted> {
                     ),
                   ),
                 ),
-                InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(
-                        context, '/Choose_Account'); //allow back
-                    // Navigator.pushReplacementNamed(context, '/Login'); //NOT allow back
-                  },
-                  child: Card(
-                    color: Colors.deepPurple,
-                    margin:
-                        EdgeInsets.symmetric(horizontal: 75.0, vertical: 0.0),
-                    child: ListTile(
-                      leading: Icon(
-                        Icons.hail,
-                        size: 40.0,
-                        color: Colors.white,
-                      ),
-                      title: Padding(
-                        padding: const EdgeInsets.only(left: 25.0),
-                        child: Text(
-                          'Worker',
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+
+                // InkWell(
+                //   onTap: () {
+                //     Navigator.pushNamed(
+                //         context, '/Choose_Account'); //allow back
+                //     // Navigator.pushReplacementNamed(context, '/Login'); //NOT allow back
+                //   },
+                //   child: Card(
+                //     color: Colors.deepPurple,
+                //     margin:
+                //         EdgeInsets.symmetric(horizontal: 75.0, vertical: 0.0),
+                //     child: ListTile(
+                //       leading: Icon(
+                //         Icons.hail,
+                //         size: 40.0,
+                //         color: Colors.white,
+                //       ),
+                //       title: Padding(
+                //         padding: const EdgeInsets.only(left: 25.0),
+                //         child: Text(
+                //           'Worker',
+                //           style: TextStyle(
+                //             fontSize: 20.0,
+                //             color: Colors.white,
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),
