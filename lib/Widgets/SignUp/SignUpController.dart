@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:email_validator/email_validator.dart';
 
 class SignupController {
   final signUpKey = GlobalKey<FormState>();
@@ -15,6 +16,9 @@ class SignupController {
   TextEditingController locationController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
   TextEditingController confirmPasswordController = new TextEditingController();
+  TextEditingController workerTitleController = new TextEditingController();
+  TextEditingController workerExperienceController =
+      new TextEditingController();
 
   void signUp(String firstName, lastName, emailAddress, location, password,
       occupation, experience) {

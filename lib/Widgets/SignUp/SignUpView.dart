@@ -1,8 +1,10 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ti_boulot/Common/CustomTextField.dart';
 import 'package:ti_boulot/Widgets/SignUp/SignUpController.dart';
+import 'package:validators/validators.dart';
 
 class SignUpView extends StatefulWidget {
   @override
@@ -66,6 +68,8 @@ class _SignUpViewState extends State<SignUpView> {
                       validator: (firstName) {
                         if (firstName.isEmpty) {
                           return "First name cannot be empty!";
+                        } else if (!isAlpha(firstName)) {
+                          return "First name should contain only letters";
                         }
                         return null;
                       },
@@ -102,9 +106,11 @@ class _SignUpViewState extends State<SignUpView> {
                     width: MediaQuery.of(context).size.width * 0.8,
                     child: TextFormField(
                       controller: signupController.lastNameController,
-                      validator: (firstName) {
-                        if (firstName.isEmpty) {
+                      validator: (lastName) {
+                        if (lastName.isEmpty) {
                           return "Last name cannot be empty!";
+                        } else if (!isAlpha(lastName)) {
+                          return "Last name should contain only letters";
                         }
                         return null;
                       },
@@ -141,12 +147,17 @@ class _SignUpViewState extends State<SignUpView> {
                     width: MediaQuery.of(context).size.width * 0.8,
                     child: TextFormField(
                       controller: signupController.emailController,
-                      validator: (firstName) {
-                        if (firstName.isEmpty) {
-                          return "Email Address cannot be empty!";
-                        }
-                        return null;
-                      },
+                      validator: (email) => EmailValidator.validate(email)
+                          ? null
+                          : "Invalid email address",
+                      onSaved: (email) => email = email,
+                      // validator: (emailAddress) {
+                      //   if (emailAddress.isEmpty) {
+                      //     return "Email Address cannot be empty!";
+                      //   }
+                      //   return null;
+                      // },
+                      //
                       keyboardType: TextInputType.emailAddress,
                       style: TextStyle(
                         fontSize: 16.0,
@@ -181,8 +192,8 @@ class _SignUpViewState extends State<SignUpView> {
                     width: MediaQuery.of(context).size.width * 0.8,
                     child: TextFormField(
                       controller: signupController.locationController,
-                      validator: (firstName) {
-                        if (firstName.isEmpty) {
+                      validator: (location) {
+                        if (location.isEmpty) {
                           return "Location cannot be empty!";
                         }
                         return null;
@@ -220,12 +231,16 @@ class _SignUpViewState extends State<SignUpView> {
                     width: MediaQuery.of(context).size.width * 0.8,
                     child: TextFormField(
                       controller: signupController.passwordController,
-                      validator: (firstName) {
-                        if (firstName.isEmpty) {
-                          return "Password cannot be empty!";
-                        }
-                        return null;
+                      validator: (password) {
+                        Pattern pattern =
+                            r'^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$';
+                        RegExp regex = new RegExp(pattern);
+                        if (!regex.hasMatch(password))
+                          return 'Must contain at least 1 letter, 1 number and 6 characters';
+                        else
+                          return null;
                       },
+                      onSaved: (password) => password = password,
                       obscureText: true,
                       style: TextStyle(
                         fontSize: 16.0,
@@ -260,9 +275,12 @@ class _SignUpViewState extends State<SignUpView> {
                     width: MediaQuery.of(context).size.width * 0.8,
                     child: TextFormField(
                       controller: signupController.confirmPasswordController,
-                      validator: (firstName) {
-                        if (firstName.isEmpty) {
+                      validator: (ConfirmPassword) {
+                        if (ConfirmPassword.isEmpty) {
                           return "Please fill in the confirm password field!";
+                        }
+                        if (ConfirmPassword != password) {
+                          return 'Password does not match';
                         }
                         return null;
                       },
@@ -312,6 +330,98 @@ class _SignUpViewState extends State<SignUpView> {
                         );
                       }).toList(),
                     ),
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  Container(
+                    child: signupController.selectedType == "Worker"
+                        ? Column(
+                            children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.8,
+                                child: TextFormField(
+                                  controller:
+                                      signupController.workerTitleController,
+                                  validator: (workerTitle) {
+                                    if (workerTitle.isEmpty) {
+                                      return "Worker title cannot be empty!";
+                                    } else if (!isAlpha(workerTitle)) {
+                                      return "Worker title should contain only letters";
+                                    }
+                                    return null;
+                                  },
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontFamily: 'StemRegular',
+                                  ),
+                                  decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.only(top: 50.0),
+                                    prefixIcon: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15.0),
+                                      child: Icon(Icons.person),
+                                    ),
+                                    labelText: 'Worker title',
+                                    labelStyle: TextStyle(
+                                      fontSize: 16.0,
+                                      fontFamily: 'StemRegular',
+                                    ),
+                                    border: new OutlineInputBorder(
+                                      borderRadius: const BorderRadius.all(
+                                        const Radius.circular(15.0),
+                                      ),
+                                    ),
+                                  ),
+                                  onChanged: (value) {
+                                    firstname = value;
+                                  },
+                                ),
+                              ), //firstname
+                              SizedBox(
+                                height: 15.0,
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.8,
+                                child: TextFormField(
+                                  controller: signupController
+                                      .workerExperienceController,
+                                  validator: (workerExperience) {
+                                    if (workerExperience.isEmpty) {
+                                      return "Worker experience cannot be empty!";
+                                    }
+                                    return null;
+                                  },
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontFamily: 'StemRegular',
+                                  ),
+                                  decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.only(top: 50.0),
+                                    prefixIcon: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15.0),
+                                      child: Icon(Icons.person),
+                                    ),
+                                    labelText: 'Worker experience',
+                                    labelStyle: TextStyle(
+                                      fontSize: 16.0,
+                                      fontFamily: 'StemRegular',
+                                    ),
+                                    border: new OutlineInputBorder(
+                                      borderRadius: const BorderRadius.all(
+                                        const Radius.circular(15.0),
+                                      ),
+                                    ),
+                                  ),
+                                  onChanged: (value) {
+                                    lastname = value;
+                                  },
+                                ),
+                              ), //l/l
+                            ],
+                          )
+                        : null,
                   ),
                   InkWell(
                     onTap: () {
