@@ -342,12 +342,12 @@ class _SignUpViewState extends State<SignUpView> {
                                 width: MediaQuery.of(context).size.width * 0.8,
                                 child: TextFormField(
                                   controller:
-                                      signupController.workerTitleController,
-                                  validator: (workerTitle) {
-                                    if (workerTitle.isEmpty) {
-                                      return "Worker title cannot be empty!";
-                                    } else if (!isAlpha(workerTitle)) {
-                                      return "Worker title should contain only letters";
+                                      signupController.occupationController,
+                                  validator: (occupation) {
+                                    if (occupation.isEmpty) {
+                                      return "Occupation cannot be empty!";
+                                    } else if (!isAlpha(occupation)) {
+                                      return "Occupation should contain only letters";
                                     }
                                     return null;
                                   },
@@ -362,7 +362,7 @@ class _SignUpViewState extends State<SignUpView> {
                                           horizontal: 15.0),
                                       child: Icon(Icons.person),
                                     ),
-                                    labelText: 'Worker title',
+                                    labelText: 'Occupation',
                                     labelStyle: TextStyle(
                                       fontSize: 16.0,
                                       fontFamily: 'StemRegular',
@@ -384,11 +384,11 @@ class _SignUpViewState extends State<SignUpView> {
                               Container(
                                 width: MediaQuery.of(context).size.width * 0.8,
                                 child: TextFormField(
-                                  controller: signupController
-                                      .workerExperienceController,
-                                  validator: (workerExperience) {
-                                    if (workerExperience.isEmpty) {
-                                      return "Worker experience cannot be empty!";
+                                  controller:
+                                      signupController.experienceController,
+                                  validator: (experience) {
+                                    if (experience.isEmpty) {
+                                      return "Occupation cannot be empty!";
                                     }
                                     return null;
                                   },
@@ -403,7 +403,7 @@ class _SignUpViewState extends State<SignUpView> {
                                           horizontal: 15.0),
                                       child: Icon(Icons.person),
                                     ),
-                                    labelText: 'Worker experience',
+                                    labelText: 'Worker experience (in years)',
                                     labelStyle: TextStyle(
                                       fontSize: 16.0,
                                       fontFamily: 'StemRegular',
@@ -422,22 +422,22 @@ class _SignUpViewState extends State<SignUpView> {
                             ],
                           )
                         : null,
-                  ),
+                  ), //Dropdown menu: worker, customer
                   InkWell(
                     onTap: () {
                       // FocusScope.of(context).requestFocus(new FocusNode());
 
                       if (signupController.signUpKey.currentState.validate()) {
-                        //si data valid li rent ici !
-                        // ici to met to method sign up
+                        // sign up method
                         signupController.signUp(
-                            signupController.firstNameController.text,
-                            signupController.lastNameController.text,
-                            signupController.emailController.text,
-                            signupController.locationController.text,
-                            signupController.passwordController.text,
-                            "occupation",
-                            "experience");
+                          signupController.firstNameController.text,
+                          signupController.lastNameController.text,
+                          signupController.emailController.text,
+                          signupController.locationController.text,
+                          signupController.passwordController.text,
+                          signupController.occupationController.text,
+                          signupController.experienceController.text,
+                        );
                       }
 
                       // Navigator.pushNamed(context, '/Login'); //allow back
