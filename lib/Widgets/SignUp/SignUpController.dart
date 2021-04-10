@@ -4,6 +4,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:email_validator/email_validator.dart';
+import 'package:ti_boulot/Common/API.dart';
+import 'package:ti_boulot/Common/ApiURL.dart';
+import 'package:ti_boulot/Common/ResponseType.dart';
 
 class SignupController {
   final signUpKey = GlobalKey<FormState>();
@@ -18,12 +21,12 @@ class SignupController {
   TextEditingController occupationController = new TextEditingController();
   TextEditingController experienceController = new TextEditingController();
 
-  void signUp(String firstName, lastName, emailAddress, location, password,
-      occupation, experience) {
+  Future<void> signUp(String firstName, lastName, emailAddress, location,
+      password, occupation, experience) async {
     // occupation = "";
     // experience = "";
-
     //json format obj
+
     var body = {
       "firstName": firstName,
       "lastName": lastName,
@@ -35,16 +38,9 @@ class SignupController {
       "experience": experience,
     };
 
-    var response = postReq(body);
+    ResponseType response =
+        await API().post(ApiURL.getURL(ApiURL.register), body);
 
     print(response);
-  }
-
-  Future<dynamic> postReq(var body) async {
-    var response =
-        //   await http.post('http://localhost:9000/register', body: body);
-        await http.post('http://10.0.2.2:9000/register',
-            body: body); // localhost has been replaced by 10.0.2.2 to be
-    return response;
   }
 }

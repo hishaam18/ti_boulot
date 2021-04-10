@@ -2,7 +2,6 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:ti_boulot/Common/CustomTextField.dart';
 import 'package:ti_boulot/Widgets/SignUp/SignUpController.dart';
 import 'package:validators/validators.dart';
 
@@ -151,13 +150,6 @@ class _SignUpViewState extends State<SignUpView> {
                           ? null
                           : "Invalid email address",
                       onSaved: (email) => email = email,
-                      // validator: (emailAddress) {
-                      //   if (emailAddress.isEmpty) {
-                      //     return "Email Address cannot be empty!";
-                      //   }
-                      //   return null;
-                      // },
-                      //
                       keyboardType: TextInputType.emailAddress,
                       style: TextStyle(
                         fontSize: 16.0,
