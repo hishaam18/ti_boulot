@@ -23,10 +23,6 @@ class SignupController {
 
   Future<void> signUp(String firstName, lastName, emailAddress, location,
       password, occupation, experience) async {
-    // occupation = "";
-    // experience = "";
-    //json format obj
-
     var body = {
       "firstName": firstName,
       "lastName": lastName,
