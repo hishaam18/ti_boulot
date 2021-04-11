@@ -47,8 +47,8 @@ class LoginController {
       );
 
       AlertDialog alert = AlertDialog(
-        title: Text("My title"),
-        content: Text("Error this Account does not exist"),
+        title: Text("Error"),
+        content: Text("This Account does not exist"),
         actions: [
           okButton,
         ],
