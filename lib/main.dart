@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:ti_boulot/Widgets/Home/HomeView.dart';
 import 'package:ti_boulot/Widgets/Login/LoginView.dart';
 import 'package:ti_boulot/Widgets/SignUp/SignUpView.dart';
-
 import 'Widgets/Choose_Account/ChooseAccountView.dart';
+import 'Widgets/Home/PostTaskView.dart';
 
 void main() {
   runApp(MyApp());
@@ -27,6 +27,7 @@ class _MyAppState extends State<MyApp> {
         '/Choose_Account': (context) => ChooseAccountView(),
         '/SignUp': (context) => SignUpView(),
         '/Home': (context) => HomeView(),
+        '/PostTask': (context) => PostTaskView(),
       },
     );
   }

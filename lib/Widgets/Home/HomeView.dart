@@ -1,3 +1,4 @@
+import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -7,9 +8,12 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
-        title: Text(
-          'Back',
-          style: TextStyle(color: Colors.white),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 113.0),
+          child: Text(
+            'Home',
+            style: TextStyle(color: Colors.white),
+          ),
         ),
         automaticallyImplyLeading: true,
         leading: IconButton(
@@ -19,7 +23,29 @@ class HomeView extends StatelessWidget {
           color: Colors.white,
         ),
       ),
-      body: Text(" This is the Home Page"),
+      bottomNavigationBar: ConvexAppBar(
+        style: TabStyle.react,
+        curve: Curves.easeInQuad,
+        backgroundColor: Colors.deepPurple,
+        items: [
+          TabItem(icon: Icons.message, title: 'Message'),
+          TabItem(icon: Icons.notifications, title: 'Notifications'),
+          TabItem(icon: Icons.add_circle_outline, title: 'Browse'),
+          TabItem(icon: Icons.inventory, title: 'MyTasks'),
+          TabItem(icon: Icons.person, title: 'Profile'),
+        ],
+        initialActiveIndex: 2, //optional, default as 0
+        onTap: (int i) => print('click index=$i'),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.deepPurple,
+        child: Icon(Icons.add),
+
+        //onPressed -> floating action button
+        onPressed: () {
+          Navigator.pushNamed(context, '/PostTask');
+        },
+      ),
     );
   }
 }

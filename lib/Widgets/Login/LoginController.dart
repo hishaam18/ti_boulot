@@ -31,8 +31,8 @@ class LoginController {
     if (response.success == true) {
       print("Login Successful");
 
-      //navigate to page
-      Navigator.pushNamed(context, '/Home');
+      //navigate to Home page
+      Navigator.pushReplacementNamed(context, '/Home'); //NOT allow back
     } else {
       print(response.error); //display error msg
 
@@ -48,7 +48,7 @@ class LoginController {
 
       AlertDialog alert = AlertDialog(
         title: Text("Error"),
-        content: Text("This Account does not exist"),
+        content: Text("Invalid Email or Password"),
         actions: [
           okButton,
         ],
