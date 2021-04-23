@@ -14,7 +14,7 @@ var password;
 
 class _LoginViewState extends State<LoginView> {
   LoginController loginController =
-      new LoginController(); //creating n object to connect to loginController class
+      new LoginController(); //creating object to connect to loginController class
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +37,7 @@ class _LoginViewState extends State<LoginView> {
         ),
       ),
       body: GestureDetector(
+        //gesture detector makes the whole screen clickable
         onTap: () {
           FocusScope.of(context).requestFocus(new FocusNode());
         },
@@ -44,7 +45,7 @@ class _LoginViewState extends State<LoginView> {
           child: Container(
               child: SingleChildScrollView(
             child: Form(
-              key: loginController.loginKey,
+              key: loginController.loginKey, //login key
               child: Column(
                 children: [
                   Image.asset('images/undraw_Designer_by46.png'),
