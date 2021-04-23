@@ -4,7 +4,7 @@
 class ResponseType {
   bool success;
   String error;
-  String data;
+  Map<String, dynamic> data;
   String msg;
 
   ResponseType({this.success, this.error, this.data, this.msg});

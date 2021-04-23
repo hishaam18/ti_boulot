@@ -1,10 +1,13 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:http/http.dart';
 import 'package:ti_boulot/Common/API.dart';
 import 'package:ti_boulot/Common/ApiURL.dart';
+import 'package:ti_boulot/Common/Common.dart';
 import 'package:ti_boulot/Common/ResponseType.dart';
 import "package:latlong/latlong.dart" as latLng;
 
@@ -60,11 +63,12 @@ class PostTaskViewController {
       "budget": budget,
       "displayDate": displayDate,
       "displayDeadlineDate": displayDeadlineDate,
+      "User_ID": Common.userID
     };
 
     ResponseType response =
         await API().post(ApiURL.getURL(ApiURL.postTask), body);
 
-    print(response);
+    print(response.data);
   }
 }

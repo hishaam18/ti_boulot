@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:ti_boulot/Common/API.dart';
 import 'package:ti_boulot/Common/ApiURL.dart';
+import 'package:ti_boulot/Common/Common.dart';
 import 'package:ti_boulot/Common/ResponseType.dart';
 
 class LoginController {
@@ -29,8 +30,8 @@ class LoginController {
     print(response.success);
 
     if (response.success == true) {
-      print("Login Successful");
-
+      print(response.data['User_ID']);
+      Common.userID = response.data['User_ID'];
       //navigate to Home page
       Navigator.pushReplacementNamed(context, '/Home'); //NOT allow back
     } else {
