@@ -23,6 +23,7 @@ app.use(function (req, res, next) {
 
 
 //---------------------------------Register----------------------------------------//
+
 app.use("/register", function (req, res, next) {
 
     console.log(req.body);
@@ -66,13 +67,13 @@ async function registerUser(firstName, lastName, emailAddress, location, passwor
 }
 
 //---------------------------------Login----------------------------------------//
+
 app.use("/login", function (req, res, next) {
 
     var emailAddress = req.body.emailAddress;
     var password = req.body.password;
 
     checkValidLogIn(emailAddress, password).then(result => {
-
 
 
         if (result == 1) {
@@ -190,36 +191,32 @@ async function checkValidEmailAddress(emailAddress) {
 
 
 
-
 //---------------------------------postTask----------------------------------------//
+
 app.use("/postTask", function (req, res, next) {
 
     console.log(req.body);
 
     var task_ID = req.body.task_ID;
-
     var User_ID = req.body.User_ID;
-
     var title = req.body.title;
-    var taskDescription = req.body.taskDescription;
-    var location = req.body.location;
+    var task_description = req.body.task_description;
+    var lat = req.body.lat;
+    var lng = req.body.lng;
     var budget = req.body.budget;
     var displayDate = req.body.displayDate;
     var displayDeadlineDate = req.body.displayDeadlineDate;
 
-   // console.log(User_ID)
+   //console.log(User_ID)
 
-    postTaskFunction(title, taskDescription, location, budget, displayDate, displayDeadlineDate).then(result => {
+    postTaskFunction(User_ID, title, task_description, lat, lng, budget, displayDate, displayDeadlineDate).then(result => {
     });
 
 });
 
+async function postTaskFunction(User_ID, title, task_description, lat, lng, budget, displayDate, displayDeadlineDate) {
 
-
-async function postTaskFunction(User_ID, title, taskDescription, location, budget, displayDate, displayDeadlineDate) {
-
-
-    let sql = "INSERT INTO task VALUES (Default ,'" + User_ID + "','" + title + "','" + taskDescription + "','" + location + "','" + budget + "','" + displayDate + "','" + displayDeadlineDate + "');"
+    let sql = "INSERT INTO task VALUES (Default ,'" + User_ID + "','" + title + "','" + task_description + "','" + lat + "', '" + lng + "','" + budget + "','" + displayDate + "','" + displayDeadlineDate + "');"
 
     console.log(sql);
 

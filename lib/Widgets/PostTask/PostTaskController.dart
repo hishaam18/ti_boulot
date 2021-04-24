@@ -17,11 +17,14 @@ class PostTaskViewController {
   TextEditingController taskTitleController = new TextEditingController();
   TextEditingController taskDescriptionController = new TextEditingController();
 
-  TextEditingController taskLocationController = new TextEditingController();
+  // TextEditingController taskLocationController = new TextEditingController();
+
+  String lat;
+  String lng;
 
   TextEditingController budgetController = new TextEditingController();
-  String displayDate; //availability
-  String displayDeadlineDate; //dealine
+  String displayDate; //availability - creating a global variable
+  String displayDeadlineDate; //dealine- creating a global variable
 
   //
   Marker dropPinMarker = Marker(
@@ -41,6 +44,11 @@ class PostTaskViewController {
 
   dropPin(double latitude, double longitude) {
     droppedPinLocation = new latLng.LatLng(latitude, longitude);
+
+    //Assigning latitude and longitude values to Global variables: lat and long
+    lat = droppedPinLocation.latitude.toString();
+    lng = droppedPinLocation.longitude.toString();
+
     dropPinMarker = Marker(
       width: 80.0,
       height: 80.0,
@@ -54,16 +62,18 @@ class PostTaskViewController {
     );
   }
 
-  Future<void> postTask(String title, description, location, displayDate,
-      displayDeadlineDate, budget) async {
+  //Function to send post request to backend ( containing details of post task function)
+  Future<void> postTask(String title, task_description, lat, lng, budget,
+      displayDate, displayDeadlineDate) async {
     var body = {
+      "User_ID": Common.userID,
       "title": title,
-      "description": description,
-      "location": location,
+      "task_description": task_description,
+      "lat": lat,
+      "lng": lng,
       "budget": budget,
       "displayDate": displayDate,
       "displayDeadlineDate": displayDeadlineDate,
-      "User_ID": Common.userID
     };
 
     ResponseType response =

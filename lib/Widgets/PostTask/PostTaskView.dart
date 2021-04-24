@@ -126,6 +126,7 @@ class _PostTaskViewState extends State<PostTaskView> {
                               children: [
                                 SizedBox(height: 20.0),
                                 TextFormField(
+                                  maxLines: 2,
                                   controller: postTaskViewController
                                       .taskTitleController,
                                   style: TextStyle(
@@ -156,14 +157,14 @@ class _PostTaskViewState extends State<PostTaskView> {
                                       ),
                                     ),
                                   ),
-                                ),
+                                ), //task-title
                                 SizedBox(
                                   height: 30.0,
                                 ),
                                 TextFormField(
                                   controller: postTaskViewController
                                       .taskDescriptionController,
-                                  maxLines: 8,
+                                  maxLines: 10,
                                   style: TextStyle(
                                     fontSize: 16.0,
                                     fontWeight: FontWeight.bold,
@@ -188,7 +189,7 @@ class _PostTaskViewState extends State<PostTaskView> {
                                       ),
                                     ),
                                   ),
-                                ),
+                                ), //task-description
                                 SizedBox(
                                   height: 30.0,
                                 ),
@@ -248,57 +249,14 @@ class _PostTaskViewState extends State<PostTaskView> {
                                       ), //flutterMap + Text_instructions
                                     ],
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 30.0,
-                                ),
-                                Container(
-                                  child: Column(
-                                    children: [
-                                      TextFormField(
-                                        controller: postTaskViewController
-                                            .taskLocationController,
-                                        style: TextStyle(
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: 'StemRegular',
-                                        ),
-                                        decoration: InputDecoration(
-                                          labelText: 'Location',
-                                          suffixIcon: IconButton(
-                                            icon: Icon(Icons.location_pin),
-                                            onPressed: () =>
-                                                print('suffixIcon pressed'),
-                                          ),
-                                          contentPadding:
-                                              EdgeInsets.only(top: 50.0),
-                                          prefixIcon: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 10.0),
-                                          ),
-                                          labelStyle: TextStyle(
-                                            fontSize: 18.0,
-                                            fontFamily: 'StemRegular',
-                                          ),
-                                          hintText: 'Use location picker ->',
-                                          border: new OutlineInputBorder(
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                              const Radius.circular(15.0),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ), //location
-                                ),
+                                ), //flutterMap
                                 SizedBox(
                                   height: 30.0,
                                 ),
                                 //flutter_map
                               ],
                             ),
-                          ), //title/descrip/location
+                          ), //title/description/location
                           Step(
                             isActive: true,
                             state: StepState.editing,
@@ -447,20 +405,29 @@ class _PostTaskViewState extends State<PostTaskView> {
                                   ),
                                 ),
                                 FlatButton(
-                                  child: Text(' Submit'),
+                                  child: Text('Submit'),
                                   color: Colors.blueAccent,
                                   textColor: Colors.white,
                                   onPressed: () {
+                                    //on pressing this button, sending each input of the text fields, as an object, to the controller
                                     postTaskViewController.postTask(
                                       postTaskViewController
                                           .taskTitleController.text,
                                       postTaskViewController
                                           .taskDescriptionController.text,
-                                      postTaskViewController
-                                          .taskLocationController.text,
+
+                                      // postTaskViewController
+                                      //     .taskLocationController.text,
+
+                                      postTaskViewController.lat,
+
+                                      postTaskViewController.lng,
+
                                       postTaskViewController
                                           .budgetController.text,
+
                                       postTaskViewController.displayDate,
+
                                       postTaskViewController
                                           .displayDeadlineDate,
                                     );
