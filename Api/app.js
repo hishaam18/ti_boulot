@@ -150,7 +150,6 @@ async function getUserID(emailAddress) {
     });
 }
 
-
 async function checkValidLogIn(emailAddress, password) {
 
     let sqlQuery = "SELECT EXISTS(SELECT * FROM user WHERE Email = '" + emailAddress + "' AND Password = '" + password + "') AS result;"
@@ -188,7 +187,6 @@ async function checkValidEmailAddress(emailAddress) {
     });
 
 }
-
 
 
 //---------------------------------postTask----------------------------------------//
@@ -234,7 +232,6 @@ async function postTaskFunction(User_ID, title, task_description, lat, lng, budg
     });
 
 }
-
 
 
 module.exports = app;

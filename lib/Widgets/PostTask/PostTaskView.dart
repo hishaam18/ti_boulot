@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
 import "package:latlong/latlong.dart" as latLng;
 import 'package:ti_boulot/Common/API.dart';
@@ -373,6 +374,12 @@ class _PostTaskViewState extends State<PostTaskView> {
                             content: Column(
                               children: <Widget>[
                                 TextFormField(
+                                  keyboardType: TextInputType.numberWithOptions(
+                                      decimal: true),
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.allow(
+                                        RegExp('([0-9]+(\.[0-9]+)?)')),
+                                  ],
                                   controller:
                                       postTaskViewController.budgetController,
                                   style: TextStyle(
@@ -415,19 +422,11 @@ class _PostTaskViewState extends State<PostTaskView> {
                                           .taskTitleController.text,
                                       postTaskViewController
                                           .taskDescriptionController.text,
-
-                                      // postTaskViewController
-                                      //     .taskLocationController.text,
-
                                       postTaskViewController.lat,
-
                                       postTaskViewController.lng,
-
                                       postTaskViewController
                                           .budgetController.text,
-
                                       postTaskViewController.displayDate,
-
                                       postTaskViewController
                                           .displayDeadlineDate,
                                     );

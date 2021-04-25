@@ -4,6 +4,7 @@ import 'package:ti_boulot/Widgets/Login/LoginView.dart';
 import 'package:ti_boulot/Widgets/SignUp/SignUpView.dart';
 import 'Widgets/Choose_Account/ChooseAccountView.dart';
 import 'Widgets/PostTask/PostTaskView.dart';
+import 'Widgets/Home/HomeView.dart';
 
 void main() {
   runApp(MyApp());
@@ -26,8 +27,8 @@ class _MyAppState extends State<MyApp> {
         '/Login': (context) => LoginView(),
         '/Choose_Account': (context) => ChooseAccountView(),
         '/SignUp': (context) => SignUpView(),
-        '/Home': (context) => HomeView(),
         '/PostTask': (context) => PostTaskView(),
+        '/Home': (context) => HomeView(),
       },
     );
   }
@@ -98,36 +99,6 @@ class _GetStartedState extends State<GetStarted> {
                     ),
                   ),
                 ),
-
-                // InkWell(
-                //   onTap: () {
-                //     Navigator.pushNamed(
-                //         context, '/Choose_Account'); //allow back
-                //     // Navigator.pushReplacementNamed(context, '/Login'); //NOT allow back
-                //   },
-                //   child: Card(
-                //     color: Colors.deepPurple,
-                //     margin:
-                //         EdgeInsets.symmetric(horizontal: 75.0, vertical: 0.0),
-                //     child: ListTile(
-                //       leading: Icon(
-                //         Icons.hail,
-                //         size: 40.0,
-                //         color: Colors.white,
-                //       ),
-                //       title: Padding(
-                //         padding: const EdgeInsets.only(left: 25.0),
-                //         child: Text(
-                //           'Worker',
-                //           style: TextStyle(
-                //             fontSize: 20.0,
-                //             color: Colors.white,
-                //           ),
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-                // ),
               ],
             ),
           ),

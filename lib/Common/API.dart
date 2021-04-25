@@ -29,10 +29,12 @@ class API {
 
     var apiResponse = await http.post(url, body: jsonEncode(body));
 
+    var fullAddress; //contains latitude and longitiude converted to text address
+
     //stringResponse to JSON
     Map<String, dynamic> mapJSON = jsonDecode(apiResponse.body);
 
-    print(mapJSON['results'][0]['locations'][0]['street'] == ""
+    fullAddress = mapJSON['results'][0]['locations'][0]['street'] == ""
         ? mapJSON['results'][0]['locations'][0]['adminArea5'] +
             ", " +
             mapJSON['results'][0]['locations'][0]['adminArea3']
@@ -40,6 +42,8 @@ class API {
             ", " +
             mapJSON['results'][0]['locations'][0]['adminArea5'] +
             ", " +
-            mapJSON['results'][0]['locations'][0]['adminArea3']);
+            mapJSON['results'][0]['locations'][0]['adminArea3'];
+
+    print(fullAddress);
   }
 }

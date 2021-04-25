@@ -1,28 +1,49 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ti_boulot/Widgets/Message/MessageView.dart';
+import 'package:ti_boulot/Widgets/Notifications/Notifications.dart';
+import 'package:ti_boulot/Widgets/MyTask/MyTaskView.dart';
+import 'package:ti_boulot/Widgets/Profile/ProfileView.dart';
+import 'package:ti_boulot/Widgets/Browse/BrowseView.dart';
 
-class HomeView extends StatelessWidget {
+class HomeApp extends StatelessWidget {
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: HomeView(title: 'Flutter Convex Bottom Bar'),
+    );
+  }
+}
+
+class HomeView extends StatefulWidget {
+  HomeView({Key key, this.title}) : super(key: key);
+  final String title;
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<HomeView> {
+  int selectedPage = 0; //int with default 0
+
+  final _pageOptions = [
+    MessageView(),
+    NotificationsView(),
+    BrowseView(),
+    MyTaskView(),
+    ProfileView()
+  ]; //5 pages stored in array form
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.deepPurple,
-        title: Padding(
-          padding: const EdgeInsets.only(left: 113.0),
-          child: Text(
-            'Home',
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
-        automaticallyImplyLeading: true,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () =>
-              Navigator.pop(context, false), // returns to previous page
-          color: Colors.white,
-        ),
-      ),
+      body: _pageOptions[selectedPage],
       bottomNavigationBar: ConvexAppBar(
         style: TabStyle.react,
         curve: Curves.easeInQuad,
@@ -34,8 +55,14 @@ class HomeView extends StatelessWidget {
           TabItem(icon: Icons.inventory, title: 'MyTasks'),
           TabItem(icon: Icons.person, title: 'Profile'),
         ],
-        initialActiveIndex: 2, //optional, default as 0
-        onTap: (int i) => print('click index=$i'),
+
+        initialActiveIndex: 0, //optional, default as 0
+
+        onTap: (int i) {
+          setState(() {
+            selectedPage = i;
+          });
+        },
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.deepPurple,
