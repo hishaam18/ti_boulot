@@ -7,6 +7,7 @@ import 'package:ti_boulot/Widgets/MyTask/MyTaskView.dart';
 import 'package:ti_boulot/Widgets/Profile/ProfileView.dart';
 import 'package:ti_boulot/Widgets/Browse/BrowseView.dart';
 
+//contains navigation bar to all the other 5 pages
 class HomeApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
@@ -56,7 +57,7 @@ class _MyHomePageState extends State<HomeView> {
           TabItem(icon: Icons.person, title: 'Profile'),
         ],
 
-        initialActiveIndex: 0, //optional, default as 0
+        initialActiveIndex: 2, //optional, default as 0
 
         onTap: (int i) {
           setState(() {
@@ -64,14 +65,17 @@ class _MyHomePageState extends State<HomeView> {
           });
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.deepPurple,
-        child: Icon(Icons.add),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 25),
+        child: FloatingActionButton(
+          backgroundColor: Colors.deepPurple,
+          child: Icon(Icons.add),
 
-        //onPressed -> floating action button
-        onPressed: () {
-          Navigator.pushNamed(context, '/PostTask');
-        },
+          //onPressed -> floating action button
+          onPressed: () {
+            Navigator.pushNamed(context, '/PostTask');
+          },
+        ),
       ),
     );
   }

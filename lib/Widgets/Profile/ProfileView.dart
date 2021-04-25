@@ -8,7 +8,7 @@ class ProfileView extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
         title: Padding(
-          padding: const EdgeInsets.only(left: 113.0),
+          padding: const EdgeInsets.only(left: 110.0),
           child: Text(
             'Profile',
             style: TextStyle(color: Colors.white),

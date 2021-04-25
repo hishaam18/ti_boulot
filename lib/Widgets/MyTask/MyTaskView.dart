@@ -8,7 +8,7 @@ class MyTaskView extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
         title: Padding(
-          padding: const EdgeInsets.only(left: 113.0),
+          padding: const EdgeInsets.only(left: 103.0),
           child: Text(
             'My Task',
             style: TextStyle(color: Colors.white),
