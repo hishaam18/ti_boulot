@@ -19,8 +19,9 @@ class PostTaskViewController {
 
   // TextEditingController taskLocationController = new TextEditingController();
 
-  String lat;
-  String lng;
+  String lat; //latititude
+  String lng; //longitude
+  String displayAddress = 'No Address Selected'; //full address selected on map
 
   TextEditingController budgetController = new TextEditingController();
   String displayDate; //availability - creating a global variable
@@ -62,7 +63,7 @@ class PostTaskViewController {
     );
   }
 
-  //Function to send post request to backend ( containing details of post task function)
+  //Function to send post request to backend (containing details of post task functionality)
   Future<void> postTask(String title, task_description, lat, lng, budget,
       displayDate, displayDeadlineDate) async {
     var body = {

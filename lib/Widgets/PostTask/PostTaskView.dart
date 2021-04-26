@@ -67,8 +67,14 @@ class _PostTaskViewState extends State<PostTaskView> {
         : stepperType = StepperType.horizontal);
   }
 
+  API objectAPI =
+      new API(); //creating an object for class API ie an instance of the class
+
   @override
   Widget build(BuildContext context) {
+    objectAPI.getAddress(
+        'postTask', -20.5, 53.5); //calling an instance of this function
+
     return new Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
@@ -101,7 +107,7 @@ class _PostTaskViewState extends State<PostTaskView> {
                   ? Expanded(
                       child: Center(
                         child: AlertDialog(
-                          title: new Text(" Posted? "),
+                          title: new Text(" Confirm "),
                           content: new Text(
                             "Successfully posted ",
                           ),
@@ -208,6 +214,8 @@ class _PostTaskViewState extends State<PostTaskView> {
                                       SizedBox(
                                         height: 10.0,
                                       ),
+                                      Text(postTaskViewController
+                                          .displayAddress),
                                       Container(
                                         decoration: BoxDecoration(
                                           border: Border.all(
@@ -228,6 +236,11 @@ class _PostTaskViewState extends State<PostTaskView> {
                                                       .dropPin(
                                                           droppedPin.latitude,
                                                           droppedPin.longitude);
+
+                                                  postTaskViewController
+                                                          .displayAddress =
+                                                      objectAPI.fullAddress ??
+                                                          'loading';
                                                 });
                                               },
                                               center: latLng.LatLng(

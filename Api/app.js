@@ -73,6 +73,46 @@ app.use("/login", function (req, res, next) {
     var emailAddress = req.body.emailAddress;
     var password = req.body.password;
 
+
+/* The function below is calling the checkValidLogIn function: 
+
+What the checkValidLogIn does:-  see comments  above the checkValidLogIn far below, not this one.
+
+This function takes as parameters emailAddress and password.
+
+'result' is received from the checkValidLogIn function and contains emailAddress and password.
+
+
+if result = 1 , that is if the result contains the 2 arguments:
+
+    getUserID() is called -  see comments of the function far below(not immediate) 
+    then: 
+
+    if:- result=0 that is the result does not contain a stringified User_ID,    
+        - json sent to UI/Flutter 
+            -success false
+            -error message displayed in UI console
+            -data - map form 
+            -msg
+    else:-
+        that is if result =1, 'result' contains a User_ID, 
+            -json is sent to flutter
+            -success true
+            -error message null
+            -data- User_ID
+
+if result = 0, that is the result contains the 2 arguments(emailAddress, password)
+
+     checkValidEmailAddress() is called -  see comments of the function far below(not immediate) 
+
+    if:- result = 1, that is the email correponds,
+       send json: error message password does not match
+
+         result =0, that is email cannot be found in database,
+         send json, error message, account downt exist
+            
+*/
+
     checkValidLogIn(emailAddress, password).then(result => {
 
 
@@ -97,8 +137,6 @@ app.use("/login", function (req, res, next) {
                         msg: ""
                     });
                 }
-
-
             });
 
 
@@ -130,6 +168,20 @@ app.use("/login", function (req, res, next) {
 
 });
 
+
+/* 
+
+makes sql query to select user_id  of corresponding emailAddress
+
+reject:- outputs Error message + user_id in console
+
+resolve:- transforms  the User_ID from varchar to String and storesit in  result
+
+'result' is then sent to the function above:- where getUserID function is called in - where checkValidLogIn is called
+
+*/
+
+
 //get User_ID
 async function getUserID(emailAddress) {
 
@@ -150,6 +202,15 @@ async function getUserID(emailAddress) {
     });
 }
 
+/* Runs an sql query which takes existing Email and Password from the database 
+
+what the promise does:-
+    1. reject
+        outputs error message + query error in console
+    2. resolve 
+        sends 'result'- which contains email and password, back to where this function was called, ie above. ^
+*/
+
 async function checkValidLogIn(emailAddress, password) {
 
     let sqlQuery = "SELECT EXISTS(SELECT * FROM user WHERE Email = '" + emailAddress + "' AND Password = '" + password + "') AS result;"
@@ -168,6 +229,17 @@ async function checkValidLogIn(emailAddress, password) {
     });
 
 }
+
+/* 
+sql query: select all from corresponding email
+
+what the promise does:-
+    1. reject
+    outputs error message + query error in console
+
+    2. resolve 
+    results contain all user details corresponding to the email.
+*/
 
 async function checkValidEmailAddress(emailAddress) {
 
@@ -232,6 +304,66 @@ async function postTaskFunction(User_ID, title, task_description, lat, lng, budg
     });
 
 }
+
+
+//---------------------------------BrowseTask----------------------------------------//
+
+
+app.use("/retrieveTask", function (req, res, next)  {    
+
+
+    retrieveTaskFunction().then(result => {
+
+        if (result == 0) {
+            res.status(200).json({
+                success: false,
+                error: "Failed to get task_data",
+                data: {},
+                msg: ""
+            });
+        } else {
+            res.status(200).json({
+                success: true,
+                error: "",
+                data: {
+                    "task_data": result,
+                },
+                msg: ""
+            });
+        }
+    });
+
+
+
+
+});
+
+    async function retrieveTaskFunction() { 
+
+        let sql = "SELECT * FROM task;"
+
+        console.log(sql);
+
+        return new Promise((resolve, reject) => {
+
+            pool.query(sql, (err, result) => {
+                if (err) {
+                    reject("Error executing the query: " + JSON.stringify(err));
+                    resolve(0);
+                } else {
+                    result = JSON.stringify(result[0]);
+                    resolve(result);
+                }
+            });
+    
+        });
+
+    }
+
+
+
+    
+
 
 
 module.exports = app;

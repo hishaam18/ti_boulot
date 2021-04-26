@@ -13,6 +13,8 @@ class API {
     return ResponseType().fromJson(mapJSON);
   }
 
+  var fullAddress; //contains latitude and longitiude converted to text address //global variable
+
   Future<dynamic> getAddress(
       String url, double latitude, double longitude) async {
     var body = {
@@ -28,8 +30,6 @@ class API {
     };
 
     var apiResponse = await http.post(url, body: jsonEncode(body));
-
-    var fullAddress; //contains latitude and longitiude converted to text address
 
     //stringResponse to JSON
     Map<String, dynamic> mapJSON = jsonDecode(apiResponse.body);

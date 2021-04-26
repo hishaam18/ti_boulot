@@ -20,6 +20,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+
       //linking the different pages
       initialRoute: '/GetStarted',
       routes: {
@@ -65,10 +66,10 @@ class _GetStartedState extends State<GetStarted> {
                   // height: 400.0,
                   child: Image.asset('images/undraw_coffee_break_h3uu (1).png'),
                 ),
-
                 SizedBox(
                   height: 85.0,
                 ),
+
                 //pushing from main page to Login Pa
                 InkWell(
                   onTap: () {
