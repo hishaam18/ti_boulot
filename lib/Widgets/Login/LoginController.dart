@@ -18,6 +18,8 @@ class LoginController {
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
 
+  //future used to represent values that will be available later ie,
+  //once callback functions receive their values
   Future<void> login(
       String emailAddress, String password, BuildContext context) async {
     var body = {
@@ -25,13 +27,18 @@ class LoginController {
       "password": password
     };
 
+    //getting response from backend from: (app.use/login)
     ResponseType response = await API().post(ApiURL.getURL(ApiURL.login), body);
 
+    //print response
     print(response.success);
 
+    //storing User_ID received from backend response, into static
+    //variable ' userID ' found in common
     if (response.success == true) {
       print(response.data['User_ID']);
       Common.userID = response.data['User_ID'];
+
       //navigate to Home page
       Navigator.pushReplacementNamed(context, '/Home'); //NOT allow back
     } else {

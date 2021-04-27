@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ti_boulot/Common/ApiURL.dart';
+import 'package:ti_boulot/Widgets/Browse/BrowseController.dart';
 import 'package:ti_boulot/Widgets/Home/HomeView.dart';
 import 'package:ti_boulot/Widgets/Login/LoginView.dart';
 import 'package:ti_boulot/Widgets/SignUp/SignUpView.dart';
@@ -16,8 +18,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  BrowseController controller = new BrowseController();
+
   @override
   Widget build(BuildContext context) {
+    controller.retrieveTask();
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
 

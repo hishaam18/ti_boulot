@@ -27,7 +27,6 @@ class PostTaskViewController {
   String displayDate; //availability - creating a global variable
   String displayDeadlineDate; //dealine- creating a global variable
 
-  //
   Marker dropPinMarker = Marker(
     width: 80.0,
     height: 80.0,
@@ -81,5 +80,19 @@ class PostTaskViewController {
         await API().post(ApiURL.getURL(ApiURL.postTask), body);
 
     print(response.data);
+
+    if (response.success = true) {
+      print(response.data);
+    }
+    ;
   }
+
+  // Future<void> receivePostTask() async {
+  //   /*  *****************    Getting PostTask values from Backend     ********************    */
+  //
+  //   //getting response from backend from: (app.use/login)
+  //   ResponseType response =
+  //       await API().post(ApiURL.getURL(ApiURL.retrieveTask), body);
+  // }
+
 }

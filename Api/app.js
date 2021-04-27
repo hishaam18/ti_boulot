@@ -83,7 +83,7 @@ This function takes as parameters emailAddress and password.
 'result' is received from the checkValidLogIn function and contains emailAddress and password.
 
 
-if result = 1 , that is if the result contains the 2 arguments:
+if result = 1 , that is if the result contains the 2 arguments (emailAddress and password):
 
     getUserID() is called -  see comments of the function far below(not immediate) 
     then: 
@@ -279,8 +279,32 @@ app.use("/postTask", function (req, res, next) {
 
    //console.log(User_ID)
 
-    postTaskFunction(User_ID, title, task_description, lat, lng, budget, displayDate, displayDeadlineDate).then(result => {
-    });
+
+  
+
+        postTaskFunction(User_ID, title, task_description, lat, lng, budget, displayDate, displayDeadlineDate).then(result => {
+
+            if (result == 0) {
+                res.status(200).json({
+                    success: false,
+                    error: "Failed to post task",
+                    data: {},
+                    msg: ""
+                });
+            } else {
+                res.status(200).json({
+                    success: true,
+                    error: "",
+                    data: {
+                        "Posted_data": result,
+                    },
+                    msg: ""
+                });
+            }
+
+
+        });
+    
 
 });
 
@@ -297,7 +321,7 @@ async function postTaskFunction(User_ID, title, task_description, lat, lng, budg
                 console.log(err);
                 resolve(err.code);
             } else {
-                console.log(result);
+                console.log(result); // result = all the data posted
                 resolve(1);
             }
         })
@@ -306,7 +330,8 @@ async function postTaskFunction(User_ID, title, task_description, lat, lng, budg
 }
 
 
-//---------------------------------BrowseTask----------------------------------------//
+
+//---------------------------------retrieveTask----------------------------------------//
 
 
 app.use("/retrieveTask", function (req, res, next)  {    
@@ -332,11 +357,10 @@ app.use("/retrieveTask", function (req, res, next)  {
             });
         }
     });
-
-
-
+    
 
 });
+
 
     async function retrieveTaskFunction() { 
 
@@ -351,7 +375,6 @@ app.use("/retrieveTask", function (req, res, next)  {
                     reject("Error executing the query: " + JSON.stringify(err));
                     resolve(0);
                 } else {
-                    result = JSON.stringify(result[0]);
                     resolve(result);
                 }
             });
@@ -361,8 +384,6 @@ app.use("/retrieveTask", function (req, res, next)  {
     }
 
 
-
-    
 
 
 

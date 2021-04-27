@@ -10,6 +10,7 @@ class ApiURL {
   static const String login = 'login';
   static const String register = 'register';
   static const String postTask = 'postTask';
+  static const String retrieveTask = 'retrieveTask';
 
   static String getURL(String url) {
     return baseURL + url.toString();
