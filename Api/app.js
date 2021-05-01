@@ -280,8 +280,6 @@ app.use("/postTask", function (req, res, next) {
    //console.log(User_ID)
 
 
-  
-
         postTaskFunction(User_ID, title, task_description, lat, lng, budget, displayDate, displayDeadlineDate).then(result => {
 
             if (result == 0) {
@@ -351,7 +349,7 @@ app.use("/retrieveTask", function (req, res, next)  {
                 success: true,
                 error: "",
                 data: {
-                    "task_data": result,
+                    "task_data": result
                 },
                 msg: ""
             });
@@ -382,7 +380,6 @@ app.use("/retrieveTask", function (req, res, next)  {
         });
 
     }
-
 
 
 
