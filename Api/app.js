@@ -337,6 +337,9 @@ app.use("/retrieveTask", function (req, res, next)  {
 
     retrieveTaskFunction().then(result => {
 
+console.log(result);
+
+
         if (result == 0) {
             res.status(200).json({
                 success: false,
@@ -373,15 +376,13 @@ app.use("/retrieveTask", function (req, res, next)  {
                     reject("Error executing the query: " + JSON.stringify(err));
                     resolve(0);
                 } else {
-                    resolve(result);
+                    resolve(result); //result contains an array of json objects
                 }
             });
     
         });
 
     }
-
-
 
 
 module.exports = app;

@@ -1,3 +1,5 @@
+//Constructor to create and initialise all variables of an object(BrowseControllerConstructor)
+//The object is the one returned from API(server) ie response from receiveTask function
 class BrowseControllerConstructor {
   int taskID;
   int userID;

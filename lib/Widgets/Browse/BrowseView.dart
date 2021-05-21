@@ -24,7 +24,8 @@ class _BrowseViewState extends State<BrowseView> {
   }
 
   loadTasks() async {
-    List<Widget> columnWidgets = await browseController.retrieveTask();
+    List<Widget> columnWidgets = await browseController
+        .retrieveTask(); //waits for retrieveTask() function to get all tasks from database
 
     setState(() {
       browseController.bodyContent = Scrollbar(
@@ -75,7 +76,8 @@ class _BrowseViewState extends State<BrowseView> {
         ),
       ),
       body: Container(
-        child: browseController.bodyContent,
+        child: browseController
+            .bodyContent, //body loads and displays all tasks obtained from retrieveTask() function in BrowseController.dart
       ),
     );
   }

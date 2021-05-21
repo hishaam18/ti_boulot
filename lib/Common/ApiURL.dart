@@ -1,7 +1,7 @@
 class ApiURL {
   static String baseURL = 'http://10.0.2.2:9000/';
-  // static String baseURL = 'http://localhost:9000/';
-  // static String baseURL = 'http://192.168.100.61:9000/';
+  //static String baseURL = 'http://localhost:9000/';
+  //static String baseURL = 'http://192.168.100.61:9000/';
 
   static String reverseGeocodingURLKey = "7Ty3EwM0hCwAKhvXSTXqAIP3T2jAbxxr";
   static String reverseGeocodingURL =

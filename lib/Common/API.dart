@@ -33,17 +33,18 @@ class API {
 
     //stringResponse to JSON
     Map<String, dynamic> mapJSON = jsonDecode(apiResponse.body);
+    fullAddress = mapJSON['results'][0]['locations'].isEmpty
+        ? "No address"
+        : mapJSON['results'][0]['locations'][0]['street'] == ""
+            ? mapJSON['results'][0]['locations'][0]['adminArea5'] +
+                ", " +
+                mapJSON['results'][0]['locations'][0]['adminArea3']
+            : mapJSON['results'][0]['locations'][0]['street'] +
+                ", " +
+                mapJSON['results'][0]['locations'][0]['adminArea5'] +
+                ", " +
+                mapJSON['results'][0]['locations'][0]['adminArea3'];
 
-    fullAddress = mapJSON['results'][0]['locations'][0]['street'] == ""
-        ? mapJSON['results'][0]['locations'][0]['adminArea5'] +
-            ", " +
-            mapJSON['results'][0]['locations'][0]['adminArea3']
-        : mapJSON['results'][0]['locations'][0]['street'] +
-            ", " +
-            mapJSON['results'][0]['locations'][0]['adminArea5'] +
-            ", " +
-            mapJSON['results'][0]['locations'][0]['adminArea3'];
-
-    print(fullAddress);
+    return fullAddress;
   }
 }

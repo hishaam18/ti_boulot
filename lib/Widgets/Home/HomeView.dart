@@ -31,7 +31,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<HomeView> {
-  int selectedPage = 0; //int with default 0
+  int selectedPage = 2; //int with default 0
 
   final _pageOptions = [
     MessageView(),
@@ -50,6 +50,7 @@ class _MyHomePageState extends State<HomeView> {
         curve: Curves.easeInQuad,
         backgroundColor: Colors.deepPurple,
         items: [
+          //bottom av bar routes
           TabItem(icon: Icons.message, title: 'Message'),
           TabItem(icon: Icons.notifications, title: 'Notifications'),
           TabItem(icon: Icons.add_circle_outline, title: 'Browse'),
