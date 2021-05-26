@@ -3,27 +3,28 @@ import 'package:flutter/material.dart';
 import 'package:ti_boulot/Common/API.dart';
 import 'package:ti_boulot/Common/ApiURL.dart';
 import 'package:ti_boulot/Widgets/Browse/BrowseControllerConstructor.dart';
+import 'package:ti_boulot/Widgets/MyTask/myTaskControllerConstructor.dart';
 
-class TaskWidget extends StatefulWidget {
-  BrowseControllerConstructor data;
-  TaskWidget({this.data});
+class ContentMyTaskView extends StatefulWidget {
+  myTaskControllerConstructor data;
+  ContentMyTaskView({this.data});
   @override
-  _TaskWidgetState createState() => _TaskWidgetState();
+  _ContentMyTaskViewState createState() => _ContentMyTaskViewState();
 }
 
-class _TaskWidgetState extends State<TaskWidget> {
-  String address; //contains converted lat lng to address
+class _ContentMyTaskViewState extends State<ContentMyTaskView> {
+  String convertAddress;
 
-  //function to convert lat lng to address and stores in variable 'address'
-  Future<void> loadAddress() async {
+  //function to convert lat lng to address and stores in variable 'loadConvertedAddress'
+  Future<void> loadConvertedAddress() async {
     String rawAddress = await API().getAddress(
         ApiURL.reverseGeocodingURL, widget.data.lat, widget.data.lng);
-    address = rawAddress;
+    convertAddress = rawAddress;
   }
 
   @override
   Widget build(BuildContext context) {
-    loadAddress(); //function created just above
+    loadConvertedAddress();
 
     return Center(
       child: Column(
@@ -116,11 +117,9 @@ class _TaskWidgetState extends State<TaskWidget> {
                                               textAlign: TextAlign.left,
                                               style: TextStyle(fontSize: 18.0),
                                             ), //Description-database
-
                                             SizedBox(
                                               height: 20.0,
                                             ),
-
                                             Text(
                                               'Budget',
                                               textAlign: TextAlign.left,
@@ -184,7 +183,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                                               height: 8.0,
                                             ),
 
-                                            Text(address), //Address
+                                            Text(convertAddress), //Address
                                           ],
                                         ),
                                       ),

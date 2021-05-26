@@ -46,6 +46,7 @@ class _BrowseViewState extends State<BrowseView> {
     return Scaffold(
       appBar: AppBar(
         actions: [
+          //refresh button
           IconButton(
               onPressed: () {
                 setState(() {
@@ -57,7 +58,7 @@ class _BrowseViewState extends State<BrowseView> {
 
                 loadTasks();
               },
-              icon: Icon(Icons.refresh))
+              icon: Icon(Icons.refresh)) //refresh button
         ],
         backgroundColor: Colors.deepPurple,
         title: Padding(

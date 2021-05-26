@@ -7,11 +7,14 @@ class ApiURL {
   static String reverseGeocodingURL =
       "http://www.mapquestapi.com/geocoding/v1/reverse?key=$reverseGeocodingURLKey";
 
+  //string storing end of paths
   static const String login = 'login';
   static const String register = 'register';
   static const String postTask = 'postTask';
   static const String retrieveTask = 'retrieveTask';
+  static const String getMyTasks = 'getMyTasks';
 
+  //creating paths
   static String getURL(String url) {
     return baseURL + url.toString();
   }

@@ -74,47 +74,48 @@ app.use("/login", function (req, res, next) {
     var password = req.body.password;
 
 
-/* The function below is calling the checkValidLogIn function: 
-
-What the checkValidLogIn does:-  see comments  above the checkValidLogIn far below, not this one.
-
-This function takes as parameters emailAddress and password.
-
-'result' is received from the checkValidLogIn function and contains emailAddress and password.
-
-
-if result = 1 , that is if the result contains the 2 arguments (emailAddress and password):
-
-    getUserID() is called -  see comments of the function far below(not immediate) 
-    then: 
-
-    if:- result=0 that is the result does not contain a stringified User_ID,    
-        - json sent to UI/Flutter 
-            -success false
-            -error message displayed in UI console
-            -data - map form 
-            -msg
-    else:-
-        that is if result =1, 'result' contains a User_ID, 
-            -json is sent to flutter
-            -success true
-            -error message null
-            -data- User_ID
-
-if result = 0, that is the result contains the 2 arguments(emailAddress, password)
-
-     checkValidEmailAddress() is called -  see comments of the function far below(not immediate) 
-
-    if:- result = 1, that is the email correponds,
-       send json: error message password does not match
-
-         result =0, that is email cannot be found in database,
-         send json, error message, account downt exist
-            
-*/
+    /* The function below is calling the checkValidLogIn function: 
+    
+    What the checkValidLogIn does:-  see comments  above the checkValidLogIn far below, not this one.
+    
+    This function takes as parameters emailAddress and password.
+    
+    'result' is received from the checkValidLogIn function and contains emailAddress and password.
+    
+    
+    if result = 1 , that is if the result contains the 2 arguments (emailAddress and password):
+    
+        getUserID() is called -  see comments of the function far below(not immediate) 
+        then: 
+    
+        if:- result=0 that is the result does not contain a stringified User_ID,    
+            - json sent to UI/Flutter 
+                -success false
+                -error message displayed in UI console
+                -data - map form 
+                -msg
+        else:-
+            that is if result =1, 'result' contains a User_ID, 
+                -json is sent to flutter
+                -success true
+                -error message null
+                -data- User_ID
+    
+    if result = 0, that is the result contains the 2 arguments(emailAddress, password)
+    
+         checkValidEmailAddress() is called -  see comments of the function far below(not immediate) 
+    
+        if:- result = 1, that is the email correponds,
+           send json: error message password does not match
+    
+             result =0, that is email cannot be found in database,
+             send json, error message, account downt exist
+                
+    */
 
     checkValidLogIn(emailAddress, password).then(result => {
 
+        console.log(result); //print user_id
 
         if (result == 1) {
 
@@ -277,32 +278,31 @@ app.use("/postTask", function (req, res, next) {
     var displayDate = req.body.displayDate;
     var displayDeadlineDate = req.body.displayDeadlineDate;
 
-   //console.log(User_ID)
+    //console.log(User_ID)
 
 
-        postTaskFunction(User_ID, title, task_description, lat, lng, budget, displayDate, displayDeadlineDate).then(result => {
+    postTaskFunction(User_ID, title, task_description, lat, lng, budget, displayDate, displayDeadlineDate).then(result => {
 
-            if (result == 0) {
-                res.status(200).json({
-                    success: false,
-                    error: "Failed to post task",
-                    data: {},
-                    msg: ""
-                });
-            } else {
-                res.status(200).json({
-                    success: true,
-                    error: "",
-                    data: {
-                        "Posted_data": result,
-                    },
-                    msg: ""
-                });
-            }
+        if (result == 0) {
+            res.status(200).json({
+                success: false,
+                error: "Failed to post task",
+                data: {},
+                msg: ""
+            });
+        } else {
+            res.status(200).json({
+                success: true,
+                error: "",
+                data: {
+                    "Posted_data": result,
+                },
+                msg: ""
+            });
+        }
 
 
-        });
-    
+    });
 
 });
 
@@ -332,12 +332,12 @@ async function postTaskFunction(User_ID, title, task_description, lat, lng, budg
 //---------------------------------retrieveTask----------------------------------------//
 
 
-app.use("/retrieveTask", function (req, res, next)  {    
+app.use("/retrieveTask", function (req, res, next) {
 
 
     retrieveTaskFunction().then(result => {
 
-console.log(result);
+        console.log(result);
 
 
         if (result == 0) {
@@ -358,34 +358,94 @@ console.log(result);
             });
         }
     });
-    
+
 
 });
 
 
-    async function retrieveTaskFunction() { 
+async function retrieveTaskFunction() {
 
-        let sql = "SELECT * FROM task;"
+    let sql = "SELECT * FROM task;"
 
-        console.log(sql);
+    console.log(sql);
 
-        return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
 
-            pool.query(sql, (err, result) => {
-                if (err) {
-                    reject("Error executing the query: " + JSON.stringify(err));
-                    resolve(0);
-                } else {
-                    resolve(result); //result contains an array of json objects
-                }
-            });
-    
+        pool.query(sql, (err, result) => {
+            if (err) {
+                reject("Error executing the query: " + JSON.stringify(err));
+                resolve(0);
+            } else {
+                resolve(result); //result contains an array of json objects
+            }
         });
 
-    }
+    });
 
+}
+
+
+//---------------------------------getMyTasks----------------------------------------//
+
+app.use("/getMyTasks", function (req, res, next) {
+
+
+    var User_ID = req.body.User_ID;
+    console.log(User_ID);
+
+    getMyTasksFunction(User_ID).then(result => {
+
+        console.log(result);
+
+
+        if (result == 0) {
+            res.status(200).json({
+                success: false,
+                error: "Failed to get mytask_data",
+                data: {},
+                msg: ""
+            });
+        } else {
+            res.status(200).json({
+                success: true,
+                error: "",
+                data: {
+                    "mytask_data": result
+                },
+                msg: ""
+            });
+        }
+    });
+});
+
+/* 
+
+Contains query to select all tasks for the user 
+
+returns result json object of all tasks for the logged in user
+
+*/
+
+async function getMyTasksFunction(User_ID) {
+
+    let sql = " SELECT * FROM task WHERE User_ID = '" + User_ID + "';"
+
+    console.log(sql);
+
+    console.log(User_ID);
+
+    return new Promise((resolve, reject) => {
+
+        pool.query(sql, (err, result) => {
+            if (err) {
+                reject("Error executing the query: " + JSON.stringify(err));
+                resolve(0);
+            } else {
+                resolve(result); //result contains an array of json objects (list of myTasks)
+            }
+        });
+    });
+
+}
 
 module.exports = app;
-
-
-
