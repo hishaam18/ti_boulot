@@ -16,11 +16,11 @@ class _LoginViewState extends State<LoginView> {
   LoginController loginController =
       new LoginController(); //creating object to connect to loginController class
 
-  if (response.data['User_Type'] == 'Worker') {
-    //open worker page
-  } else {
-    //open user page
-  }
+  // if (response.data['User_Type'] == 'Worker') {
+  //   //open worker page
+  // } else {
+  //   //open user page
+  // }
 
   @override
   Widget build(BuildContext context) {
