@@ -5,7 +5,6 @@ import 'package:flutter_map/flutter_map.dart';
 import "package:latlong/latlong.dart" as latLng;
 import 'package:ti_boulot/Common/API.dart';
 import 'package:ti_boulot/Common/ApiURL.dart';
-
 import 'package:ti_boulot/Widgets/Browse/BrowseController.dart';
 import 'PostTaskController.dart';
 

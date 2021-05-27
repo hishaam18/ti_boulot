@@ -16,6 +16,12 @@ class _LoginViewState extends State<LoginView> {
   LoginController loginController =
       new LoginController(); //creating object to connect to loginController class
 
+  if (response.data['User_Type'] == 'Worker') {
+    //open worker page
+  } else {
+    //open user page
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -163,11 +169,11 @@ class _LoginViewState extends State<LoginView> {
                     onTap: () {
                       FocusScope.of(context).requestFocus(new FocusNode());
 
-                      //*********************************** to remove below 2 lines **********************************
-                      loginController.emailController.text =
-                          "hishaam@gmail.com";
-                      loginController.passwordController.text = "hishaam1234";
-                      //********************************** to remove above 2 lines ***********************************
+                      // //*********************************** to remove below 2 lines **********************************
+                      // loginController.emailController.text =
+                      //     "hishaam@gmail.com";
+                      // loginController.passwordController.text = "hishaam1234";
+                      // //********************************** to remove above 2 lines ***********************************
 
                       if (loginController.loginKey.currentState.validate()) {
                         loginController.login(

@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:ti_boulot/Common/API.dart';
@@ -18,7 +17,7 @@ class myTaskController {
     size: 50.0,
   ); //loading circle
 
-//Function to get all tasks from backend
+  //Function to get all tasks from backend
   Future<List<Widget>> getMyTasks() async {
     var body = {
       "User_ID": Common.userID,
@@ -61,7 +60,4 @@ class myTaskController {
       //use alert box --> display response.error
     }
   }
-
-  //method to get all responses from specific user_ID
-  // Future<List<Widget>> getMyTasks() async {}
 }

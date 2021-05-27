@@ -21,7 +21,6 @@ app.use(function (req, res, next) {
 }
 );
 
-
 //---------------------------------Register----------------------------------------//
 
 app.use("/register", function (req, res, next) {
@@ -110,7 +109,6 @@ app.use("/login", function (req, res, next) {
     
              result =0, that is email cannot be found in database,
              send json, error message, account downt exist
-                
     */
 
     checkValidLogIn(emailAddress, password).then(result => {
@@ -129,16 +127,29 @@ app.use("/login", function (req, res, next) {
                         msg: ""
                     });
                 } else {
-                    res.status(200).json({
-                        success: true,
-                        error: "",
-                        data: {
-                            "User_ID": result,
-                        },
-                        msg: ""
+
+
+                    getUserType(result).then(result => {
+
+                            res.status(200).json({
+                                success: true,
+                                error: "",
+                                data: result,
+                                msg: ""
+                            });
+
+                        
+
                     });
+
+
                 }
             });
+
+
+
+            //call new method here
+
 
 
         } else if (result == 0) {
@@ -164,10 +175,54 @@ app.use("/login", function (req, res, next) {
             });
         }
 
+
+
+
     });
 
 
 });
+
+
+async function getUserType(User_ID) {
+
+
+    let sqlQuery = "SELECT EXISTS(SELECT * FROM worker WHERE User_ID = '" + User_ID + "') AS result;"
+
+
+    return new Promise((resolve, reject) => {
+        pool.query(sqlQuery, (err, result) => {
+
+            if (err) {
+                reject(JSON.stringify(err));
+            } else {
+                var data = {
+                    "User_ID": User_ID,
+                    "User_Type": result[0].result == 1 ? "Worker" : "User"
+
+             // var x;
+
+            // if (result[0].result == 1) {
+            //     x ="worker";
+            // } else {
+            //     x = "user";
+            // }
+
+
+
+                };
+                resolve(data);
+            }
+        });
+    });
+
+
+}
+
+
+
+
+
 
 
 /* 
@@ -181,7 +236,6 @@ resolve:- transforms  the User_ID from varchar to String and storesit in  result
 'result' is then sent to the function above:- where getUserID function is called in - where checkValidLogIn is called
 
 */
-
 
 //get User_ID
 async function getUserID(emailAddress) {
@@ -447,5 +501,12 @@ async function getMyTasksFunction(User_ID) {
     });
 
 }
+
+
+//--------------------------------------------- Login Worker ----------------------------------------------------//
+
+
+
+
 
 module.exports = app;
