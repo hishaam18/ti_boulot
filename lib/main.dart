@@ -7,6 +7,7 @@ import 'package:ti_boulot/Widgets/SignUp/SignUpView.dart';
 import 'Widgets/Choose_Account/ChooseAccountView.dart';
 import 'Widgets/PostTask/PostTaskView.dart';
 import 'Widgets/Home/HomeView.dart';
+import 'Widgets/WorkerHome/WorkerHomeView.dart';
 
 void main() {
   runApp(MyApp());
@@ -36,6 +37,7 @@ class _MyAppState extends State<MyApp> {
         '/SignUp': (context) => SignUpView(),
         '/PostTask': (context) => PostTaskView(),
         '/Home': (context) => HomeView(),
+        '/WorkerHomeView': (context) => WorkerHomeView(),
       },
     );
   }

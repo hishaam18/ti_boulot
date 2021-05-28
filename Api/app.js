@@ -99,6 +99,14 @@ app.use("/login", function (req, res, next) {
                 -success true
                 -error message null
                 -data- User_ID
+
+       AND
+
+    getUserType() is called -see comments at getUserType() function -- Far below (not immediate)
+
+
+
+
     
     if result = 0, that is the result contains the 2 arguments(emailAddress, password)
     
@@ -117,6 +125,7 @@ app.use("/login", function (req, res, next) {
 
         if (result == 1) {
 
+            //calling getUserID function
             getUserID(emailAddress).then(result => {
 
                 if (result == 0) {
@@ -128,7 +137,7 @@ app.use("/login", function (req, res, next) {
                     });
                 } else {
 
-
+                     //calling getUserType function
                     getUserType(result).then(result => {
 
                             res.status(200).json({
@@ -137,8 +146,6 @@ app.use("/login", function (req, res, next) {
                                 data: result,
                                 msg: ""
                             });
-
-                        
 
                     });
 
@@ -184,11 +191,26 @@ app.use("/login", function (req, res, next) {
 });
 
 
+
+
+/*
+getUserType function 
+
+sqlQuery: if the corresponding User_ID exists in the table worker, (it returns true),
+                                all data from worker table for that particular worker is selected and return as 'result'
+                            
+1) if User_ID doesnt exist,  error is returned
+2) if User_ID exists, the following data is sent as result in method checkLogin, where getUserType method is called
+    a) User_ID
+    b) User_Type
+
+*/
+
+
+
 async function getUserType(User_ID) {
 
-
     let sqlQuery = "SELECT EXISTS(SELECT * FROM worker WHERE User_ID = '" + User_ID + "') AS result;"
-
 
     return new Promise((resolve, reject) => {
         pool.query(sqlQuery, (err, result) => {
@@ -198,17 +220,14 @@ async function getUserType(User_ID) {
             } else {
                 var data = {
                     "User_ID": User_ID,
-                    "User_Type": result[0].result == 1 ? "Worker" : "User"
+                    "User_Type": result[0].result == 1 ? "Worker" : "User"   //ternary operator-- represented below
 
              // var x;
-
-            // if (result[0].result == 1) {
-            //     x ="worker";
+             // if (result[0].result == 1) {
+             //     x ="worker";
             // } else {
             //     x = "user";
             // }
-
-
 
                 };
                 resolve(data);

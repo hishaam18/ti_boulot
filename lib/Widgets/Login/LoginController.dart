@@ -33,14 +33,35 @@ class LoginController {
     //print response
     print(response.success);
 
-    //storing User_ID received from backend response, into static
-    //variable ' userID ' found in common
-    if (response.success == true) {
+    //Load User Home page if login is User
+    if (response.success == true && response.data['User_Type'] == 'User') {
+      //storing User_ID of User received from backend response, into static
+      //variable ' User_ID ' found in common
       print(response.data['User_ID']);
       Common.userID = response.data['User_ID'];
 
-      //navigate to Home page
+      // if (response.data['User_Type'] == 'Worker') {
+      //   //open worker page
+      // } else {
+      //   //open user page
+      // }
+
+      //navigate to User Home page
       Navigator.pushReplacementNamed(context, '/Home'); //NOT allow back
+    }
+
+    //Load Worker Home page if login is User
+    else if (response.success == true &&
+        response.data['User_Type'] == 'Worker') {
+      //storing User_ID of User received from backend response, into static
+      //variable ' User_ID ' found in common
+      print(response.data['User_ID']);
+      Common.userID = response.data['User_ID'];
+
+      //navigate to User Home page
+      Navigator.pushReplacementNamed(
+          context, '/WorkerHomeView'); //NOT allow back
+
     } else {
       print(response.error); //display error msg
 

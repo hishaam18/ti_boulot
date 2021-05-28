@@ -430,10 +430,11 @@ class _SignUpViewState extends State<SignUpView> {
                           signupController.occupationController.text,
                           signupController.experienceController.text,
                         );
-                      }
 
-                      // Navigator.pushNamed(context, '/Login'); //allow back
-                      // Navigator.pushReplacementNamed(context, '/Login'); //NOT allow back
+                        // Navigator.pushNamed(context, '/Login'); //allow back
+                        Navigator.pushReplacementNamed(
+                            context, '/Login'); //NOT allow back
+                      }
                     },
                     child: Card(
                       color: Colors.white60,
