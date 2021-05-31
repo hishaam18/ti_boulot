@@ -13,6 +13,7 @@ class ApiURL {
   static const String postTask = 'postTask';
   static const String retrieveTask = 'retrieveTask';
   static const String getMyTasks = 'getMyTasks';
+  static const String workerRetrieveTask = 'workerRetrieveTask';
 
   //creating paths
   static String getURL(String url) {

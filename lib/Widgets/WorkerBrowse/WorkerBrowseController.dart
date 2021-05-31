@@ -1,17 +1,16 @@
-import 'dart:convert';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:ti_boulot/Common/API.dart';
-import 'package:ti_boulot/Common/Common.dart';
-import 'package:ti_boulot/Common/ResponseType.dart';
 import 'package:ti_boulot/Common/ApiURL.dart';
+import 'package:ti_boulot/Common/ResponseType.dart';
 import 'package:ti_boulot/Widgets/Browse/BrowseControllerConstructor.dart';
 import 'package:ti_boulot/Widgets/Browse/TaskWidget/TaskWidget.dart';
+import 'package:ti_boulot/Widgets/WorkerBrowse/WorkerBrowseConstructor.dart';
 
-/*  *****************    Getting all tasks data from Backend -- retriveTask() in backend   ********************   */
+import 'WorkerTaskWidget/WorkerTaskWidget.dart';
 
-class BrowseController {
+class WorkerBrowseController {
   List<Widget> tasks =
       new List<Widget>(); //creating an iterable/growing list  like arraylist
 
@@ -20,8 +19,7 @@ class BrowseController {
     size: 50.0,
   ); //loading icon
 
-  //Function to get all tasks from backend
-  Future<List<Widget>> retrieveTask() async {
+  Future<List<Widget>> workerRetrieveTask() async {
     var body = {};
 
     //getting response from backend from: (app.use/login)
@@ -42,8 +40,8 @@ class BrowseController {
       for (var task in response.data['task_data']) {
         //getting information from backend retrieveTask(), response.data is the data field from the response and its called task_data
         //task_data contains all
-        columnWidgets.add(TaskWidget(
-          data: BrowseControllerConstructor.fromJson(
+        columnWidgets.add(WorkerTaskWidget(
+          data: WorkerBrowseConstructor.fromJson(
               task), //displaying task_data from json format to normal (see TaskWidget.dart)
         ));
       }
@@ -62,3 +60,5 @@ class BrowseController {
     }
   }
 }
+
+/* WORKERBROWSECONTROLLER IS NOT BEING USED*/
