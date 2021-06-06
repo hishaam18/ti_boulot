@@ -57,7 +57,8 @@ class _WorkerOfferViewState extends State<WorkerOfferView> {
                   children: [
                     SizedBox(height: 30.0),
                     TextFormField(
-                      maxLines: 2,
+                      controller: workerOfferController
+                          .offeringPriceController, // to get variable created in controller
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
@@ -89,7 +90,8 @@ class _WorkerOfferViewState extends State<WorkerOfferView> {
                     ),
                     SizedBox(height: 30.0),
                     TextFormField(
-                        maxLines: 2,
+                        controller: workerOfferController
+                            .commentController, //to get variable created in controller
                         style: TextStyle(
                           fontSize: 16.0,
                           fontWeight: FontWeight.bold,
@@ -119,7 +121,7 @@ class _WorkerOfferViewState extends State<WorkerOfferView> {
                         Container(
                           child: Text(
                             workerDateChosenCheck
-                                ? 'Available as from: ' +
+                                ? 'Potential starting time: ' +
                                     workerOfferController.workerDisplayDate
                                 : 'I can start on: ',
                             style: TextStyle(
@@ -220,6 +222,13 @@ class _WorkerOfferViewState extends State<WorkerOfferView> {
                             padding: EdgeInsets.all(10.0),
                             splashColor: Colors.white70,
                             onPressed: () {
+                              workerOfferController.sendOffer(
+                                workerOfferController
+                                    .offeringPriceController.text,
+                                workerOfferController.commentController.text,
+                                workerOfferController.workerDisplayDate,
+                                workerOfferController.workerDisplayDeadlineDate,
+                              );
                               print('Button to post on database');
                             }),
                         SizedBox(

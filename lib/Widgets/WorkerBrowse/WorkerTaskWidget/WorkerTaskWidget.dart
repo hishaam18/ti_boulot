@@ -196,7 +196,7 @@ class _WorkerTaskWidgetState extends State<WorkerTaskWidget> {
                                               children: [
                                                 RaisedButton(
                                                     child: Text(
-                                                      'Make an offer',
+                                                      'Make offer',
                                                       style: TextStyle(
                                                           fontSize: 13),
                                                     ),

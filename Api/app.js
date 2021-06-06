@@ -522,7 +522,76 @@ async function getMyTasksFunction(User_ID) {
 }
 
 
-//--------------------------------------------- Login Worker ----------------------------------------------------//
+//--------------------------------------------- worker Send Offer ----------------------------------------------------//
+
+
+app.use("/workerSendOffer", function (req, res, next) {
+
+
+
+    console.log(req.body);
+
+
+    var User_ID = req.body.User_ID;
+    var offeringPrice = req.body.offeringPrice;
+    var comment =req.body.comment;
+    var workerDisplayDate = req.body.workerDisplayDate;
+    var workerDeadlineDate = req.body.workerDeadlineDate;
+
+
+
+
+
+    
+    sendOfferFunction(User_ID, offeringPrice, comment, workerDisplayDate, workerDeadlineDate).then(result => {
+
+        if (result == 0) {
+            res.status(200).json({
+                success: false,
+                error: "Failed to send offer",
+                data: {},
+                msg: ""
+            });
+        } else {
+            res.status(200).json({
+                success: true,
+                error: "",
+                data: {
+                    "offer_data": result,
+                },
+                msg: ""
+            });
+        }
+
+
+    });
+
+});
+
+
+
+    async function sendOfferFunction (User_ID, offeringPrice, comment,  workerDisplayDate, workerDeadlineDate) {
+
+        let sqlQuery = "INSERT INTO offer VALUES (Default,'" + User_ID + "','" + offeringPrice + "','" + comment + "','" + workerDisplayDate + "','" + workerDeadlineDate + "');"
+
+        console.log(sqlQuery);
+
+        return new Promise((resolve, reject) => {
+    
+            pool.query(sqlQuery, (err, result) => {
+                if (err) {
+                    console.log(err);
+                    resolve(err.code);
+                } else {
+                    console.log(result); // result = all the data in offer
+                    resolve(1);
+                }
+            })
+        });
+
+
+    }
+
 
 
 
