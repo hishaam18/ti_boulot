@@ -206,9 +206,13 @@ class _WorkerTaskWidgetState extends State<WorkerTaskWidget> {
                                                         EdgeInsets.all(5.0),
                                                     splashColor: Colors.white70,
                                                     onPressed: () {
+                                                      Navigator.pushNamed(
+                                                          context,
+                                                          '/WorkerOfferView');
+
                                                       print(
                                                           'Hello checking button');
-                                                    }),
+                                                    }), //make offer button
                                                 SizedBox(
                                                   width: 25,
                                                 ),

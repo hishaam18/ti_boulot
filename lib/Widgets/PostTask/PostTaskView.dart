@@ -134,7 +134,9 @@ class _PostTaskViewState extends State<PostTaskView> {
                               children: [
                                 SizedBox(height: 20.0),
                                 TextFormField(
-                                  maxLines: 2,
+                                  inputFormatters: [
+                                    LengthLimitingTextInputFormatter(50),
+                                  ],
                                   controller: postTaskViewController
                                       .taskTitleController,
                                   style: TextStyle(
@@ -143,12 +145,12 @@ class _PostTaskViewState extends State<PostTaskView> {
                                     fontFamily: 'StemRegular',
                                   ),
                                   decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.only(top: 50.0),
+                                    contentPadding: EdgeInsets.all(20.0),
                                     prefixIcon: Padding(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 10.0),
                                     ),
-                                    helperText: 'Max 10 Words',
+                                    helperText: '50 Letters Limit',
                                     helperStyle: TextStyle(
                                       fontSize: 12.0,
                                       fontFamily: 'StemRegular',
@@ -179,7 +181,7 @@ class _PostTaskViewState extends State<PostTaskView> {
                                     fontFamily: 'StemRegular',
                                   ),
                                   decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.only(top: 50.0),
+                                    contentPadding: EdgeInsets.all(20.0),
                                     prefixIcon: Padding(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 15.0),

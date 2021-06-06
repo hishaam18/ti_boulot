@@ -4,10 +4,12 @@ import 'package:ti_boulot/Widgets/Browse/BrowseController.dart';
 import 'package:ti_boulot/Widgets/Home/HomeView.dart';
 import 'package:ti_boulot/Widgets/Login/LoginView.dart';
 import 'package:ti_boulot/Widgets/SignUp/SignUpView.dart';
+import 'package:ti_boulot/Widgets/WorkerOffer/WorkerOfferView.dart';
 import 'Widgets/Choose_Account/ChooseAccountView.dart';
 import 'Widgets/PostTask/PostTaskView.dart';
 import 'Widgets/Home/HomeView.dart';
 import 'Widgets/WorkerHome/WorkerHomeView.dart';
+import 'Widgets/WorkerOffer/WorkerOfferView.dart';
 
 void main() {
   runApp(MyApp());
@@ -38,6 +40,7 @@ class _MyAppState extends State<MyApp> {
         '/PostTask': (context) => PostTaskView(),
         '/Home': (context) => HomeView(),
         '/WorkerHomeView': (context) => WorkerHomeView(),
+        '/WorkerOfferView': (context) => WorkerOfferView(),
       },
     );
   }

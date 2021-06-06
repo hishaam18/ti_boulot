@@ -16,7 +16,7 @@ class PostTaskViewController {
   TextEditingController taskTitleController = new TextEditingController();
   TextEditingController taskDescriptionController = new TextEditingController();
 
-  // TextEditingController taskLocationController = new TextEditingController();
+  //TextEditingController taskLocationController = new TextEditingController();
 
   String lat; //latititude
   String lng; //longitude
