@@ -10,8 +10,8 @@ class WorkerOfferController {
   TextEditingController offeringPriceController = new TextEditingController();
   TextEditingController commentController = new TextEditingController();
 
-  String workerDisplayDate; //availability - creating a global variable
-  String workerDisplayDeadlineDate;
+  String workerDisplayDate = ""; //availability - creating a global variable
+  String workerDisplayDeadlineDate = "";
   DateTime selectedDate = DateTime.now();
 
   Future<void> sendOffer(String offeringPrice, comment, workerDisplaydate,

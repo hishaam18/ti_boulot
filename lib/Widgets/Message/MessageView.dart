@@ -1,7 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ti_boulot/Widgets/Message/ChatPage.dart';
 
-class MessageView extends StatelessWidget {
+class MessageView extends StatefulWidget {
+  @override
+  _MessageViewState createState() => _MessageViewState();
+}
+
+class _MessageViewState extends State<MessageView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,11 +23,13 @@ class MessageView extends StatelessWidget {
         automaticallyImplyLeading: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: () =>
-              Navigator.pop(context, false), // returns to previous page
+          onPressed: () => Navigator.pushNamed(
+              context, '/WorkerHomeView'), // returns to previous page
+
           color: Colors.white,
         ),
       ),
+      body: ChatPage(),
     );
   }
 }

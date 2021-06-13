@@ -48,15 +48,14 @@ class _BrowseViewState extends State<BrowseView> {
         actions: [
           //refresh button
           IconButton(
-              onPressed: () {
+              onPressed: () async {
                 setState(() {
                   browseController.bodyContent = SpinKitRotatingCircle(
                     color: Colors.black,
                     size: 50.0,
                   );
                 });
-
-                loadTasks();
+                await loadTasks();
               },
               icon: Icon(Icons.refresh)) //refresh button
         ],

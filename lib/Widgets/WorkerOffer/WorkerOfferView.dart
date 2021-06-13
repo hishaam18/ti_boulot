@@ -92,6 +92,7 @@ class _WorkerOfferViewState extends State<WorkerOfferView> {
                     TextFormField(
                         controller: workerOfferController
                             .commentController, //to get variable created in controller
+                        maxLines: 6,
                         style: TextStyle(
                           fontSize: 16.0,
                           fontWeight: FontWeight.bold,
@@ -108,7 +109,7 @@ class _WorkerOfferViewState extends State<WorkerOfferView> {
                             fontSize: 18.0,
                             fontFamily: 'StemRegular',
                           ),
-                          hintText: '',
+                          hintText: 'Add your work details here',
                           border: new OutlineInputBorder(
                             borderRadius: const BorderRadius.all(
                               const Radius.circular(15.0),
@@ -121,10 +122,11 @@ class _WorkerOfferViewState extends State<WorkerOfferView> {
                         Container(
                           child: Text(
                             workerDateChosenCheck
-                                ? 'Potential starting time: ' +
-                                    workerOfferController.workerDisplayDate
-                                : 'I can start on: ',
+                                ? 'Potential starting time: '
+                                : 'I can start on: ' +
+                                    workerOfferController.workerDisplayDate,
                             style: TextStyle(
+                              color: Colors.black,
                               fontSize: 18.0,
                               fontFamily: 'StemRegular',
                               fontWeight: FontWeight.bold,
@@ -177,7 +179,7 @@ class _WorkerOfferViewState extends State<WorkerOfferView> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 8.0),
+                        Spacer(),
                         Container(
                           height: 50.0,
                           color: Color(0xFF673ab7),
@@ -229,7 +231,8 @@ class _WorkerOfferViewState extends State<WorkerOfferView> {
                                 workerOfferController.workerDisplayDate,
                                 workerOfferController.workerDisplayDeadlineDate,
                               );
-                              print('Button to post on database');
+
+                              Navigator.pushNamed(context, '/MessageView');
                             }),
                         SizedBox(
                           width: 20.0,

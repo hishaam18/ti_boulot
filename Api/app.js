@@ -538,11 +538,6 @@ app.use("/workerSendOffer", function (req, res, next) {
     var workerDisplayDate = req.body.workerDisplayDate;
     var workerDeadlineDate = req.body.workerDeadlineDate;
 
-
-
-
-
-    
     sendOfferFunction(User_ID, offeringPrice, comment, workerDisplayDate, workerDeadlineDate).then(result => {
 
         if (result == 0) {
@@ -569,7 +564,6 @@ app.use("/workerSendOffer", function (req, res, next) {
 });
 
 
-
     async function sendOfferFunction (User_ID, offeringPrice, comment,  workerDisplayDate, workerDeadlineDate) {
 
         let sqlQuery = "INSERT INTO offer VALUES (Default,'" + User_ID + "','" + offeringPrice + "','" + comment + "','" + workerDisplayDate + "','" + workerDeadlineDate + "');"
@@ -589,12 +583,7 @@ app.use("/workerSendOffer", function (req, res, next) {
             })
         });
 
-
     }
-
-
-
-
 
 
 module.exports = app;
