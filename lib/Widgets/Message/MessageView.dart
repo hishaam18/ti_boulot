@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ti_boulot/Widgets/Message/ChatPage.dart';
 
+//This is the main page for messages
+
 class MessageView extends StatefulWidget {
   @override
   _MessageViewState createState() => _MessageViewState();

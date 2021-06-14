@@ -20,6 +20,7 @@ class ConversationList extends StatefulWidget {
 }
 
 class _ConversationListState extends State<ConversationList> {
+  //list of avatar pictures which will be used at random and assigned to users
   List<String> avatars = [
     'avatar1.png',
     'avatar2.png',
@@ -36,6 +37,7 @@ class _ConversationListState extends State<ConversationList> {
   Widget build(BuildContext context) {
     Random random = new Random();
     return GestureDetector(
+      //on pressing on a user in the Conversationlist page
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return ChatDetailPage();
@@ -51,6 +53,7 @@ class _ConversationListState extends State<ConversationList> {
                   child: Row(
                     children: <Widget>[
                       CircleAvatar(
+                        //taking random pictures from the avatar list and assigning to users
                         backgroundImage: ExactAssetImage(
                             "images/avatars/${avatars[random.nextInt(avatars.length)]}"),
                         minRadius: 30,
