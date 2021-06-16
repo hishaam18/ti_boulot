@@ -59,8 +59,6 @@ class DateAndTime {
   }
 
   static DateTime sqlToFlutterDate(String date) {
-    date.replaceAll("T", " ");
-    date.replaceAll("Z", "");
     DateTime newDate = DateTime.parse(date);
     return newDate;
   }
@@ -72,7 +70,7 @@ class DateAndTime {
       return false;
   }
 
-  String getTimeFromTimestamp(String timeStamp) {
+  static String getTimeFromTimestamp(String timeStamp) {
     String time = timeStamp[11] +
         timeStamp[12] +
         timeStamp[13] +
@@ -81,7 +79,7 @@ class DateAndTime {
     return time;
   }
 
-  String getDateFromTimestamp(String timeStamp) {
+  static String getDateFromTimestamp(String timeStamp) {
     String dayString = timeStamp[8] + timeStamp[9];
     String monthString = timeStamp[5] + timeStamp[6];
     String yearString =

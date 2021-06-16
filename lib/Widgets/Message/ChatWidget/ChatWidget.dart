@@ -75,7 +75,7 @@ class _ChatWidgetState extends State<ChatWidget> {
                       height: 10.0,
                     ),
                     Text(
-                      "${widget.data.timestamp.hour}:${widget.data.timestamp.minute} on ${widget.data.timestamp.day} ${Common.months[widget.data.timestamp.month - 1]} ${widget.data.timestamp.year}",
+                      "${DateAndTime.getTimeFromTimestamp(widget.data.timestamp.toString())} on ${DateAndTime.getDateFromTimestamp(widget.data.timestamp.toString())}",
                       style: TextStyle(
                           fontSize: 16.0, fontWeight: FontWeight.w500),
                     )

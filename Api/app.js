@@ -813,9 +813,10 @@ async function addToMessage(conversationID, senderID, receiverID, message, timeS
 app.use("/getChatListForUser", function (req, res, next) {
 
     var User_ID = req.body.User_ID;
+    var timeZoneOffset = req.body.timeZoneOffset;
 
 
-    getChatListForUser(User_ID).then(result => {
+    getChatListForUser(User_ID, timeZoneOffset).then(result => {
 
         if (result == -1) {
             res.status(200).json({
@@ -843,9 +844,9 @@ app.use("/getChatListForUser", function (req, res, next) {
 });
 
 
-async function getChatListForUser(User_ID) {
+async function getChatListForUser(User_ID, timeZoneOffset) {
 
-    let sql = "SELECT user.User_ID, user.First_Name, user.Last_Name, convo.Conversation_Id, convo.Timestamp FROM user INNER JOIN conversation AS convo on convo.Recipient_One = user.User_ID WHERE convo.Recipient_Two = '"+ User_ID+"' UNION SELECT user.User_ID, user.First_Name, user.Last_Name, convo.Conversation_Id, convo.Timestamp FROM user INNER JOIN conversation AS convo on convo.Recipient_Two = user.User_ID WHERE convo.Recipient_One = '"+ User_ID+"';";
+    let sql = "SELECT user.User_ID, user.First_Name, user.Last_Name, convo.Conversation_Id, ADDTIME(convo.Timestamp, '"+ timeZoneOffset+"') AS Timestamp FROM user INNER JOIN conversation AS convo on convo.Recipient_One = user.User_ID WHERE convo.Recipient_Two = '"+User_ID+"' UNION SELECT user.User_ID, user.First_Name, user.Last_Name, convo.Conversation_Id,  ADDTIME(convo.Timestamp, '"+timeZoneOffset+"') AS Timestamp FROM user INNER JOIN conversation AS convo on convo.Recipient_Two = user.User_ID WHERE convo.Recipient_One = '"+User_ID+"';";
 
     // console.log(sql);
 
