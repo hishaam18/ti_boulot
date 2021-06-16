@@ -39,7 +39,7 @@ class myTaskController {
 
       //For-loop
       for (var task in response.data['mytask_data']) {
-        //getting information from backend retrieveTask(), response.data is the data field from the response and its called task_data
+        //getting information from backend retrieveTask(), response.data is the data field from the http response and its called task_data
         //task_data contains all
         columnWidgets.add(ContentMyTaskView(
           data: myTaskControllerConstructor.fromJson(

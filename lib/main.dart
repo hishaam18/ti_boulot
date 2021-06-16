@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ti_boulot/Common/ApiURL.dart';
+import 'package:ti_boulot/Common/Common.dart';
 import 'package:ti_boulot/Widgets/Browse/BrowseController.dart';
 import 'package:ti_boulot/Widgets/Home/HomeView.dart';
 import 'package:ti_boulot/Widgets/Login/LoginView.dart';

@@ -14,17 +14,24 @@ class WorkerOfferController {
   String workerDisplayDeadlineDate = "";
   DateTime selectedDate = DateTime.now();
 
-  Future<void> sendOffer(String offeringPrice, comment, workerDisplaydate,
-      workerDeadlineDate) async {
+  Future<void> sendOffer(int taskID, int taskUserId, String offeringPrice,
+      comment, workerDisplaydate, workerDeadlineDate) async {
+    String timeStamp = DateAndTime.flutterToSqlDate(DateTime.now());
+
     var body = {
-      "User_ID": Common.userID,
+      "user_ID": Common.userID,
+      "task_ID": taskID.toString(),
+      "task_User_ID": taskUserId.toString(),
       "offeringPrice": offeringPrice,
       "comment": comment,
       "workerDisplayDate": workerDisplayDate,
       "workerDeadlineDate": workerDisplayDeadlineDate,
+      "timeStamp": timeStamp
     };
 
     ResponseType response =
         await API().post(ApiURL.getURL(ApiURL.workerSendOffer), body);
+
+    if (response.success) {}
   }
 }

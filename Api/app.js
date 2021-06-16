@@ -25,7 +25,7 @@ app.use(function (req, res, next) {
 
 app.use("/register", function (req, res, next) {
 
-    console.log(req.body);
+    // console.log(req.body);
 
     var User_ID = req.body.User_ID;
     var firstName = req.body.firstName;
@@ -47,16 +47,16 @@ async function registerUser(firstName, lastName, emailAddress, location, passwor
 
     let sql = "INSERT INTO user VALUES (Default ,'" + firstName + "','" + lastName + "','" + emailAddress + "','" + location + "','" + password + "','" + accountType + "', 'null' ); SET @last_id =  LAST_INSERT_ID(); INSERT INTO worker VALUES (DEFAULT, @last_id ,'" + occupation + "','" + experience + "');"
 
-    console.log(sql);
+    // console.log(sql);
 
     return new Promise((resolve, reject) => {
 
         pool.query(sql, (err, result) => {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 resolve(err.code);
             } else {
-                console.log(result);
+                // console.log(result);
                 resolve(1);
             }
         })
@@ -121,7 +121,7 @@ app.use("/login", function (req, res, next) {
 
     checkValidLogIn(emailAddress, password).then(result => {
 
-        console.log(result); //print user_id
+        // console.log(result); //print user_id
 
         if (result == 1) {
 
@@ -137,15 +137,15 @@ app.use("/login", function (req, res, next) {
                     });
                 } else {
 
-                     //calling getUserType function
+                    //calling getUserType function
                     getUserType(result).then(result => {
 
-                            res.status(200).json({
-                                success: true,
-                                error: "",
-                                data: result,
-                                msg: ""
-                            });
+                        res.status(200).json({
+                            success: true,
+                            error: "",
+                            data: result,
+                            msg: ""
+                        });
 
                     });
 
@@ -222,12 +222,12 @@ async function getUserType(User_ID) {
                     "User_ID": User_ID,
                     "User_Type": result[0].result == 1 ? "Worker" : "User"   //ternary operator-- represented below
 
-             // var x;
-             // if (result[0].result == 1) {
-             //     x ="worker";
-            // } else {
-            //     x = "user";
-            // }
+                    // var x;
+                    // if (result[0].result == 1) {
+                    //     x ="worker";
+                    // } else {
+                    //     x = "user";
+                    // }
 
                 };
                 resolve(data);
@@ -339,7 +339,7 @@ async function checkValidEmailAddress(emailAddress) {
 
 app.use("/postTask", function (req, res, next) {
 
-    console.log(req.body);
+    // console.log(req.body);
 
     var task_ID = req.body.task_ID;
     var User_ID = req.body.User_ID;
@@ -383,16 +383,16 @@ async function postTaskFunction(User_ID, title, task_description, lat, lng, budg
 
     let sql = "INSERT INTO task VALUES (Default ,'" + User_ID + "','" + title + "','" + task_description + "','" + lat + "', '" + lng + "','" + budget + "','" + displayDate + "','" + displayDeadlineDate + "');"
 
-    console.log(sql);
+    // console.log(sql);
 
     return new Promise((resolve, reject) => {
 
         pool.query(sql, (err, result) => {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 resolve(err.code);
             } else {
-                console.log(result); // result = all the data posted
+                // console.log(result); // result = all the data posted
                 resolve(1);
             }
         })
@@ -410,7 +410,7 @@ app.use("/retrieveTask", function (req, res, next) {
 
     retrieveTaskFunction().then(result => {
 
-        console.log(result);
+        // console.log(result);
 
 
         if (result == 0) {
@@ -440,7 +440,7 @@ async function retrieveTaskFunction() {
 
     let sql = "SELECT * FROM task;"
 
-    console.log(sql);
+    // console.log(sql);
 
     return new Promise((resolve, reject) => {
 
@@ -464,11 +464,11 @@ app.use("/getMyTasks", function (req, res, next) {
 
 
     var User_ID = req.body.User_ID;
-    console.log(User_ID);
+    // console.log(User_ID);
 
     getMyTasksFunction(User_ID).then(result => {
 
-        console.log(result);
+        // console.log(result);
 
 
         if (result == 0) {
@@ -503,9 +503,9 @@ async function getMyTasksFunction(User_ID) {
 
     let sql = " SELECT * FROM task WHERE User_ID = '" + User_ID + "';"
 
-    console.log(sql);
+    // console.log(sql);
 
-    console.log(User_ID);
+    // console.log(User_ID);
 
     return new Promise((resolve, reject) => {
 
@@ -529,16 +529,19 @@ app.use("/workerSendOffer", function (req, res, next) {
 
 
 
-    console.log(req.body);
+    // console.log(req.body);
 
 
-    var User_ID = req.body.User_ID;
+    var user_ID = req.body.user_ID;
+    var task_ID = req.body.task_ID;
+    var taskUserID = req.body.task_User_ID;
     var offeringPrice = req.body.offeringPrice;
-    var comment =req.body.comment;
+    var comment = req.body.comment;
     var workerDisplayDate = req.body.workerDisplayDate;
     var workerDeadlineDate = req.body.workerDeadlineDate;
+    var timeStamp = req.body.timeStamp;
 
-    sendOfferFunction(User_ID, offeringPrice, comment, workerDisplayDate, workerDeadlineDate).then(result => {
+    sendOfferFunction(user_ID, task_ID, offeringPrice, comment, workerDisplayDate, workerDeadlineDate).then(result => {
 
         if (result == 0) {
             res.status(200).json({
@@ -548,14 +551,119 @@ app.use("/workerSendOffer", function (req, res, next) {
                 msg: ""
             });
         } else {
-            res.status(200).json({
-                success: true,
-                error: "",
-                data: {
-                    "offer_data": result,
-                },
-                msg: ""
+
+            getConversation(user_ID, taskUserID).then(result => {
+
+                if (result == -1) {
+                    res.status(200).json({
+                        success: false,
+                        error: "Failed to get conversation",
+                        data: {},
+                        msg: ""
+                    });
+                }
+                else if (result == 0) {
+                    addToConversation(user_ID, taskUserID, timeStamp).then(result => {
+
+                        if (result == 0) {
+                            res.status(200).json({
+                                success: false,
+                                error: "Failed to add to conversation table",
+                                data: {},
+                                msg: ""
+                            });
+                        } else {
+                            getConversationAndName(user_ID, taskUserID, task_ID).then(result => {
+
+
+                                if (result == 0) {
+                                    res.status(200).json({
+                                        success: false,
+                                        error: "Failed to update conversation table",
+                                        data: {},
+                                        msg: ""
+                                    });
+                                } else {
+                                    addToMessage(result['conversationID'], user_ID, taskUserID, result['firstName'] + " " + result['lastName'] + " has offered to work for the task " + result['taskName'] + " at Rs" + offeringPrice, timeStamp).then(result => {
+                                        if (result == 0) {
+                                            res.status(200).json({
+                                                success: false,
+                                                error: "Failed to add to message table",
+                                                data: {},
+                                                msg: ""
+                                            });
+                                        } else {
+                                            res.status(200).json({
+                                                success: true,
+                                                error: "Failed to send offer",
+                                                data: {},
+                                                msg: ""
+                                            });
+                                        }
+                                    });
+                                }
+
+
+                            });
+                        }
+
+                    });
+                } else {
+                    updateConversation(result, timeStamp).then(result => {
+
+                        if (result == 0) {
+                            res.status(200).json({
+                                success: false,
+                                error: "Failed to update conversation table",
+                                data: {},
+                                msg: ""
+                            });
+                        } else {
+
+                            getConversationAndName(user_ID, taskUserID, task_ID).then(result => {
+
+
+                                if (result == 0) {
+                                    res.status(200).json({
+                                        success: false,
+                                        error: "Failed to update conversation table",
+                                        data: {},
+                                        msg: ""
+                                    });
+                                } else {
+                                    addToMessage(result['conversationID'], user_ID, taskUserID, result['firstName'] + " " + result['lastName'] + " has offered to work for the task " + result['taskName'] + " at Rs" + offeringPrice, timeStamp).then(result => {
+                                        if (result == 0) {
+                                            res.status(200).json({
+                                                success: false,
+                                                error: "Failed to add to message table",
+                                                data: {},
+                                                msg: ""
+                                            });
+                                        } else {
+                                            res.status(200).json({
+                                                success: true,
+                                                error: "Failed to send offer",
+                                                data: {},
+                                                msg: ""
+                                            });
+                                        }
+                                    });
+                                }
+
+
+                            });
+
+
+                        }
+
+
+
+                    });
+                }
             });
+
+
+
         }
 
 
@@ -564,26 +672,300 @@ app.use("/workerSendOffer", function (req, res, next) {
 });
 
 
-    async function sendOfferFunction (User_ID, offeringPrice, comment,  workerDisplayDate, workerDeadlineDate) {
+async function sendOfferFunction(User_ID, task_ID, offeringPrice, comment, workerDisplayDate, workerDeadlineDate) {
 
-        let sqlQuery = "INSERT INTO offer VALUES (Default,'" + User_ID + "','" + offeringPrice + "','" + comment + "','" + workerDisplayDate + "','" + workerDeadlineDate + "');"
+    let sqlQuery = "INSERT INTO offer VALUES (Default,'" + User_ID + "','" + task_ID + "','" + offeringPrice + "','" + comment + "','" + workerDisplayDate + "','" + workerDeadlineDate + "');"
 
-        console.log(sqlQuery);
+    // console.log(sqlQuery);
 
-        return new Promise((resolve, reject) => {
-    
-            pool.query(sqlQuery, (err, result) => {
-                if (err) {
-                    console.log(err);
-                    resolve(err.code);
+    return new Promise((resolve, reject) => {
+
+        pool.query(sqlQuery, (err, result) => {
+            if (err) {
+                // console.log(err);
+                resolve(err.code);
+            } else {
+                // console.log(result); // result = all the data in offer
+                resolve(1);
+            }
+        })
+    });
+
+}
+
+async function getConversation(user_ID, taskUserID) {
+
+    let sqlQuery = "SELECT * FROM Conversation WHERE (Recipient_One = '" + user_ID + "' AND Recipient_Two = '" + taskUserID + "') OR (Recipient_One = '" + taskUserID + "' AND Recipient_Two = '" + user_ID + "');"
+
+    // console.log(sqlQuery);
+
+    return new Promise((resolve, reject) => {
+
+        pool.query(sqlQuery, (err, result) => {
+            if (err) {
+                // console.log(err);
+                resolve(-1);
+            } else {
+                if (result.length == 0) {
+                    resolve(0);
                 } else {
-                    console.log(result); // result = all the data in offer
-                    resolve(1);
+                    //  console.log(result[0]['Conversation_Id']); // result = all the data in offer
+                    resolve(result[0]['Conversation_Id']);
                 }
-            })
+
+            }
+        })
+    });
+
+}
+
+async function getConversationAndName(user_ID, taskUserID, task_ID) {
+
+    let sqlQuery = "SELECT (SELECT Conversation_ID FROM Conversation WHERE (Recipient_One = '" + user_ID + "' AND Recipient_Two = '" + taskUserID + "') OR (Recipient_One = '" + taskUserID + "' AND Recipient_Two = '" + user_ID + "'))  as conversationID, (SELECT First_Name FROM User WHERE User_ID = '" + user_ID + "' )  as firstName , (SELECT Last_Name FROM User WHERE User_ID = '" + user_ID + "')  as lastName, (SELECT Title FROM Task WHERE Task_ID = '" + task_ID + "')  as taskName;"
+
+    // console.log(sqlQuery);
+
+    return new Promise((resolve, reject) => {
+
+        pool.query(sqlQuery, (err, result) => {
+            if (err) {
+                // console.log(err);
+                resolve(err.code);
+            } else {
+                if (result.length == 0) {
+                    resolve(0);
+                } else {
+                    //  console.log(result[0]); // result = all the data in offer
+                    resolve(result[0]);
+                }
+
+            }
+        })
+    });
+
+}
+
+async function updateConversation(conversationID, timeStamp) {
+
+    let sqlQuery = "UPDATE Conversation SET Timestamp = '" + timeStamp + "' WHERE Conversation_ID = '" + conversationID + "';"
+
+    // console.log(sqlQuery);
+
+    return new Promise((resolve, reject) => {
+
+        pool.query(sqlQuery, (err, result) => {
+            if (err) {
+                // console.log(err);
+                resolve(0);
+            } else {
+                // console.log(result); // result = all the data in offer
+                resolve(1);
+            }
+        })
+    });
+
+}
+
+async function addToConversation(recipientOne, recipientTwo, timeStamp) {
+
+    let sqlQuery = "INSERT INTO Conversation VALUES (Default, '" + recipientOne + "', '" + recipientTwo + "', '" + timeStamp + "');"
+
+    // console.log(sqlQuery);
+
+    return new Promise((resolve, reject) => {
+
+        pool.query(sqlQuery, (err, result) => {
+            if (err) {
+                // console.log(err);
+                resolve(0);
+            } else {
+                // console.log(result); // result = all the data in offer
+                resolve(1);
+            }
+        })
+    });
+
+}
+
+async function addToMessage(conversationID, senderID, receiverID, message, timeStamp) {
+
+    let sqlQuery = "INSERT INTO Message VALUES(Default, '" + conversationID + "', '" + senderID + "', '" + receiverID + "', '" + message + "', '" + timeStamp + "');"
+
+    // console.log(sqlQuery);
+
+    return new Promise((resolve, reject) => {
+
+        pool.query(sqlQuery, (err, result) => {
+            if (err) {
+                // console.log(err);
+                resolve(0);
+            } else {
+                // console.log(result); // result = all the data in offer
+                resolve(1);
+            }
+        })
+    });
+
+}
+
+//--------------------------------------------- GET CHAT LIST ----------------------------------------------------//
+
+app.use("/getChatListForUser", function (req, res, next) {
+
+    var User_ID = req.body.User_ID;
+
+
+    getChatListForUser(User_ID).then(result => {
+
+        if (result == -1) {
+            res.status(200).json({
+                success: false,
+                error: "Failed to get User details",
+                data: {},
+                msg: ""
+            });
+        } else {
+
+
+            res.status(200).json({
+                success: true,
+                error: "Failed to get User details",
+                data: result,
+                msg: ""
+            });
+
+
+
+        }
+
+    });
+
+});
+
+
+async function getChatListForUser(User_ID) {
+
+    let sql = "SELECT user.User_ID, user.First_Name, user.Last_Name, convo.Conversation_Id, convo.Timestamp FROM user INNER JOIN conversation AS convo on convo.Recipient_One = user.User_ID WHERE convo.Recipient_Two = '"+ User_ID+"' UNION SELECT user.User_ID, user.First_Name, user.Last_Name, convo.Conversation_Id, convo.Timestamp FROM user INNER JOIN conversation AS convo on convo.Recipient_Two = user.User_ID WHERE convo.Recipient_One = '"+ User_ID+"';";
+
+    // console.log(sql);
+
+    // console.log(User_ID);
+
+    return new Promise((resolve, reject) => {
+
+        pool.query(sql, (err, result) => {
+            if (err) {
+                reject("Error executing the query: " + JSON.stringify(err));
+                resolve(-1);
+            } else {
+                // console.log(result)
+                resolve(result); //result contains an array of json objects (firstname and lastname of user)
+            }
+        });
+    });
+
+
+};
+
+
+
+//--------------------------------------------- MESSAGING ----------------------------------------------------//
+
+app.use("/getUserDetails", function (req, res, next) {
+
+    var User_ID = req.body.User_ID;
+
+
+    getUserDetailsFunction(User_ID).then(result => {
+
+        if (result == 0) {
+            res.status(200).json({
+                success: false,
+                error: "Failed to get User details",
+                data: {},
+                msg: ""
+            });
+        } else {
+            res.status(200).json({
+                success: true,
+                error: "",
+                data: {
+                    "userDetails_data": result,
+                },
+                msg: ""
+            });
+        }
+
+    });
+
+});
+
+
+async function getUserDetailsFunction(User_ID) {
+
+    let sql = " SELECT First_Name, Last_Name FROM user WHERE User_ID = '" + User_ID + "';"
+
+    // console.log(sql);
+
+    // console.log(User_ID);
+
+    return new Promise((resolve, reject) => {
+
+        pool.query(sql, (err, result) => {
+            if (err) {
+                reject("Error executing the query: " + JSON.stringify(err));
+                resolve(0);
+            } else {
+                resolve(result); //result contains an array of json objects (firstname and lastname of user)
+            }
+        });
+    });
+
+
+};
+
+/* -------------------------------- get chat list ----------------------*/
+
+app.use("/getChatUsers", function (req, res, next) {
+
+    getChatUsers(req.body.id).then(result => {
+        if (result == 0) {
+            res.status(200).json({
+                success: false,
+                error: "",
+                data: {},
+                msg: ""
+            });
+        } else {
+            res.status(200).json({
+                success: true,
+                error: "",
+                data: result,
+                msg: ""
+            });
+        }
+    });
+
+});
+
+async function getChatUsers(id) {
+    let sqlQuery = "SELECT DISTINCT From_User_ID AS ID FROM message WHERE To_User_ID = '" + id + "' UNION SELECT DISTINCT To_User_ID AS ID FROM message WHERE From_User_ID = '" + id + "';";
+
+    return new Promise((resolve, reject) => {
+
+        pool.query(sqlQuery, (err, result) => {
+
+            if (err) {
+                resolve(0);
+            } else {
+                // console.log(result)
+                resolve(result);
+            }
+
         });
 
-    }
+    });
 
+}
 
 module.exports = app;

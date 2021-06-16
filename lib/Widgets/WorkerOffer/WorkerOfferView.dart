@@ -3,6 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:ti_boulot/Widgets/WorkerOffer/WorkerOfferController.dart';
 
 class WorkerOfferView extends StatefulWidget {
+  final int taskId;
+  final int taskUserId;
+
+  WorkerOfferView({this.taskId, this.taskUserId});
+
   @override
   _WorkerOfferViewState createState() => _WorkerOfferViewState();
 }
@@ -223,8 +228,10 @@ class _WorkerOfferViewState extends State<WorkerOfferView> {
                             textColor: Colors.white70,
                             padding: EdgeInsets.all(10.0),
                             splashColor: Colors.white70,
-                            onPressed: () {
-                              workerOfferController.sendOffer(
+                            onPressed: () async {
+                              await workerOfferController.sendOffer(
+                                widget.taskId,
+                                widget.taskUserId,
                                 workerOfferController
                                     .offeringPriceController.text,
                                 workerOfferController.commentController.text,

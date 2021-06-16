@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ti_boulot/Common/API.dart';
 import 'package:ti_boulot/Common/ApiURL.dart';
 import 'package:ti_boulot/Widgets/WorkerBrowse/WorkerBrowseConstructor.dart';
+import 'package:ti_boulot/Widgets/WorkerOffer/WorkerOfferView.dart';
 
 class WorkerTaskWidget extends StatefulWidget {
   WorkerBrowseConstructor data; //
@@ -206,9 +207,19 @@ class _WorkerTaskWidgetState extends State<WorkerTaskWidget> {
                                                         EdgeInsets.all(5.0),
                                                     splashColor: Colors.white70,
                                                     onPressed: () {
-                                                      Navigator.pushNamed(
-                                                          context,
-                                                          '/WorkerOfferView');
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                WorkerOfferView(
+                                                                    taskId: widget
+                                                                        .data
+                                                                        .taskID,
+                                                                    taskUserId:
+                                                                        widget
+                                                                            .data
+                                                                            .userID)),
+                                                      );
 
                                                       print(
                                                           'Hello checking button');

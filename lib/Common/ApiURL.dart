@@ -15,6 +15,7 @@ class ApiURL {
   static const String getMyTasks = 'getMyTasks';
   static const String workerRetrieveTask = 'workerRetrieveTask';
   static const String workerSendOffer = 'workerSendOffer';
+  static const String getChatListForUser = 'getChatListForUser';
 
   //creating paths
   static String getURL(String url) {
