@@ -3,11 +3,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:ti_boulot/Common/Common.dart';
 import 'package:ti_boulot/Common/ConversationModel.dart';
+import 'package:ti_boulot/Widgets/Message/ChatDetails/dart/ChatDetailsPage.dart';
 import 'package:ti_boulot/Widgets/Message/ChatWidget/ChatWidgetController.dart';
 
 class ChatWidget extends StatefulWidget {
   final ConversationModel data;
-
   ChatWidget({this.data});
 
   @override
@@ -25,16 +25,27 @@ class _ChatWidgetState extends State<ChatWidget> {
       children: [
         InkWell(
           onTap: () {
-            print(widget.data.firstName +
-                " " +
-                widget.data.lastName +
-                " with conversation id ${widget.data.conversationId} tapped!");
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ChatDetailsPage(
+                        name:
+                            widget.data.firstName + " " + widget.data.lastName,
+                        conversationID: widget.data.conversationId,
+                      )),
+            );
+
+            // print(widget.data.firstName +
+            //     " " +
+            //     widget.data.lastName +
+            //     " with conversation id ${widget.data.conversationId} tapped!");
           },
           child: Container(
             width: MediaQuery.of(context).size.width * 0.9,
             height: 90.0,
             decoration: BoxDecoration(
-              color: Color(0xFF673ab7).withOpacity(0.3),
+              color: Colors.grey[400],
+              // color: Color(0xFF673ab7).withOpacity(0.3),
               borderRadius: BorderRadius.all(
                 Radius.circular(16.0),
               ),

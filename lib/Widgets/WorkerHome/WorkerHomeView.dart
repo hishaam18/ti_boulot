@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:ti_boulot/Widgets/Message/MessageView.dart';
 import 'package:ti_boulot/Widgets/MyTask/MyTaskView.dart';
 import 'package:ti_boulot/Widgets/Notifications/Notifications.dart';
-import 'package:ti_boulot/Widgets/Profile/ProfileView.dart';
+import 'package:ti_boulot/Widgets/Setting/SettingView.dart';
 import 'package:ti_boulot/Widgets/WorkerBrowse/WorkerBrowseView.dart';
 
 class WorkerHomeApp extends StatelessWidget {
@@ -37,7 +37,7 @@ class _WorkerHomeViewState extends State<WorkerHomeView> {
     NotificationsView(),
     WorkerBrowseView(),
     MyTaskView(),
-    ProfileView()
+    SettingView(),
   ]; //5 pages stored in array form
 
   @override
@@ -54,7 +54,7 @@ class _WorkerHomeViewState extends State<WorkerHomeView> {
           TabItem(icon: Icons.notifications, title: 'Notifications'),
           TabItem(icon: Icons.add_circle_outline, title: 'Browse'),
           TabItem(icon: Icons.inventory, title: 'MyTasks'),
-          TabItem(icon: Icons.person, title: 'Profile'),
+          TabItem(icon: Icons.settings, title: 'Setting'),
         ],
 
         initialActiveIndex: 2, //optional, default as 0

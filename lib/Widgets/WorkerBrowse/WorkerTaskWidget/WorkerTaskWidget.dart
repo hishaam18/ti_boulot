@@ -220,9 +220,6 @@ class _WorkerTaskWidgetState extends State<WorkerTaskWidget> {
                                                                             .data
                                                                             .userID)),
                                                       );
-
-                                                      print(
-                                                          'Hello checking button');
                                                     }), //make offer button
                                                 SizedBox(
                                                   width: 25,

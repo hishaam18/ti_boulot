@@ -140,10 +140,18 @@ app.use("/login", function (req, res, next) {
                     //calling getUserType function
                     getUserType(result).then(result => {
 
+
+
+
+
                         res.status(200).json({
                             success: true,
                             error: "",
-                            data: result,
+                            data: {
+                                "User_ID": result['User_Data']["User_ID"],
+                                "Avatar_Path": result['User_Data']["Avatar_Path"],
+                                "User_Type": result['User_Data']["User_Type"]
+                            },
                             msg: ""
                         });
 
@@ -210,7 +218,7 @@ sqlQuery: if the corresponding User_ID exists in the table worker, (it returns t
 
 async function getUserType(User_ID) {
 
-    let sqlQuery = "SELECT EXISTS(SELECT * FROM worker WHERE User_ID = '" + User_ID + "') AS result;"
+    let sqlQuery = "SELECT EXISTS(SELECT * FROM worker WHERE User_ID = '" + User_ID['User_ID'] + "') AS result;"
 
     return new Promise((resolve, reject) => {
         pool.query(sqlQuery, (err, result) => {
@@ -219,8 +227,8 @@ async function getUserType(User_ID) {
                 reject(JSON.stringify(err));
             } else {
                 var data = {
-                    "User_ID": User_ID,
-                    "User_Type": result[0].result == 1 ? "Worker" : "User"   //ternary operator-- represented below
+                    "User_Data": User_ID,
+                    //ternary operator-- represented below
 
                     // var x;
                     // if (result[0].result == 1) {
@@ -230,6 +238,7 @@ async function getUserType(User_ID) {
                     // }
 
                 };
+                data['User_Data']['User_Type'] = result[0].result == 1 ? "Worker" : "User";
                 resolve(data);
             }
         });
@@ -259,7 +268,7 @@ resolve:- transforms  the User_ID from varchar to String and storesit in  result
 //get User_ID
 async function getUserID(emailAddress) {
 
-    let sqlQuery = "SELECT User_ID FROM user WHERE Email='" + emailAddress + "';"
+    let sqlQuery = "SELECT User_ID, Avatar_Path FROM user WHERE Email='" + emailAddress + "';"
 
     return new Promise((resolve, reject) => {
 
@@ -268,7 +277,7 @@ async function getUserID(emailAddress) {
                 reject("Error executing the query: " + JSON.stringify(err));
                 resolve(0);
             } else {
-                result = JSON.stringify(result[0].User_ID);
+                result = result[0];
                 resolve(result);
             }
         });
@@ -846,7 +855,7 @@ app.use("/getChatListForUser", function (req, res, next) {
 
 async function getChatListForUser(User_ID, timeZoneOffset) {
 
-    let sql = "SELECT user.User_ID, user.First_Name, user.Last_Name, convo.Conversation_Id, ADDTIME(convo.Timestamp, '"+ timeZoneOffset+"') AS Timestamp FROM user INNER JOIN conversation AS convo on convo.Recipient_One = user.User_ID WHERE convo.Recipient_Two = '"+User_ID+"' UNION SELECT user.User_ID, user.First_Name, user.Last_Name, convo.Conversation_Id,  ADDTIME(convo.Timestamp, '"+timeZoneOffset+"') AS Timestamp FROM user INNER JOIN conversation AS convo on convo.Recipient_Two = user.User_ID WHERE convo.Recipient_One = '"+User_ID+"';";
+    let sql = "SELECT user.User_ID, user.First_Name, user.Last_Name, convo.Conversation_Id, ADDTIME(convo.Timestamp, '" + timeZoneOffset + "') AS Timestamp FROM user INNER JOIN conversation AS convo on convo.Recipient_One = user.User_ID WHERE convo.Recipient_Two = '" + User_ID + "' UNION SELECT user.User_ID, user.First_Name, user.Last_Name, convo.Conversation_Id,  ADDTIME(convo.Timestamp, '" + timeZoneOffset + "') AS Timestamp FROM user INNER JOIN conversation AS convo on convo.Recipient_Two = user.User_ID WHERE convo.Recipient_One = '" + User_ID + "';";
 
     // console.log(sql);
 
@@ -924,6 +933,237 @@ async function getUserDetailsFunction(User_ID) {
 
 
 };
+
+/* -------------------------------- get avatar for user  ----------------------*/
+
+
+
+app.use("/getAvatarForUser", function (req, res, next) {
+
+    var userID = req.body.userID;
+
+
+    getAvatarForUser(userID).then(result => {
+
+        if (result == 0) {
+            res.status(200).json({
+                success: false,
+                error: "Failed to get User details",
+                data: {},
+                msg: ""
+            });
+        } else {
+            res.status(200).json({
+                success: true,
+                error: "",
+                data: result,
+                msg: ""
+            });
+        }
+
+    });
+
+});
+
+
+async function getAvatarForUser(userID) {
+
+    let sql = " SELECT Avatar_Path FROM user WHERE User_ID = '" + userID + "';";
+
+    // console.log(sql);
+
+    // console.log(User_ID);
+
+    return new Promise((resolve, reject) => {
+
+        pool.query(sql, (err, result) => {
+            if (err) {
+                reject("Error executing the query: " + JSON.stringify(err));
+                resolve(0);
+            } else {
+                resolve(result); //result contains an array of json objects (firstname and lastname of user)
+            }
+        });
+    });
+
+
+};
+
+/* --------------------------------conversation for a user ----------------------*/
+
+app.use("/getChatFromConversationID", function (req, res, next) {
+
+
+    var conversationID = req.body.conversationID;
+
+    getChatFromConversationID(conversationID).then(result => {
+        if (result == 0) {
+            res.status(200).json({
+                success: false,
+                error: "",
+                data: {},
+                msg: ""
+            });
+        } else {
+            res.status(200).json({
+                success: true,
+                error: "",
+                data: result,
+                msg: ""
+            });
+        }
+    });
+
+});
+
+async function getChatFromConversationID(id) {
+    let sqlQuery = "SELECT * FROM message WHERE Conversation_ID = '" + id + "';";
+
+    return new Promise((resolve, reject) => {
+
+        pool.query(sqlQuery, (err, result) => {
+
+            if (err) {
+                resolve(0);
+            } else {
+                // console.log(result)
+                resolve(result);
+            }
+
+        });
+
+    });
+
+}
+
+/* -------------------------------- get chat list ----------------------*/
+
+app.use("/sendMessage", function (req, res, next) {
+
+
+    var conversationID = req.body.conversationID;
+    var senderID = req.body.senderID;
+    var message = req.body.message;
+    var timestamp = req.body.timestamp;
+
+    getReceiverID(conversationID, senderID, message, timestamp).then(result => {
+
+        if (result == 0) {
+            res.status(200).json({
+                success: false,
+                error: "",
+                data: {},
+                msg: ""
+            });
+        } else {
+
+            sendMessage(conversationID, senderID, result, message, timestamp).then(result => {
+
+
+                if (result == 0) {
+                    res.status(200).json({
+                        success: false,
+                        error: "",
+                        data: {},
+                        msg: ""
+                    });
+                } else if (result == 1) {
+
+                    setConversationTimestamp(conversationID, timestamp).then(result => {
+
+                        if (result == 0) {
+                            res.status(200).json({
+                                success: false,
+                                error: "",
+                                data: {},
+                                msg: ""
+                            });
+                        } else if (result == 1) {
+                            res.status(200).json({
+                                success: true,
+                                error: "",
+                                data: {},
+                                msg: ""
+                            });
+                        }
+
+                    });
+
+                }
+
+            });
+
+        }
+
+    });
+
+
+});
+
+async function getReceiverID(conversationID, senderID, message, timestamp) {
+
+    let sql = "SELECT * FROM conversation WHERE (Conversation_ID = '" + conversationID + "' AND Recipient_One = '" + senderID + "') OR (Conversation_ID = '" + conversationID + "' AND Recipient_Two = '" + senderID + "');";
+    // console.log(sql);
+
+    return new Promise((resolve, reject) => {
+
+        pool.query(sql, (err, result) => {
+            if (err) {
+                console.log(err);
+                resolve(err.code);
+            } else {
+                resolve(result[0]['Recipient_One'] == senderID ? result[0]['Recipient_Two'] : result[0]['Recipient_One']);
+            }
+        })
+
+    });
+
+}
+
+
+async function setConversationTimestamp(conversationID, timestamp) {
+
+    let sql = "UPDATE conversation SET Timestamp = '" + timestamp + "' WHERE Conversation_ID = '" + conversationID + "';"
+
+    // console.log(sql);
+    // console.log(sql);
+    return new Promise((resolve, reject) => {
+
+        pool.query(sql, (err, result) => {
+            if (err) {
+                console.log(err);
+                resolve(err.code);
+            } else {
+                // console.log(result);
+                resolve(1);
+            }
+        })
+
+    });
+
+}
+
+async function sendMessage(conversationID, senderID, receiverID, message, timestamp) {
+
+    let sql = "INSERT INTO message VALUES (Default, '" + conversationID + "', '" + senderID + "', '" + receiverID + "', '" + message + "', '" + timestamp + "');"
+
+    // console.log(sql);
+    // console.log(sql);
+    return new Promise((resolve, reject) => {
+
+        pool.query(sql, (err, result) => {
+            if (err) {
+                console.log(err);
+                resolve(err.code);
+            } else {
+                // console.log(result);
+                resolve(1);
+            }
+        })
+
+    });
+
+}
 
 /* -------------------------------- get chat list ----------------------*/
 

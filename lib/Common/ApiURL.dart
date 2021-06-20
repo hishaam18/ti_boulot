@@ -1,5 +1,6 @@
 class ApiURL {
-  static String baseURL = 'http://10.0.2.2:9000/';
+  // static String baseURL = 'http://10.0.2.2:9000/';
+  static String baseURL = 'http://192.168.100.61:9000/';
   //static String baseURL = 'http://localhost:9000/';
   //static String baseURL = 'http://192.168.100.61:9000/';
 
@@ -16,6 +17,9 @@ class ApiURL {
   static const String workerRetrieveTask = 'workerRetrieveTask';
   static const String workerSendOffer = 'workerSendOffer';
   static const String getChatListForUser = 'getChatListForUser';
+  static const String getAvatarForUser = 'getAvatarForUser';
+  static const String getChatFromConversationID = 'getChatFromConversationID';
+  static const String sendMessage = 'sendMessage';
 
   //creating paths
   static String getURL(String url) {

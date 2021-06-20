@@ -1,5 +1,6 @@
 class Common {
   static String userID;
+  static String avatarPath;
   static var taskData;
 
   static List<String> avatars = [
@@ -65,6 +66,13 @@ class DateAndTime {
 
   static bool compareFlutterDates(DateTime first, DateTime last) {
     if (first.compareTo(last) > 0)
+      return true;
+    else
+      return false;
+  }
+
+  static bool compareFlutterDatesReversed(DateTime first, DateTime last) {
+    if (first.compareTo(last) < 0)
       return true;
     else
       return false;

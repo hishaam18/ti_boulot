@@ -4,6 +4,7 @@ import 'package:ti_boulot/Common/Common.dart';
 import 'package:ti_boulot/Widgets/Browse/BrowseController.dart';
 import 'package:ti_boulot/Widgets/Home/HomeView.dart';
 import 'package:ti_boulot/Widgets/Login/LoginView.dart';
+import 'package:ti_boulot/Widgets/Message/ChatDetails/dart/ChatDetailsPage.dart';
 import 'package:ti_boulot/Widgets/Message/MessageView.dart';
 import 'package:ti_boulot/Widgets/SignUp/SignUpView.dart';
 import 'package:ti_boulot/Widgets/WorkerOffer/WorkerOfferView.dart';
@@ -44,6 +45,7 @@ class _MyAppState extends State<MyApp> {
         '/WorkerHomeView': (context) => WorkerHomeView(),
         '/WorkerOfferView': (context) => WorkerOfferView(),
         '/MessageView': (context) => MessageView(),
+        '/ChatDetailsPage': (context) => ChatDetailsPage(),
       },
     );
   }
@@ -120,5 +122,13 @@ class _GetStartedState extends State<GetStarted> {
         ),
       ),
     );
+  }
+}
+
+class MyBehavior extends ScrollBehavior {
+  @override
+  Widget buildViewportChrome(
+      BuildContext context, Widget child, AxisDirection axisDirection) {
+    return child;
   }
 }
