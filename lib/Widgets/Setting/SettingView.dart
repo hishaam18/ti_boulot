@@ -115,7 +115,13 @@ class _SettingViewState extends State<SettingView> {
                               setState(() {});
                             },
                           ),
-                          IconButton(icon: Icon(Icons.save), onPressed: () {})
+                          IconButton(
+                              icon: Icon(
+                                Icons.save,
+                                color: Colors.deepPurple,
+                                size: 30,
+                              ),
+                              onPressed: () {})
                         ],
                       ),
                     ],
