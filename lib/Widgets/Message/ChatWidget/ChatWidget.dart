@@ -44,7 +44,7 @@ class _ChatWidgetState extends State<ChatWidget> {
             width: MediaQuery.of(context).size.width * 0.9,
             height: 90.0,
             decoration: BoxDecoration(
-              color: Colors.grey[400],
+              color: Colors.grey[400].withOpacity(0.4),
               // color: Color(0xFF673ab7).withOpacity(0.3),
               borderRadius: BorderRadius.all(
                 Radius.circular(16.0),

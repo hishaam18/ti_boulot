@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
@@ -49,6 +50,7 @@ class _SettingViewState extends State<SettingView> {
       ),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             SizedBox(
               height: 20,
@@ -57,7 +59,7 @@ class _SettingViewState extends State<SettingView> {
               width: MediaQuery.of(context).size.width * 0.9,
               height: 120,
               decoration: BoxDecoration(
-                color: Colors.grey[400],
+                color: Colors.grey[400].withOpacity(0.4),
                 borderRadius: BorderRadius.all(Radius.circular(25.0)),
               ),
               child: Row(
@@ -120,6 +122,58 @@ class _SettingViewState extends State<SettingView> {
                   ),
                 ],
               ),
+            ),
+            SizedBox(
+              height: 290,
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.9,
+              height: 120,
+              decoration: BoxDecoration(
+                color: Colors.grey[400].withOpacity(0.4),
+                borderRadius: BorderRadius.all(Radius.circular(25.0)),
+              ),
+              child: Center(
+                  child: RaisedButton(
+                color: Colors.deepPurple,
+                onPressed: () => {
+                  showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      title: const Text('LOGOUT'),
+                      content: const Text('Are you sure you want to logout ?'),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, 'Cancel'),
+                          child: const Text(
+                            'Cancel',
+                            style: TextStyle(color: Colors.red, fontSize: 16),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () =>
+                              Future.delayed(Duration(seconds: 1), () {
+                            Navigator.pushNamed(context, '/Login');
+                          }),
+                          child: const Text(
+                            'Confirm',
+                            style: TextStyle(
+                                color: Colors.deepPurple, fontSize: 16),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                },
+                child: new Text(
+                  'LOGOUT',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      color: Colors.white),
+                ),
+                padding: new EdgeInsets.all(15),
+              )),
             ),
           ],
         ),
