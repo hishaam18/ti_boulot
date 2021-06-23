@@ -36,7 +36,8 @@ class LoginController {
     if (response.success == true && response.data['User_Type'] == 'Worker') {
       print(response.data['User_Type']);
       Common.userID = response.data['User_ID'].toString();
-      Common.avatarPath = response.data['Avatar_Path'];
+      Common.avatarPath = "images/avatars/" + response.data['Avatar_Path'];
+
       //storing User_ID of User received from backend response, into static
       //variable ' User_ID ' found in common
 
@@ -53,7 +54,8 @@ class LoginController {
       //variable ' User_ID ' found in common
       // print(response.data['User_ID']);
       Common.userID = response.data['User_ID'].toString();
-      Common.avatarPath = response.data['Avatar_Path'];
+      Common.avatarPath = "images/avatars/" + response.data['Avatar_Path'];
+      // Common.avatarPath = response.data['Avatar_Path'];
 
       // if (response.data['User_Type'] == 'Worker') {
       //   //open worker page

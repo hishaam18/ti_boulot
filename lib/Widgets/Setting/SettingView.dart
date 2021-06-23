@@ -26,9 +26,10 @@ class _SettingViewState extends State<SettingView> {
 
   @override
   Widget build(BuildContext context) {
-    settingController.getAvatar(callSetState);
-
+    // settingController.getAvatar(callSetState);
+    int _user;
     Random random = new Random();
+    String value;
 
     return Scaffold(
       appBar: AppBar(
@@ -75,8 +76,8 @@ class _SettingViewState extends State<SettingView> {
                         height: 70.0,
                         child: CircleAvatar(
                           //taking random pictures from the avatar list and assigning to users
-                          backgroundImage: ExactAssetImage(
-                              "images/avatars/${Common.avatarPath}"),
+                          backgroundImage:
+                              ExactAssetImage("${Common.avatarPath}"),
                           minRadius: 35,
                           maxRadius: 35,
                         ),
@@ -109,11 +110,35 @@ class _SettingViewState extends State<SettingView> {
                         children: [
                           DropdownButton(
                             menuMaxHeight: 400.0,
-                            items: settingController.dropdownList,
-                            value: "images/avatars/${Common.avatarPath}",
+                            hint: new Text('Choose your avatar'),
+                            value: _user == null ? null : Common.avatars[_user],
+                            items: Common.avatars.map((value) {
+                              return new DropdownMenuItem(
+                                value: "images/avatars/$value",
+                                child: CircleAvatar(
+                                  //taking random pictures from the avatar list and assigning to users
+                                  backgroundImage:
+                                      ExactAssetImage("images/avatars/$value"),
+                                  minRadius: 38,
+                                  maxRadius: 38,
+                                ),
+                              );
+                            }).toList(),
                             onChanged: (value) {
-                              setState(() {});
+                              Common.avatarPath = value;
+
+                              setState(() {
+                                _user = Common.avatars.indexOf(value);
+                              });
+
+                              print(value);
                             },
+
+                            // items: settingController.dropdownList,
+                            // value: "images/avatars/${Common.avatarPath}",
+                            // onChanged: (value) {
+                            //   setState(() {});
+                            // },
                           ),
                           IconButton(
                               icon: Icon(
