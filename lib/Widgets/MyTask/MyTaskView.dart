@@ -62,7 +62,7 @@ class _MyTaskViewState extends State<MyTaskView> {
         title: Padding(
           padding: const EdgeInsets.only(left: 107.0),
           child: Text(
-            'Browse',
+            'My Task',
             style: TextStyle(color: Colors.white),
           ),
         ),

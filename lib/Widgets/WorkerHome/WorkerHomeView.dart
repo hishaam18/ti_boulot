@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ti_boulot/Widgets/Message/MessageView.dart';
 import 'package:ti_boulot/Widgets/MyTask/MyTaskView.dart';
-import 'package:ti_boulot/Widgets/Notifications/Notifications.dart';
 import 'package:ti_boulot/Widgets/Setting/SettingView.dart';
 import 'package:ti_boulot/Widgets/WorkerBrowse/WorkerBrowseView.dart';
 
@@ -30,11 +29,10 @@ class WorkerHomeView extends StatefulWidget {
 }
 
 class _WorkerHomeViewState extends State<WorkerHomeView> {
-  int selectedPage = 2; //int with default 0
+  int selectedPage = 1; //int with default 0
 
   final _pageOptions = [
     MessageView(),
-    NotificationsView(),
     WorkerBrowseView(),
     MyTaskView(),
     SettingView(),
@@ -51,13 +49,12 @@ class _WorkerHomeViewState extends State<WorkerHomeView> {
         items: [
           //Whatever is written under the Icons
           TabItem(icon: Icons.message, title: 'Message'),
-          TabItem(icon: Icons.notifications, title: 'Notifications'),
           TabItem(icon: Icons.add_circle_outline, title: 'Browse'),
           TabItem(icon: Icons.inventory, title: 'MyTasks'),
           TabItem(icon: Icons.settings, title: 'Setting'),
         ],
 
-        initialActiveIndex: 2, //optional, default as 0
+        initialActiveIndex: 1, //optional, default as 0
 
         onTap: (int i) {
           setState(() {

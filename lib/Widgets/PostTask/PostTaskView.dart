@@ -89,8 +89,8 @@ class _PostTaskViewState extends State<PostTaskView> {
         automaticallyImplyLeading: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: () =>
-              Navigator.pop(context, false), // returns to previous page
+          onPressed: () => Navigator.pushNamed(
+              context, '/MyTaskView'), // returns to previous page
           color: Colors.white,
         ),
       ),
@@ -108,15 +108,28 @@ class _PostTaskViewState extends State<PostTaskView> {
                   ? Expanded(
                       child: Center(
                         child: AlertDialog(
-                          title: new Text(" Confirm "),
-                          content: new Text(
-                            "Successfully posted ",
-                          ),
+                          title: new Text(" Task Posted Successfully"),
                           actions: <Widget>[
                             new FlatButton(
-                              child: new Text("Post"),
+                              child: new Text("Okay"),
                               onPressed: () {
-                                setState(() => complete = false);
+                                Navigator.pushNamed(
+                                    context, '/WorkerHomeView'); //allow back
+
+                                //on pressing this button, sending each input of the text fields, as an object, to the controller
+                                postTaskViewController.postTask(
+                                  postTaskViewController
+                                      .taskTitleController.text,
+                                  postTaskViewController
+                                      .taskDescriptionController.text,
+                                  postTaskViewController.lat,
+                                  postTaskViewController.lng,
+                                  postTaskViewController.budgetController.text,
+                                  postTaskViewController.displayDate,
+                                  postTaskViewController.displayDeadlineDate,
+                                );
+
+                                setState(() => complete = true);
                               },
                             ),
                           ],
@@ -427,27 +440,27 @@ class _PostTaskViewState extends State<PostTaskView> {
                                     ),
                                   ),
                                 ),
-                                FlatButton(
-                                  child: Text('Submit'),
-                                  color: Colors.blueAccent,
-                                  textColor: Colors.white,
-                                  onPressed: () {
-                                    //on pressing this button, sending each input of the text fields, as an object, to the controller
-                                    postTaskViewController.postTask(
-                                      postTaskViewController
-                                          .taskTitleController.text,
-                                      postTaskViewController
-                                          .taskDescriptionController.text,
-                                      postTaskViewController.lat,
-                                      postTaskViewController.lng,
-                                      postTaskViewController
-                                          .budgetController.text,
-                                      postTaskViewController.displayDate,
-                                      postTaskViewController
-                                          .displayDeadlineDate,
-                                    );
-                                  },
-                                ),
+                                // FlatButton(
+                                //   child: Text('Submit'),
+                                //   color: Colors.blueAccent,
+                                //   textColor: Colors.white,
+                                //   onPressed: () {
+                                //     //on pressing this button, sending each input of the text fields, as an object, to the controller
+                                //     postTaskViewController.postTask(
+                                //       postTaskViewController
+                                //           .taskTitleController.text,
+                                //       postTaskViewController
+                                //           .taskDescriptionController.text,
+                                //       postTaskViewController.lat,
+                                //       postTaskViewController.lng,
+                                //       postTaskViewController
+                                //           .budgetController.text,
+                                //       postTaskViewController.displayDate,
+                                //       postTaskViewController
+                                //           .displayDeadlineDate,
+                                //     );
+                                //   },
+                                // ),
                               ],
                             ),
                           ),

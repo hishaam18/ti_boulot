@@ -109,8 +109,8 @@ class _SettingViewState extends State<SettingView> {
                         children: [
                           DropdownButton(
                             menuMaxHeight: 400.0,
-                            value: "images/avatars/${Common.avatarPath}",
                             items: settingController.dropdownList,
+                            value: "images/avatars/${Common.avatarPath}",
                             onChanged: (value) {
                               setState(() {});
                             },
@@ -158,7 +158,7 @@ class _SettingViewState extends State<SettingView> {
                         ),
                         TextButton(
                           onPressed: () =>
-                              Future.delayed(Duration(seconds: 1), () {
+                              Future.delayed(Duration(milliseconds: 500), () {
                             Navigator.pushNamed(context, '/Login');
                           }),
                           child: const Text(

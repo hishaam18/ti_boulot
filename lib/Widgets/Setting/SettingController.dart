@@ -19,8 +19,8 @@ class SettingController {
             //taking random pictures from the avatar list and assigning to users
             backgroundImage:
                 ExactAssetImage("images/avatars/${Common.avatars[value]}"),
-            minRadius: 35,
-            maxRadius: 35,
+            minRadius: 38,
+            maxRadius: 38,
           ),
           value: "images/avatars/${Common.avatars[value]}",
         ),

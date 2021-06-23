@@ -9,6 +9,7 @@ import 'package:ti_boulot/Widgets/Message/MessageView.dart';
 import 'package:ti_boulot/Widgets/SignUp/SignUpView.dart';
 import 'package:ti_boulot/Widgets/WorkerOffer/WorkerOfferView.dart';
 import 'Widgets/Choose_Account/ChooseAccountView.dart';
+import 'Widgets/MyTask/MyTaskView.dart';
 import 'Widgets/PostTask/PostTaskView.dart';
 import 'Widgets/Home/HomeView.dart';
 import 'Widgets/WorkerHome/WorkerHomeView.dart';
@@ -46,6 +47,7 @@ class _MyAppState extends State<MyApp> {
         '/WorkerOfferView': (context) => WorkerOfferView(),
         '/MessageView': (context) => MessageView(),
         '/ChatDetailsPage': (context) => ChatDetailsPage(),
+        '/MyTaskView': (context) => MyTaskView(),
       },
     );
   }

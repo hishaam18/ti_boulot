@@ -2,7 +2,6 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ti_boulot/Widgets/Message/MessageView.dart';
-import 'package:ti_boulot/Widgets/Notifications/Notifications.dart';
 import 'package:ti_boulot/Widgets/MyTask/MyTaskView.dart';
 import 'package:ti_boulot/Widgets/Browse/BrowseView.dart';
 import 'package:ti_boulot/Widgets/Setting/SettingView.dart';
@@ -31,11 +30,10 @@ class HomeView extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<HomeView> {
-  int selectedPage = 2; //int with default 0
+  int selectedPage = 1; //int with default 0
 
   final _pageOptions = [
     MessageView(),
-    NotificationsView(),
     BrowseView(),
     MyTaskView(),
     SettingView(),
@@ -52,7 +50,6 @@ class _MyHomePageState extends State<HomeView> {
         items: [
           //bottom av bar routes
           TabItem(icon: Icons.message, title: 'Message'),
-          TabItem(icon: Icons.notifications, title: 'Notifications'),
           TabItem(icon: Icons.add_circle_outline, title: 'Browse'),
           TabItem(icon: Icons.inventory, title: 'MyTasks'),
           TabItem(icon: Icons.settings, title: 'Setting'),
