@@ -57,7 +57,8 @@ async function registerUser(firstName, lastName, emailAddress, location, passwor
                 resolve(err.code);
             } else {
                 // console.log(result);
-                resolve(1);
+                resolve(1
+                    );
             }
         })
 
@@ -1214,12 +1215,51 @@ async function getChatUsers(id) {
 
 app.use("/sendRating", function (req, res, next) { 
 
+var User_ID = req.body.User_ID; 
+var Worker_ID = req.body.worker_ID;
+var rating = req.body.rating;
 
-console.log(req.body);
+sendRatingFunction(User_ID, Worker_ID, rating).then(result => { 
 
+    if (result == 1) {
+        res.status(200).json({
+            success: true,
+            error: "",
+            data: {},
+            msg: ""
+        });
+    } else {  
+        res.status(200).json({
+            success: false,
+            error: "Failed to insert rating in database",
+            data: {},
+            msg: ""
+        });
+
+    }
+});
 
 });
 
+async function sendRatingFunction(User_ID, Worker_ID, rating) {
 
+    let sql = "INSERT INTO rating VALUES (Default,'" + User_ID + "','" + Worker_ID + "','" + rating + "');"
+    
+    return new Promise((resolve, reject) => {
+    
+        pool.query(sql, (err, result) => {
+            if (err) {
+                resolve(err.code);
+            } else {
+                resolve(1
+                    );
+            }
+        })
+    });
+    
+     }
+
+    
+    
 
 module.exports = app;
