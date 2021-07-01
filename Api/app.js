@@ -989,7 +989,7 @@ async function getAvatarForUser(userID) {
 
 };
 
-/* --------------------------------conversation for a user ----------------------*/
+/* ---------------------------------- Conversation for a user ---------------------------------*/
 
 app.use("/getChatFromConversationID", function (req, res, next) {
 
@@ -1165,7 +1165,7 @@ async function sendMessage(conversationID, senderID, receiverID, message, timest
 
 }
 
-/* -------------------------------- get chat list ----------------------*/
+/* -------------------------------- get chat list ------------------------------------*/
 
 app.use("/getChatUsers", function (req, res, next) {
 
@@ -1208,5 +1208,18 @@ async function getChatUsers(id) {
     });
 
 }
+
+
+//-------------------------------------- Rating ------------------------------------------//
+
+app.use("/sendRating", function (req, res, next) { 
+
+
+console.log(req.body);
+
+
+});
+
+
 
 module.exports = app;

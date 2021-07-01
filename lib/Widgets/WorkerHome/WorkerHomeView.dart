@@ -50,7 +50,7 @@ class _WorkerHomeViewState extends State<WorkerHomeView> {
           //Whatever is written under the Icons
           TabItem(icon: Icons.message, title: 'Message'),
           TabItem(icon: Icons.add_circle_outline, title: 'Browse'),
-          TabItem(icon: Icons.inventory, title: 'MyTasks'),
+          TabItem(icon: Icons.inventory, title: 'MyTask'),
           TabItem(icon: Icons.settings, title: 'Setting'),
         ],
 

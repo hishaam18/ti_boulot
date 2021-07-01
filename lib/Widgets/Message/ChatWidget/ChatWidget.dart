@@ -29,6 +29,7 @@ class _ChatWidgetState extends State<ChatWidget> {
               context,
               MaterialPageRoute(
                   builder: (context) => ChatDetailsPage(
+                        workerID: widget.data.userID,
                         name:
                             widget.data.firstName + " " + widget.data.lastName,
                         conversationID: widget.data.conversationId,
@@ -58,7 +59,11 @@ class _ChatWidgetState extends State<ChatWidget> {
                 CircleAvatar(
                   //taking random pictures from the avatar list and assigning to users
                   backgroundImage: ExactAssetImage(
-                      "images/avatars/${Common.avatars[random.nextInt(Common.avatars.length)]}"),
+                      "images/avatars/${Common.avatars[random.nextInt(Common.avatars.length)]}"
+
+                      //  "${Common.avatarPath}",
+                      ),
+
                   minRadius: 35,
                   maxRadius: 35,
                 ),

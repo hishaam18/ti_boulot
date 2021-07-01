@@ -20,6 +20,7 @@ class ApiURL {
   static const String getAvatarForUser = 'getAvatarForUser';
   static const String getChatFromConversationID = 'getChatFromConversationID';
   static const String sendMessage = 'sendMessage';
+  static const String sendRating = 'sendRating';
 
   //creating paths
   static String getURL(String url) {

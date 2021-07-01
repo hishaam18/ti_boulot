@@ -6,6 +6,8 @@ import 'package:ti_boulot/Widgets/Home/HomeView.dart';
 import 'package:ti_boulot/Widgets/Login/LoginView.dart';
 import 'package:ti_boulot/Widgets/Message/ChatDetails/dart/ChatDetailsPage.dart';
 import 'package:ti_boulot/Widgets/Message/MessageView.dart';
+import 'package:ti_boulot/Widgets/Rating/RatingsPage.dart';
+import 'package:ti_boulot/Widgets/Rating/rating.dart';
 import 'package:ti_boulot/Widgets/SignUp/SignUpView.dart';
 import 'package:ti_boulot/Widgets/WorkerOffer/WorkerOfferView.dart';
 import 'Widgets/Choose_Account/ChooseAccountView.dart';
@@ -48,6 +50,7 @@ class _MyAppState extends State<MyApp> {
         '/MessageView': (context) => MessageView(),
         '/ChatDetailsPage': (context) => ChatDetailsPage(),
         '/MyTaskView': (context) => MyTaskView(),
+        '/Rating': (context) => RatingsPage(),
       },
     );
   }

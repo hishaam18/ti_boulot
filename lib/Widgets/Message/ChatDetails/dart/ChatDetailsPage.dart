@@ -6,13 +6,16 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:ti_boulot/Common/ConversationModel.dart';
 import 'package:ti_boulot/Widgets/Message/ChatDetails/dart/ChatDetailsController.dart';
 import 'package:ti_boulot/Widgets/Message/ChatWidget/ChatWidget.dart';
+import 'package:ti_boulot/Widgets/Rating/RatingsPage.dart';
+import 'package:ti_boulot/Widgets/Rating/rating.dart';
 import 'package:ti_boulot/main.dart';
 
 class ChatDetailsPage extends StatefulWidget {
+  final String workerID;
   final String name;
   final String conversationID;
 
-  ChatDetailsPage({this.name, this.conversationID});
+  ChatDetailsPage({this.workerID, this.name, this.conversationID});
 
   @override
   _ChatDetailsPageState createState() => _ChatDetailsPageState();
@@ -75,8 +78,22 @@ class _ChatDetailsPageState extends State<ChatDetailsPage> {
           color: Colors.white,
         ),
         actions: [
-          //refresh button
           chatDetailsController.loadingWidget,
+          FlatButton(
+            color: Colors.deepPurpleAccent,
+            child: Text(
+              'Rate',
+              style: TextStyle(fontSize: 20.0, color: Colors.white),
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        RatingsPage(workerID: widget.workerID)),
+              );
+            },
+          ),
         ],
       ),
       body: GestureDetector(

@@ -31,10 +31,6 @@ class _SignUpViewState extends State<SignUpView> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
-        title: Text(
-          'Back',
-          style: TextStyle(color: Colors.white),
-        ),
         automaticallyImplyLeading: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),

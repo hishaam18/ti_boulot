@@ -2,6 +2,7 @@ class Common {
   static String userID;
   static String avatarPath;
   static var taskData;
+  static String userType;
 
   static List<String> avatars = [
     'avatar1.png',

@@ -37,8 +37,8 @@ class _LoginViewState extends State<LoginView> {
         automaticallyImplyLeading: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: () =>
-              Navigator.pop(context, false), // returns to previous page
+          onPressed: () => Navigator.pushNamed(
+              context, '/GetStarted'), // returns to previous page
           color: Colors.white,
         ),
       ),

@@ -37,7 +37,9 @@ class LoginController {
       print(response.data['User_Type']);
       Common.userID = response.data['User_ID'].toString();
       Common.avatarPath = "images/avatars/" + response.data['Avatar_Path'];
+      Common.userType = response.data['User_Type'].toString();
 
+      print(response.data['User_Type']);
       //storing User_ID of User received from backend response, into static
       //variable ' User_ID ' found in common
 
@@ -49,13 +51,15 @@ class LoginController {
 
     //Load User Home page if login is User
     else if (response.success == true && response.data['User_Type'] == 'User') {
-      //HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
       //storing User_ID of User received from backend response, into static
       //variable ' User_ID ' found in common
       // print(response.data['User_ID']);
       Common.userID = response.data['User_ID'].toString();
       Common.avatarPath = "images/avatars/" + response.data['Avatar_Path'];
+      Common.userType = response.data['User_Type'].toString();
       // Common.avatarPath = response.data['Avatar_Path'];
+
+      print(response.data['User_Type']);
 
       // if (response.data['User_Type'] == 'Worker') {
       //   //open worker page
@@ -65,12 +69,11 @@ class LoginController {
 
       //navigate to User Home page
       Navigator.pushReplacementNamed(context, '/Home'); //NOT allow back
+
     }
 
     //Load Worker Home page if login is User
     else {
-      // print(response.error); //display error msg
-
       // set up the button
       Widget okButton = FlatButton(
         child: Text("OK"),
