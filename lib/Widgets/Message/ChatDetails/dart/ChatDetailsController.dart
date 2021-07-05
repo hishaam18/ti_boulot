@@ -167,13 +167,6 @@ class ChatDetailsController {
 
     UserDetailRating userDetailRating =
         UserDetailRating().fromJson(response.data);
-    // print(userDetailRating.firstName +
-    //     " " +
-    //     userDetailRating.lastName +
-    //     " has a star rating of " +
-    //     userDetailRating.rating);
-
-    //workerDisplayDetails
 
     return userDetailRating;
   }

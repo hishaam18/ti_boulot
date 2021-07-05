@@ -22,7 +22,7 @@ class ApiURL {
   static const String sendMessage = 'sendMessage';
   static const String sendRating = 'sendRating';
   static const String displayRating = 'displayRating';
-
+  static const String displayProfile = 'displayProfile';
   //creating paths
   static String getURL(String url) {
     return baseURL + url.toString();

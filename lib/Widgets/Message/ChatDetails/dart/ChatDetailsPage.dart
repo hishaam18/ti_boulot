@@ -16,6 +16,7 @@ import 'package:ti_boulot/Widgets/Message/ChatDetails/dart/ChatDetailsConstructo
 
 class ChatDetailsPage extends StatefulWidget {
   final String workerID;
+
   final String name;
   final String conversationID;
   final String firstname;
@@ -130,14 +131,14 @@ class _ChatDetailsPageState extends State<ChatDetailsPage> {
                             TextStyle(fontSize: 23.0, color: Color(0xFF673ab7)),
                       ),
                       content: Container(
-                        height: 320.0,
+                        height: 180.0,
                         child: SingleChildScrollView(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                userDetail.firstName,
+                                'Email',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -146,7 +147,7 @@ class _ChatDetailsPageState extends State<ChatDetailsPage> {
                                 height: 10.0,
                               ),
                               Text(
-                                userDetail.lastName,
+                                userDetail.email,
                                 textAlign: TextAlign.left,
                                 style: TextStyle(fontSize: 16.0),
                               ),
@@ -154,7 +155,35 @@ class _ChatDetailsPageState extends State<ChatDetailsPage> {
                                 height: 10.0,
                               ),
                               Text(
-                                "The motherfucker has $displayRating star(s) rating!",
+                                'Address',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              Text(
+                                userDetail.address,
+                                textAlign: TextAlign.left,
+                                style: TextStyle(fontSize: 16.0),
+                              ),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              Text(
+                                'Rating',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              Text(
+                                "$displayRating" + " " + "out of 5!",
                                 textAlign: TextAlign.left,
                                 style: TextStyle(fontSize: 16.0),
                               ),

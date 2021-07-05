@@ -7,10 +7,25 @@ import 'package:ti_boulot/Common/ApiURL.dart';
 import 'package:ti_boulot/Common/Common.dart';
 import 'package:ti_boulot/Common/ResponseType.dart';
 
-class SettingController {
-  List<DropdownMenuItem> dropdownList = new List<DropdownMenuItem>();
+import 'SettingConstructor.dart';
 
-  int _user;
+class SettingController {
+  Future<UserProfileDetail> displayProfile() async {
+    var body = {
+      "User_ID": Common.userID,
+    };
+
+    ResponseType response =
+        await API().post(ApiURL.getURL(ApiURL.displayProfile), body);
+
+    UserProfileDetail userProfileDetail =
+        UserProfileDetail().fromJson(response.data);
+
+    return userProfileDetail;
+  }
+
+// List<DropdownMenuItem> dropdownList = new List<DropdownMenuItem>();
+  // int _user;
 
 //users = Common.avatars
 

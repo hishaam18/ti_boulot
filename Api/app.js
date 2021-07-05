@@ -1379,5 +1379,58 @@ async function displayRatingFunction(Worker_ID) {
 
 };
 
+// -----------------------------------------------------------Display Profile --------------------------------------------------------------//
+
+app.use("/displayProfile", function (req, res, next) {
+
+
+    var User_ID = req.body.User_ID;
+
+    console.log(User_ID);
+
+   displayProfileFunction(User_ID).then(result => {
+
+        if (result == 0) {
+
+            res.status(200).json({
+                success: false,
+                error: "Could not select all from user",
+                data: {},
+                msg: ""
+            });
+        } else {
+
+            res.status(200).json({
+                success: true,
+                error: "",
+                data: result[0],
+                msg: ""
+            });
+
+        }
+
+    });
+
+});
+
+async function displayProfileFunction(User_ID) {
+
+    let sql = "SELECT (SELECT First_Name FROM user WHERE User_ID = '"+ User_ID+"') AS firstName,  (SELECT Last_Name FROM user WHERE User_ID = '"+ User_ID+"') AS lastName,  (SELECT Email FROM user WHERE User_ID = '"+ User_ID+"') AS emailAddress,  (SELECT Address FROM user WHERE User_ID = '"+ User_ID+"') AS address, (SELECT AVG(Star_Rating) FROM rating WHERE Worker_ID = '"+ User_ID+"') AS starRating;";
+
+    return new Promise((resolve, reject) => {
+
+        pool.query(sql, (err, result) => {
+            if (err) {
+                console.log(err)
+                resolve(0);
+            } else {
+                resolve(result);
+            }
+        })
+    });
+
+};
+
+
 
 module.exports = app;

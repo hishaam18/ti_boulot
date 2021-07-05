@@ -7,7 +7,7 @@ import 'package:ti_boulot/Widgets/MyTask/myTaskControllerConstructor.dart';
 
 class ContentMyTaskView extends StatefulWidget {
   myTaskControllerConstructor data;
-  ContentMyTaskView({this.data}); //THISSSSSSSSSSSSSSSSSSS MODAFAKAAAAA
+  ContentMyTaskView({this.data});
   @override
   _ContentMyTaskViewState createState() => _ContentMyTaskViewState();
 }
