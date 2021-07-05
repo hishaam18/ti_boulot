@@ -5,6 +5,7 @@ import 'package:ti_boulot/Common/ApiURL.dart';
 import 'package:ti_boulot/Common/ChatModel.dart';
 import 'package:ti_boulot/Common/Common.dart';
 import 'package:ti_boulot/Common/ResponseType.dart';
+import 'package:ti_boulot/Widgets/Message/ChatDetails/dart/ChatDetailsConstructor.dart';
 import 'package:ti_boulot/Widgets/Message/ChatDetails/dart/ChatDetailsPage.dart';
 
 class ChatDetailsController {
@@ -154,5 +155,26 @@ class ChatDetailsController {
       callSetState();
       await loadMessages(conversationID);
     }
+  }
+
+  Future<UserDetailRating> displayRating(String workerID) async {
+    var body = {
+      "Worker_ID": workerID,
+    };
+
+    ResponseType response =
+        await API().post(ApiURL.getURL(ApiURL.displayRating), body);
+
+    UserDetailRating userDetailRating =
+        UserDetailRating().fromJson(response.data);
+    // print(userDetailRating.firstName +
+    //     " " +
+    //     userDetailRating.lastName +
+    //     " has a star rating of " +
+    //     userDetailRating.rating);
+
+    //workerDisplayDetails
+
+    return userDetailRating;
   }
 }

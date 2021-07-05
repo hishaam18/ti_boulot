@@ -116,7 +116,6 @@ class _TaskWidgetState extends State<TaskWidget> {
                                               textAlign: TextAlign.left,
                                               style: TextStyle(fontSize: 18.0),
                                             ), //Description-database
-
                                             SizedBox(
                                               height: 20.0,
                                             ),

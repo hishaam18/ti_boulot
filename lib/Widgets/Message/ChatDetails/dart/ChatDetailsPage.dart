@@ -3,19 +3,39 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:ti_boulot/Common/Common.dart';
 import 'package:ti_boulot/Common/ConversationModel.dart';
+import 'package:ti_boulot/Common/ResponseType.dart';
 import 'package:ti_boulot/Widgets/Message/ChatDetails/dart/ChatDetailsController.dart';
 import 'package:ti_boulot/Widgets/Message/ChatWidget/ChatWidget.dart';
 import 'package:ti_boulot/Widgets/Rating/RatingsPage.dart';
 import 'package:ti_boulot/Widgets/Rating/rating.dart';
+import 'package:ti_boulot/Widgets/SignUp/SignUpView.dart';
 import 'package:ti_boulot/main.dart';
+import 'package:ti_boulot/Widgets/Message/ChatDetails/dart/ChatDetailsConstructor.dart';
 
 class ChatDetailsPage extends StatefulWidget {
   final String workerID;
   final String name;
   final String conversationID;
+  final String firstname;
+  final String lastname;
+  final String email;
+  final String address;
+  final String rating;
 
-  ChatDetailsPage({this.workerID, this.name, this.conversationID});
+  ChatDetailsPage(
+      {this.workerID,
+      this.name,
+      this.conversationID,
+      this.firstname,
+      this.lastname,
+      this.email,
+      this.address,
+      this.rating});
+
+  ChatDetailsController data;
+  //ChatDetailsPage({this.data});
 
   @override
   _ChatDetailsPageState createState() => _ChatDetailsPageState();
@@ -30,6 +50,13 @@ class _ChatDetailsPageState extends State<ChatDetailsPage> {
 
   callSetState() {
     setState(() {});
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    timer.cancel();
+    super.dispose();
   }
 
   @override
@@ -66,10 +93,10 @@ class _ChatDetailsPageState extends State<ChatDetailsPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
-        title: Text(
-          widget.name,
-          style: TextStyle(color: Colors.white),
-        ),
+        // title: Text(
+        //   widget.name,
+        //   style: TextStyle(color: Colors.white),
+        // ),
         automaticallyImplyLeading: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
@@ -79,6 +106,69 @@ class _ChatDetailsPageState extends State<ChatDetailsPage> {
         ),
         actions: [
           chatDetailsController.loadingWidget,
+          FlatButton(
+            color: Colors.deepPurple,
+            child: Text(
+              widget.name,
+              style: TextStyle(fontSize: 20.0, color: Colors.white),
+            ),
+            onPressed: () async {
+              // await chatDetailsController.displayRating(widget.workerID);
+              UserDetailRating userDetail =
+                  await chatDetailsController.displayRating(
+                widget.workerID,
+              );
+              String displayRating =
+                  userDetail.rating == "null" ? "0" : userDetail.rating;
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text(
+                        userDetail.firstName + " " + userDetail.lastName,
+                        style:
+                            TextStyle(fontSize: 23.0, color: Color(0xFF673ab7)),
+                      ),
+                      content: Container(
+                        height: 320.0,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                userDetail.firstName,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              Text(
+                                userDetail.lastName,
+                                textAlign: TextAlign.left,
+                                style: TextStyle(fontSize: 16.0),
+                              ),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              Text(
+                                "The motherfucker has $displayRating star(s) rating!",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(fontSize: 16.0),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  });
+            },
+          ),
+          SizedBox(
+            width: 100.0,
+          ),
           FlatButton(
             color: Colors.deepPurpleAccent,
             child: Text(

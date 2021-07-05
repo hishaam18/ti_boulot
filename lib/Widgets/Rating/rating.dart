@@ -69,14 +69,14 @@ class _Rating extends State<Rating> {
             Row(
               children: [
                 RaisedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (_currentRating == 0) {
                       setState(() {
                         showError = true;
                       });
                     } else {
-                      ratingController.sendStars(
-                          widget.workerID, _currentRating);
+                      await ratingController.sendStars(
+                          widget.workerID, _currentRating, context);
                     }
                     setState(() {
                       _currentRating = 0;
@@ -90,7 +90,6 @@ class _Rating extends State<Rating> {
                 SizedBox(width: 20.0),
                 RaisedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/ChatDetailsPage');
                     setState(() {
                       _currentRating = 0;
                       if (_currentRating == 0) showError = true;

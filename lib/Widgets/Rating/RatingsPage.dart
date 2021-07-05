@@ -78,7 +78,8 @@ class _RatingsPage extends State<RatingsPage> {
 }
 
 class RatingController {
-  Future<void> sendStars(String workerID, int stars) async {
+  Future<void> sendStars(
+      String workerID, int stars, BuildContext context) async {
     var body = {
       "User_ID": Common.userID,
       "worker_ID": workerID,
@@ -89,7 +90,9 @@ class RatingController {
     ResponseType response =
         await API().post(ApiURL.getURL(ApiURL.sendRating), body);
 
-    print(body);
+    if (response.success) {
+      Navigator.pop(context);
+    }
   } //end Future<void>
 
 }

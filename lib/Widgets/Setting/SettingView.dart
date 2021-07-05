@@ -45,7 +45,7 @@ class _SettingViewState extends State<SettingView> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () =>
-              Navigator.pop(context, false), // returns to previous page
+              Navigator.pushNamed(context, '/Home'), // returns to previous page
           color: Colors.white,
         ),
       ),

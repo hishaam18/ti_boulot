@@ -21,6 +21,7 @@ class ApiURL {
   static const String getChatFromConversationID = 'getChatFromConversationID';
   static const String sendMessage = 'sendMessage';
   static const String sendRating = 'sendRating';
+  static const String displayRating = 'displayRating';
 
   //creating paths
   static String getURL(String url) {

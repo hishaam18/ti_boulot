@@ -58,7 +58,7 @@ async function registerUser(firstName, lastName, emailAddress, location, passwor
             } else {
                 // console.log(result);
                 resolve(1
-                    );
+                );
             }
         })
 
@@ -140,10 +140,6 @@ app.use("/login", function (req, res, next) {
 
                     //calling getUserType function
                     getUserType(result).then(result => {
-
-
-
-
 
                         res.status(200).json({
                             success: true,
@@ -1211,55 +1207,177 @@ async function getChatUsers(id) {
 }
 
 
-//-------------------------------------- Rating ------------------------------------------//
+//-------------------------------------- Save Rating ------------------------------------------//
 
-app.use("/sendRating", function (req, res, next) { 
+app.use("/sendRating", function (req, res, next) {
 
-var User_ID = req.body.User_ID; 
-var Worker_ID = req.body.worker_ID;
-var rating = req.body.rating;
+    var User_ID = req.body.User_ID;
+    var Worker_ID = req.body.worker_ID;
+    var rating = req.body.rating;
 
-sendRatingFunction(User_ID, Worker_ID, rating).then(result => { 
+    console.log(req.body);
 
-    if (result == 1) {
-        res.status(200).json({
-            success: true,
-            error: "",
-            data: {},
-            msg: ""
-        });
-    } else {  
-        res.status(200).json({
-            success: false,
-            error: "Failed to insert rating in database",
-            data: {},
-            msg: ""
-        });
+    checkExistence(User_ID, Worker_ID, rating).then(result => {
 
-    }
+
+
+        if (result == 1) {
+
+            changeExistingRating(User_ID, Worker_ID, rating).then(result => {
+                if (result == 1) {
+                    res.status(200).json({
+                        success: true,
+                        error: "",
+                        data: {},
+                        msg: ""
+                    });
+                } else {
+                    res.status(200).json({
+                        success: false,
+                        error: "Failed to update rating in database",
+                        data: {},
+                        msg: ""
+                    });
+
+                }
+            });
+
+        } else {
+
+            sendRatingFunction(User_ID, Worker_ID, rating).then(result => {
+
+                if (result == 1) {
+                    res.status(200).json({
+                        success: true,
+                        error: "",
+                        data: {},
+                        msg: ""
+                    });
+                } else {
+                    res.status(200).json({
+                        success: false,
+                        error: "Failed to insert rating in database",
+                        data: {},
+                        msg: ""
+                    });
+
+                }
+            });
+
+        }
+    });
+
+
 });
 
-});
 
-async function sendRatingFunction(User_ID, Worker_ID, rating) {
 
-    let sql = "INSERT INTO rating VALUES (Default,'" + User_ID + "','" + Worker_ID + "','" + rating + "');"
-    
+async function changeExistingRating(User_ID, Worker_ID, rating) {
+
+    let sql = "Update rating SET Star_Rating = '" + rating + "' WHERE User_ID='" + User_ID + "' AND Worker_ID='" + Worker_ID + "' ;";
+
     return new Promise((resolve, reject) => {
-    
+
         pool.query(sql, (err, result) => {
             if (err) {
                 resolve(err.code);
             } else {
                 resolve(1
-                    );
+                );
             }
         })
     });
-    
-     }
 
-    
-    
+
+};
+
+
+async function checkExistence(User_ID, Worker_ID, rating) {
+
+    let sql = "SELECT EXISTS(SELECT * From rating WHERE User_ID='" + User_ID + "' AND Worker_ID='" + Worker_ID + "') as result";
+
+    return new Promise((resolve, reject) => {
+
+        pool.query(sql, (err, result) => {
+            if (err) {
+                resolve(err.code);
+            } else {
+
+                resolve(result[0]['result']);
+            }
+        })
+    });
+
+}
+
+
+async function sendRatingFunction(User_ID, Worker_ID, rating) {
+
+    let sql = "INSERT INTO rating VALUES (Default,'" + User_ID + "','" + Worker_ID + "','" + rating + "');";
+
+    return new Promise((resolve, reject) => {
+
+        pool.query(sql, (err, result) => {
+            if (err) {
+                resolve(err.code);
+            } else {
+                resolve(1
+                );
+            }
+        })
+    });
+
+}
+
+//---------------------------------------------------Display stars-----------------------------------------------------//
+
+
+app.use("/displayRating", function (req, res, next) {
+
+    var Worker_ID = req.body.Worker_ID;
+
+    displayRatingFunction(Worker_ID).then(result => {
+
+        if (result == 0) {
+
+            res.status(200).json({
+                success: false,
+                error: "Could not select all from user",
+                data: {},
+                msg: ""
+            });
+        } else {
+
+            res.status(200).json({
+                success: true,
+                error: "",
+                data: result[0],
+                msg: ""
+            });
+
+        }
+
+    });
+
+});
+
+async function displayRatingFunction(Worker_ID) {
+
+    let sql = "SELECT (SELECT First_Name FROM user WHERE User_ID = '"+ Worker_ID+"') AS firstName,  (SELECT Last_Name FROM user WHERE User_ID = '"+ Worker_ID+"') AS lastName,  (SELECT Email FROM user WHERE User_ID = '"+ Worker_ID+"') AS emailAddress,  (SELECT Address FROM user WHERE User_ID = '"+ Worker_ID+"') AS address, (SELECT AVG(Star_Rating) FROM rating WHERE Worker_ID = '"+ Worker_ID+"') AS starRating;";
+
+    return new Promise((resolve, reject) => {
+
+        pool.query(sql, (err, result) => {
+            if (err) {
+                console.log(err)
+                resolve(0);
+            } else {
+                resolve(result);
+            }
+        })
+    });
+
+};
+
 
 module.exports = app;
