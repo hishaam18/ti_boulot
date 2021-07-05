@@ -169,10 +169,10 @@ class _SettingViewState extends State<SettingView> {
               ),
               child: ElevatedButton(
                 child: new Text(
-                  'Profile',
+                  'PROFILE',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 18,
+                      fontSize: 20,
                       color: Colors.deepPurple),
                 ),
                 style: ElevatedButton.styleFrom(
@@ -313,7 +313,7 @@ class _SettingViewState extends State<SettingView> {
                   'LOGOUT',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 18,
+                      fontSize: 20,
                       color: Colors.deepPurple),
                 ),
                 style: ElevatedButton.styleFrom(
