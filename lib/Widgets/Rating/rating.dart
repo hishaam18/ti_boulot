@@ -29,8 +29,6 @@ class _Rating extends State<Rating> {
   Widget _buildBody() {
     RatingsPage ratingsPage = new RatingsPage();
 
-    //   print(ratingsPage.rating);
-
     final stars = List<Widget>.generate(this.widget.maximumRating, (index) {
       return GestureDetector(
         child: _buildRatingStar(index),

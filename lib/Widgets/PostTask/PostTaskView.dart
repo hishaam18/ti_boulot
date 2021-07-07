@@ -253,10 +253,10 @@ class _PostTaskViewState extends State<PostTaskView> {
                                                           droppedPin.latitude,
                                                           droppedPin.longitude);
 
-                                                  postTaskViewController
-                                                          .displayAddress =
-                                                      objectAPI.fullAddress ??
-                                                          'loading';
+                                                  // postTaskViewController
+                                                  //         .displayAddress =
+                                                  //     objectAPI.fullAddress ??
+                                                  //         'loading';
                                                 });
                                               },
                                               center: latLng.LatLng(

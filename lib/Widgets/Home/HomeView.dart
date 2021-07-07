@@ -55,7 +55,7 @@ class _MyHomePageState extends State<HomeView> {
           TabItem(icon: Icons.settings, title: 'Setting'),
         ],
 
-        initialActiveIndex: 2, //optional, default as 0
+        initialActiveIndex: 1, //optional, default as 0
 
         onTap: (int i) {
           setState(() {

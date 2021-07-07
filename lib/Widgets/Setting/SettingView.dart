@@ -44,13 +44,13 @@ class _SettingViewState extends State<SettingView> {
             style: TextStyle(color: Colors.white),
           ),
         ),
-        automaticallyImplyLeading: true,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () =>
-              Navigator.pushNamed(context, '/Home'), // returns to previous page
-          color: Colors.white,
-        ),
+        leading: Container(),
+        // leading: IconButton(
+        //   icon: Icon(Icons.arrow_back),
+        //   onPressed: () =>
+        //       Navigator.pushNamed(context, '/Home'), // returns to previous page
+        //   color: Colors.white,
+        // ),
       ),
       body: Center(
         child: Column(
@@ -127,14 +127,16 @@ class _SettingViewState extends State<SettingView> {
                                 ),
                               );
                             }).toList(),
-                            onChanged: (value) {
+                            onChanged: (value) async {
                               Common.avatarPath = value;
-
+                              settingController.newAvatar = value;
                               setState(() {
                                 _user = Common.avatars.indexOf(value);
                               });
-
-                              print(value);
+                              await settingController.setAvatar(
+                                  settingController.newAvatar, Common.userID);
+                              //
+                              // print(value);
                             },
 
                             // items: settingController.dropdownList,
@@ -143,13 +145,6 @@ class _SettingViewState extends State<SettingView> {
                             //   setState(() {});
                             // },
                           ),
-                          IconButton(
-                              icon: Icon(
-                                Icons.save,
-                                color: Colors.deepPurple,
-                                size: 30,
-                              ),
-                              onPressed: () {})
                         ],
                       ),
                     ],
@@ -300,7 +295,7 @@ class _SettingViewState extends State<SettingView> {
               ),
             ),
             SizedBox(
-              height: 158.0,
+              height: 50.0,
             ),
             Container(
               width: MediaQuery.of(context).size.width * 0.9,
@@ -351,6 +346,9 @@ class _SettingViewState extends State<SettingView> {
                   ),
                 },
               ),
+            ),
+            SizedBox(
+              height: 110.0,
             ),
           ],
         ),

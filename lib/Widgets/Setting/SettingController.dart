@@ -10,6 +10,8 @@ import 'package:ti_boulot/Common/ResponseType.dart';
 import 'SettingConstructor.dart';
 
 class SettingController {
+  String newAvatar = '';
+
   Future<UserProfileDetail> displayProfile() async {
     var body = {
       "User_ID": Common.userID,
@@ -22,6 +24,14 @@ class SettingController {
         UserProfileDetail().fromJson(response.data);
 
     return userProfileDetail;
+  }
+
+  Future<void> setAvatar(String avatarPath, String userID) async {
+    List<String> path = avatarPath.split("/");
+    var body = {"User_ID": userID, "Avatar_Path": path[2]};
+
+    ResponseType response =
+        await API().post(ApiURL.getURL(ApiURL.setAvatar), body);
   }
 
 // List<DropdownMenuItem> dropdownList = new List<DropdownMenuItem>();

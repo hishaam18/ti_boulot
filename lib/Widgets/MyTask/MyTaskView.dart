@@ -66,13 +66,14 @@ class _MyTaskViewState extends State<MyTaskView> {
             style: TextStyle(color: Colors.white),
           ),
         ),
-        automaticallyImplyLeading: true,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () =>
-              Navigator.pop(context, false), // returns to previous page
-          color: Colors.white,
-        ),
+        // automaticallyImplyLeading: true,
+        // leading: IconButton(
+        //   icon: Icon(Icons.arrow_back),
+        //   onPressed: () =>
+        //       Navigator.pop(context, false), // returns to previous page
+        //   color: Colors.white,
+        // ),
+        leading: Container(),
       ),
       body: Container(
         child: MytaskController

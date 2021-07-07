@@ -821,7 +821,6 @@ app.use("/getChatListForUser", function (req, res, next) {
     var User_ID = req.body.User_ID;
     var timeZoneOffset = req.body.timeZoneOffset;
 
-
     getChatListForUser(User_ID, timeZoneOffset).then(result => {
 
         if (result == -1) {
@@ -852,7 +851,7 @@ app.use("/getChatListForUser", function (req, res, next) {
 
 async function getChatListForUser(User_ID, timeZoneOffset) {
 
-    let sql = "SELECT user.User_ID, user.First_Name, user.Last_Name, convo.Conversation_Id, ADDTIME(convo.Timestamp, '" + timeZoneOffset + "') AS Timestamp FROM user INNER JOIN conversation AS convo on convo.Recipient_One = user.User_ID WHERE convo.Recipient_Two = '" + User_ID + "' UNION SELECT user.User_ID, user.First_Name, user.Last_Name, convo.Conversation_Id,  ADDTIME(convo.Timestamp, '" + timeZoneOffset + "') AS Timestamp FROM user INNER JOIN conversation AS convo on convo.Recipient_Two = user.User_ID WHERE convo.Recipient_One = '" + User_ID + "';";
+    let sql = "SELECT user.User_ID, user.First_Name, user.Last_Name, user.Avatar_Path, convo.Conversation_Id, ADDTIME(convo.Timestamp, '" + timeZoneOffset + "') AS Timestamp FROM user INNER JOIN conversation AS convo on convo.Recipient_One = user.User_ID WHERE convo.Recipient_Two = '" + User_ID + "' UNION SELECT user.User_ID, user.First_Name, user.Last_Name, user.Avatar_Path, convo.Conversation_Id,  ADDTIME(convo.Timestamp, '" + timeZoneOffset + "') AS Timestamp FROM user INNER JOIN conversation AS convo on convo.Recipient_Two = user.User_ID WHERE convo.Recipient_One = '" + User_ID + "';";
 
     // console.log(sql);
 
@@ -862,7 +861,8 @@ async function getChatListForUser(User_ID, timeZoneOffset) {
 
         pool.query(sql, (err, result) => {
             if (err) {
-                reject("Error executing the query: " + JSON.stringify(err));
+                console.log(err)
+                // reject("Error executing the query: " + JSON.stringify(err));
                 resolve(-1);
             } else {
                 // console.log(result)
@@ -1363,7 +1363,7 @@ app.use("/displayRating", function (req, res, next) {
 
 async function displayRatingFunction(Worker_ID) {
 
-    let sql = "SELECT (SELECT First_Name FROM user WHERE User_ID = '"+ Worker_ID+"') AS firstName,  (SELECT Last_Name FROM user WHERE User_ID = '"+ Worker_ID+"') AS lastName,  (SELECT Email FROM user WHERE User_ID = '"+ Worker_ID+"') AS emailAddress,  (SELECT Address FROM user WHERE User_ID = '"+ Worker_ID+"') AS address, (SELECT AVG(Star_Rating) FROM rating WHERE Worker_ID = '"+ Worker_ID+"') AS starRating;";
+    let sql = "SELECT (SELECT First_Name FROM user WHERE User_ID = '" + Worker_ID + "') AS firstName,  (SELECT Last_Name FROM user WHERE User_ID = '" + Worker_ID + "') AS lastName,  (SELECT Email FROM user WHERE User_ID = '" + Worker_ID + "') AS emailAddress,  (SELECT Address FROM user WHERE User_ID = '" + Worker_ID + "') AS address, (SELECT AVG(Star_Rating) FROM rating WHERE Worker_ID = '" + Worker_ID + "') AS starRating;";
 
     return new Promise((resolve, reject) => {
 
@@ -1386,9 +1386,8 @@ app.use("/displayProfile", function (req, res, next) {
 
     var User_ID = req.body.User_ID;
 
-    console.log(User_ID);
 
-   displayProfileFunction(User_ID).then(result => {
+    displayProfileFunction(User_ID).then(result => {
 
         if (result == 0) {
 
@@ -1415,7 +1414,7 @@ app.use("/displayProfile", function (req, res, next) {
 
 async function displayProfileFunction(User_ID) {
 
-    let sql = "SELECT (SELECT First_Name FROM user WHERE User_ID = '"+ User_ID+"') AS firstName,  (SELECT Last_Name FROM user WHERE User_ID = '"+ User_ID+"') AS lastName,  (SELECT Email FROM user WHERE User_ID = '"+ User_ID+"') AS emailAddress,  (SELECT Address FROM user WHERE User_ID = '"+ User_ID+"') AS address, (SELECT AVG(Star_Rating) FROM rating WHERE Worker_ID = '"+ User_ID+"') AS starRating;";
+    let sql = "SELECT (SELECT First_Name FROM user WHERE User_ID = '" + User_ID + "') AS firstName,  (SELECT Last_Name FROM user WHERE User_ID = '" + User_ID + "') AS lastName,  (SELECT Email FROM user WHERE User_ID = '" + User_ID + "') AS emailAddress,  (SELECT Address FROM user WHERE User_ID = '" + User_ID + "') AS address, (SELECT AVG(Star_Rating) FROM rating WHERE Worker_ID = '" + User_ID + "') AS starRating;";
 
     return new Promise((resolve, reject) => {
 
@@ -1431,6 +1430,56 @@ async function displayProfileFunction(User_ID) {
 
 };
 
+// -----------------------------------------------------------Set avatar --------------------------------------------------------------//
 
+app.use("/setAvatar", function (req, res, next) {
+
+
+    var User_ID = req.body.User_ID;
+    var Avatar_Path = req.body.Avatar_Path;
+
+
+    setAvatar(User_ID, Avatar_Path).then(result => {
+
+        if (result == 0) {
+
+            res.status(200).json({
+                success: false,
+                error: "Could not set new avatar path",
+                data: {},
+                msg: ""
+            });
+        } else {
+
+            res.status(200).json({
+                success: true,
+                error: "",
+                data: {},
+                msg: ""
+            });
+
+        }
+
+    });
+
+});
+
+async function setAvatar(User_ID, Avatar_Path) {
+
+    let sql = "UPDATE user SET Avatar_Path = '"+Avatar_Path+"' WHERE User_ID = '"+User_ID+"';";
+
+    return new Promise((resolve, reject) => {
+
+        pool.query(sql, (err, result) => {
+            if (err) {
+                console.log(err)
+                resolve(0);
+            } else {
+                resolve(1);
+            }
+        })
+    });
+
+};
 
 module.exports = app;

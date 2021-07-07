@@ -56,14 +56,15 @@ class _MessageViewState extends State<MessageView> {
             style: TextStyle(color: Colors.white),
           ),
         ),
-        automaticallyImplyLeading: true,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pushNamed(
-              context, '/WorkerHomeView'), // returns to previous page
-
-          color: Colors.white,
-        ),
+        leading: Container(),
+        // automaticallyImplyLeading: true,
+        // leading: IconButton(
+        //   icon: Icon(Icons.arrow_back),
+        //   onPressed: () => Navigator.pushNamed(
+        //       context, '/WorkerHomeView'), // returns to previous page
+        //
+        //   color: Colors.white,
+        // ),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,

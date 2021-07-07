@@ -58,11 +58,11 @@ class _ChatWidgetState extends State<ChatWidget> {
                 ),
                 CircleAvatar(
                   //taking random pictures from the avatar list and assigning to users
-                  backgroundImage: ExactAssetImage(
-                      "images/avatars/${Common.avatars[random.nextInt(Common.avatars.length)]}"
+                  backgroundImage:
+                      ExactAssetImage("images/avatars/${widget.data.avatarPath}"
 
-                      //  "${Common.avatarPath}",
-                      ),
+                          //  "${Common.avatarPath}",
+                          ),
 
                   minRadius: 35,
                   maxRadius: 35,

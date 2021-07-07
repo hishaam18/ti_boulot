@@ -183,7 +183,7 @@ class _ChatDetailsPageState extends State<ChatDetailsPage> {
                                 height: 10.0,
                               ),
                               Text(
-                                "$displayRating" + " " + "out of 5!",
+                                "$displayRating" + " " + "out of 5 Stars !",
                                 textAlign: TextAlign.left,
                                 style: TextStyle(fontSize: 16.0),
                               ),

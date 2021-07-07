@@ -184,6 +184,21 @@ class _TaskWidgetState extends State<TaskWidget> {
                                             ),
 
                                             Text(address), //Address
+
+                                            SizedBox(
+                                              height: 20.0,
+                                            ),
+                                            RaisedButton(
+                                                child: Text(
+                                                  'Make offer',
+                                                  style:
+                                                      TextStyle(fontSize: 13),
+                                                ),
+                                                color: Colors.deepPurple,
+                                                textColor: Colors.white70,
+                                                padding: EdgeInsets.all(5.0),
+                                                splashColor: Colors.white70,
+                                                onPressed: () {}),
                                           ],
                                         ),
                                       ),
