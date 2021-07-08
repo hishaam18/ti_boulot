@@ -24,6 +24,7 @@ class ApiURL {
   static const String displayRating = 'displayRating';
   static const String displayProfile = 'displayProfile';
   static const String setAvatar = 'setAvatar';
+  static const String sendTaskRating = 'sendTaskRating';
   //creating paths
   static String getURL(String url) {
     return baseURL + url.toString();

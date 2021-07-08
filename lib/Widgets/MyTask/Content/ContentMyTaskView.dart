@@ -4,6 +4,7 @@ import 'package:ti_boulot/Common/API.dart';
 import 'package:ti_boulot/Common/ApiURL.dart';
 import 'package:ti_boulot/Common/Common.dart';
 import 'package:ti_boulot/Widgets/Browse/BrowseControllerConstructor.dart';
+import 'package:ti_boulot/Widgets/MyTask/Content/ContentMyTaskController.dart';
 import 'package:ti_boulot/Widgets/MyTask/myTaskControllerConstructor.dart';
 
 class ContentMyTaskView extends StatefulWidget {
@@ -22,11 +23,16 @@ class _ContentMyTaskViewState extends State<ContentMyTaskView> {
     String rawAddress = await API().getAddress(
         ApiURL.reverseGeocodingURL, widget.data.lat, widget.data.lng);
     convertAddress = rawAddress;
+
+    // print(widget.data.taskID);
   }
 
   @override
   Widget build(BuildContext context) {
     loadConvertedAddress();
+
+    ContentMyTaskController contentMyTaskController =
+        new ContentMyTaskController();
 
     return Center(
       child: Column(
@@ -93,6 +99,9 @@ class _ContentMyTaskViewState extends State<ContentMyTaskView> {
                                       data: widget.data,
                                       address: convertAddress);
                                 });
+
+                            // contentMyTaskController
+                            //     .taskRating(widget.data.taskID);
                           },
                           icon: Icon(
                             Icons.open_in_new,
@@ -125,6 +134,8 @@ class popUpView extends StatefulWidget {
 
 class _popUpViewState extends State<popUpView> {
   double myValue = 0;
+  ContentMyTaskController contentMyTaskController =
+      new ContentMyTaskController();
 
   @override
   Widget build(BuildContext context) {
@@ -278,7 +289,10 @@ class _popUpViewState extends State<popUpView> {
                       textColor: Colors.white70,
                       padding: EdgeInsets.all(5.0),
                       splashColor: Colors.white70,
-                      onPressed: () {}),
+                      onPressed: () {
+                        contentMyTaskController.taskRating(
+                            widget.data.taskID.toString(), myValue.toString());
+                      }),
                   SizedBox(
                     width: 15.0,
                   ),

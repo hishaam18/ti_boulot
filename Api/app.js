@@ -356,11 +356,14 @@ app.use("/postTask", function (req, res, next) {
     var budget = req.body.budget;
     var displayDate = req.body.displayDate;
     var displayDeadlineDate = req.body.displayDeadlineDate;
+    var taskRating = 0; 
+    var completed = false;
+    var takenBy = null;
 
     //console.log(User_ID)
 
 
-    postTaskFunction(User_ID, title, task_description, lat, lng, budget, displayDate, displayDeadlineDate).then(result => {
+    postTaskFunction(User_ID, title, task_description, lat, lng, budget, displayDate, displayDeadlineDate, taskRating, completed, takenBy).then(result => {
 
         if (result == 0) {
             res.status(200).json({
@@ -385,9 +388,9 @@ app.use("/postTask", function (req, res, next) {
 
 });
 
-async function postTaskFunction(User_ID, title, task_description, lat, lng, budget, displayDate, displayDeadlineDate) {
+async function postTaskFunction(User_ID, title, task_description, lat, lng, budget, displayDate, displayDeadlineDate, taskRating, completed, takenBy ) {
 
-    let sql = "INSERT INTO task VALUES (Default ,'" + User_ID + "','" + title + "','" + task_description + "','" + lat + "', '" + lng + "','" + budget + "','" + displayDate + "','" + displayDeadlineDate + "');"
+    let sql = "INSERT INTO task VALUES (Default ,'" + User_ID + "','" + title + "','" + task_description + "','" + lat + "', '" + lng + "','" + budget + "','" + displayDate + "','" + displayDeadlineDate + "','" + taskRating + "','" + completed + "','" + takenBy + "' );"
 
     // console.log(sql);
 
@@ -1481,5 +1484,64 @@ async function setAvatar(User_ID, Avatar_Path) {
     });
 
 };
+
+
+// ----------------------------------------------------------- sendTaskRating --------------------------------------------------------------//
+
+
+app.use("/sendTaskRating", function (req, res, next) { 
+
+var taskID = req.body.taskID;
+var taskRating = req.body.taskRating;
+
+sendTaskRatingFunction(taskID, taskRating).then(result => {
+
+    if (result == 0) {
+
+        res.status(200).json({
+            success: false,
+            error: "Could not return database response",
+            data: {},
+            msg: ""
+        });
+    } else {
+
+        res.status(200).json({
+            success: true,
+            error: "",
+            data: {},
+            msg: ""
+        });
+
+    }
+
+});
+
+
+
+});
+
+
+
+async function sendTaskRatingFunction(taskID, taskRating) {
+
+    let sql = "UPDATE task SET Task_Rating = '"+taskRating+"', Completed = '"+true+"' WHERE Task_ID = '"+taskID+"';";
+
+    return new Promise((resolve, reject) => {
+
+        pool.query(sql, (err, result) => {
+            if (err) {
+                console.log(err)
+                resolve(0);
+            } else {
+                resolve(1);
+            }
+        })
+    });
+
+};
+
+
+
 
 module.exports = app;
