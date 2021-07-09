@@ -78,8 +78,6 @@ class PostTaskViewController {
     ResponseType response =
         await API().post(ApiURL.getURL(ApiURL.postTask), body);
 
-    print(response.data);
-
     if (response.success = true) {
       print(response.data);
     }

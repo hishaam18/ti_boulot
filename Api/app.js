@@ -1542,6 +1542,128 @@ async function sendTaskRatingFunction(taskID, taskRating) {
 };
 
 
+//--------------------------------------------------- allTaskData------------------------------------------------------//
 
+
+app.use("/allTaskData", function (req, res, next) { 
+
+var taskID = req.body.taskID;
+//console.log(taskID);
+
+allTaskDataFunction(taskID).then(result => {
+
+    //----------------------------
+    if (result == 0) {
+        res.status(200).json({
+            success: false,
+            error: "Failed to get all_task_data",
+            data: {},
+            msg: ""
+        });
+    } else {
+        res.status(200).json({
+            success: true,
+            error: "",
+            data: {
+                "all_task_data": result
+            },
+            msg: ""
+        });
+
+
+    }
+
+});
+
+});
+
+async function allTaskDataFunction(taskID) {
+
+   let sqlQuery = "SELECT * FROM task WHERE Task_ID = '" + taskID + "'"
+
+   console.log(sqlQuery);
+
+ return new Promise((resolve, reject) => {
+
+    pool.query(sqlQuery, (err, result) => {
+        if (err) {
+            reject("Error executing the query: " + JSON.stringify(err));
+            resolve(0);
+        } else {
+            
+            resolve(result); //result contains an array of json objects
+        }
+    });
+
+});
+
+}
+
+//--------------------------------------------------- offerDetails------------------------------------------------------//
+
+
+app.use("/offerDetails", function (req, res, next) { 
+    var taskID = req.body.taskID;
+  //  console.log(taskID);
+
+    offerDetailsFunction(taskID).then(result => {
+
+        if (result == 0) {
+            res.status(200).json({
+                success: false,
+                error: "Failed to get all_task_data",
+                data: {},
+                msg: ""
+            });
+        } else {
+            res.status(200).json({
+                success: true,
+                error: "",
+                data: {
+                    "offer_details": result
+                },
+                msg: ""
+            });
+    
+    
+        }
+    
+    });
+
+});
+
+
+async function offerDetailsFunction(taskID) {
+
+    let sqlQuery = "SELECT * FROM offer WHERE Task_ID = '" + taskID + "'"
+ 
+    //console.log(sqlQuery);
+ 
+  return new Promise((resolve, reject) => {
+ 
+     pool.query(sqlQuery, (err, result) => {
+         if (err) {
+             reject("Error executing the query: " + JSON.stringify(err));
+             resolve(0);
+         } else {
+             
+             resolve(result); //result contains an array of json objects
+         }
+     });
+ 
+ });
+ 
+ }
+ 
+//--------------------------------------------------- detailsTakenBy------------------------------------------------------//
+app.use("/detailsTakenBy", function (req, res, next) { 
+
+    var workerID = req.body.workerID;
+  // console.log(req);
+   console.log("waaaaa" + ' ' +workerID);
+
+});
+
+ //detailsTakenBy
 
 module.exports = app;

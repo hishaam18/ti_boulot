@@ -10,19 +10,26 @@ class myTaskControllerConstructor {
   int budget;
   String datePosted;
   String dateDeadline;
+  int taskRating;
+  String completed;
+  String takenBy;
 
-  myTaskControllerConstructor(
-      {this.taskID,
-      this.userID,
-      this.title,
-      this.taskDescription,
-      this.lat,
-      this.lng,
-      this.budget,
-      this.datePosted,
-      this.dateDeadline});
+  myTaskControllerConstructor({
+    this.taskID,
+    this.userID,
+    this.title,
+    this.taskDescription,
+    this.lat,
+    this.lng,
+    this.budget,
+    this.datePosted,
+    this.dateDeadline,
+    this.taskRating,
+    this.completed,
+    this.takenBy,
+  });
 
-  myTaskControllerConstructor.fromJson(Map<String, dynamic> json) {
+  myTaskControllerConstructor fromJson(Map<String, dynamic> json) {
     this.taskID = json['Task_ID'];
     this.userID = int.parse(json['User_ID']);
     this.title = json['Title'];
@@ -32,6 +39,10 @@ class myTaskControllerConstructor {
     this.budget = json['Budget'];
     this.datePosted = json['Date_Posted'];
     this.dateDeadline = json['Date_Deadline'];
+    this.taskRating = json['Task_Rating'];
+    this.completed = json['Completed'];
+    this.takenBy = json['Taken_By'];
+    return this;
   }
 
   Map<String, dynamic> toJson() {
@@ -45,6 +56,9 @@ class myTaskControllerConstructor {
     data['Budget'] = this.budget;
     data['Date_Posted'] = this.datePosted;
     data['Date_Deadline'] = this.dateDeadline;
+    data['Task_Rating'] = this.taskRating;
+    data['Completed'] = this.completed;
+    data['Taken_By'] = this.takenBy;
     return data;
   }
 }

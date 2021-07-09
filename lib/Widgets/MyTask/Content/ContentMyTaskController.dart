@@ -1,9 +1,18 @@
+import 'dart:convert';
+
 import 'package:ti_boulot/Common/API.dart';
 import 'package:ti_boulot/Common/ApiURL.dart';
 import 'package:ti_boulot/Common/Common.dart';
 import 'package:ti_boulot/Common/ResponseType.dart';
+import 'package:ti_boulot/Widgets/MyTask/Content/offerConstructor.dart';
 
 class ContentMyTaskController {
+  List<offerConstructor> offers = new List<offerConstructor>();
+  List<String> dropdownItems = new List<String>();
+  Map<String, String> offerUser = new Map<String, String>();
+  String selectedValue;
+
+  //---------- UPDATE task table------///
   Future<void> taskRating(String taskID, taskRating) async {
     var body = {
       "taskID": taskID,
@@ -12,7 +21,55 @@ class ContentMyTaskController {
 
     ResponseType response =
         await API().post(ApiURL.getURL(ApiURL.sendTaskRating), body);
+  }
 
-    print(response.data);
+//------------------ Get all task data to complete modal (conditions)---------------------------
+  Future<void> allTaskData(String taskID) async {
+    var body = {
+      "taskID": taskID,
+    };
+
+    ResponseType response =
+        await API().post(ApiURL.getURL(ApiURL.allTaskData), body);
+
+    if (response.success) {
+      print(response.data);
+    }
+  }
+
+//------------------ Get all offer details to put in modal ---------------------------
+  Future<List<offerConstructor>> offerDetails(String taskID) async {
+    var body = {
+      "taskID": taskID,
+    };
+
+    ResponseType response =
+        await API().post(ApiURL.getURL(ApiURL.offerDetails), body);
+
+    if (response.success) {
+      offers.clear();
+      for (var offer in response.data['offer_details']) {
+        offers.add(offerConstructor.fromJson(offer));
+      }
+
+      dropdownItems.clear();
+      for (var offer in offers) {
+        String offerText =
+            "Pilon offered ${offer.offeringPrice} with comments '${offer.comment}'";
+        dropdownItems.add(offerText);
+        offerUser[offerText] = offer.userID;
+      }
+    }
+  }
+
+  //----------------------------------- sending info for taken_by---------------------------------//
+
+  Future<void> detailsTakenBy(String workerID) async {
+    var body = {
+      "workerID": workerID,
+    };
+
+    ResponseType response =
+        await API().post(ApiURL.getURL(ApiURL.detailsTakenBy), body);
   }
 }
