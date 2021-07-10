@@ -18,12 +18,16 @@ class _MyTaskViewState extends State<MyTaskView> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    loadingTasks();
+    loadData();
+  }
+
+  loadData() async {
+    await loadingTasks();
   }
 
   loadingTasks() async {
-    List<Widget> columnWidgets = await MytaskController
-        .getMyTasks(); //waits for getMyTasks() function to get all tasks from database
+    List<Widget> columnWidgets = await MytaskController.getMyTasks(
+        loadData); //waits for getMyTasks() function to get all tasks from database
 
     setState(() {
       MytaskController.bodyContent = Scrollbar(

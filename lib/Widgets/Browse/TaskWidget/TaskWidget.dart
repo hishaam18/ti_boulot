@@ -16,9 +16,9 @@ class _TaskWidgetState extends State<TaskWidget> {
 
   //function to convert lat lng to address and stores in variable 'address'
   Future<void> loadAddress() async {
-    String rawAddress = await API().getAddress(
-        ApiURL.reverseGeocodingURL, widget.data.lat, widget.data.lng);
-    address = rawAddress;
+    // String rawAddress = await API().getAddress(
+    //     ApiURL.reverseGeocodingURL, widget.data.lat, widget.data.lng);
+    address = 'rawAddress';
   }
 
   @override
@@ -34,7 +34,7 @@ class _TaskWidgetState extends State<TaskWidget> {
             },
             child: Container(
               width: MediaQuery.of(context).size.width * 0.9,
-              height: 100.0,
+              height: 110.0,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(
                   Radius.circular(15.0),
@@ -47,30 +47,33 @@ class _TaskWidgetState extends State<TaskWidget> {
                   children: [
                     Container(
                       width: MediaQuery.of(context).size.width * 0.6,
-                      child: SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              widget.data.title,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFF673ab7),
-                                fontSize: 19.0,
-                              ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.data.title,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF673ab7),
+                              fontSize: 19.0,
                             ),
-                            SizedBox(
-                              height: 3.0,
-                            ),
-                            Text(
+                          ),
+                          SizedBox(
+                            height: 5.0,
+                          ),
+                          Flexible(
+                            child: Text(
                               widget.data.taskDescription,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 16.0,
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                     Spacer(),

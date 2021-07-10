@@ -18,7 +18,7 @@ class myTaskController {
   ); //loading circle
 
   //Function to get all tasks from backend
-  Future<List<Widget>> getMyTasks() async {
+  Future<List<Widget>> getMyTasks(Function loadData) async {
     var body = {
       "User_ID": Common.userID,
     };
@@ -42,6 +42,7 @@ class myTaskController {
         //getting information from backend retrieveTask(), response.data is the data field from the http response and its called task_data
         //task_data contains all
         columnWidgets.add(ContentMyTaskView(
+          loadData: loadData,
           data: myTaskControllerConstructor().fromJson(response
                   .data['mytask_data'][
               i]), //displaying task_data from json format to normal (see TaskWidget.dart)

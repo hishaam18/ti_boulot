@@ -25,7 +25,6 @@ app.use(function (req, res, next) {
 
 app.use("/register", function (req, res, next) {
 
-    // console.log(req.body);
 
     var User_ID = req.body.User_ID;
     var firstName = req.body.firstName;
@@ -47,7 +46,6 @@ async function registerUser(firstName, lastName, emailAddress, location, passwor
 
     let sql = "INSERT INTO user VALUES (Default ,'" + firstName + "','" + lastName + "','" + emailAddress + "','" + location + "','" + password + "','" + accountType + "', 'null' ); SET @last_id =  LAST_INSERT_ID(); INSERT INTO worker VALUES (DEFAULT, @last_id ,'" + occupation + "','" + experience + "');"
 
-    // console.log(sql);
 
     return new Promise((resolve, reject) => {
 
@@ -447,7 +445,7 @@ app.use("/retrieveTask", function (req, res, next) {
 
 async function retrieveTaskFunction() {
 
-    let sql = "SELECT * FROM task;"
+    let sql = "SELECT * FROM task ORDER BY Task_ID desc;"
 
     // console.log(sql);
 
@@ -510,7 +508,7 @@ returns result json object of all tasks for the logged in user
 
 async function getMyTasksFunction(User_ID) {
 
-    let sql = " SELECT * FROM task WHERE User_ID = '" + User_ID + "';"
+    let sql = " SELECT * FROM task WHERE User_ID = '" + User_ID + "' ORDER BY Task_ID Desc;"
 
     // console.log(sql);
 
@@ -1581,7 +1579,7 @@ async function allTaskDataFunction(taskID) {
 
    let sqlQuery = "SELECT * FROM task WHERE Task_ID = '" + taskID + "'"
 
-   console.log(sqlQuery);
+ //console.log(sqlQuery);
 
  return new Promise((resolve, reject) => {
 
@@ -1658,11 +1656,105 @@ async function offerDetailsFunction(taskID) {
 //--------------------------------------------------- detailsTakenBy------------------------------------------------------//
 app.use("/detailsTakenBy", function (req, res, next) { 
 
+    var taskID = req.body.taskID;
     var workerID = req.body.workerID;
-  // console.log(req);
-   console.log("waaaaa" + ' ' +workerID);
+
+    detailsTakenByFunction(taskID, workerID).then(result => {
+
+        if (result == 0) {
+            res.status(200).json({
+                success: false,
+                error: "Failed to get all_task_data",
+                data: {},
+                msg: ""
+            });
+        } else {
+            res.status(200).json({
+                success: true,
+                error: "",
+                data: {
+                    result
+                },
+                msg: ""
+            });
+    
+    
+        }
+    
+    });
 
 });
+
+
+async function detailsTakenByFunction(taskID, workerID) {
+
+    let sqlQuery = "UPDATE task SET Taken_By='"+workerID+"' WHERE Task_ID='"+taskID+"'" ;
+
+    return new Promise((resolve, reject) => {
+ 
+        pool.query(sqlQuery, (err, result) => {
+            if (err) {
+                reject("Error executing the query: " + JSON.stringify(err));
+                resolve(0);
+            } else {
+                
+                resolve(result); //result contains an array of json objects
+            }
+        });
+    
+    });
+
+}
+
+
+//--------------------------------------------------- getTaskDataByID------------------------------------------------------//
+app.use("/getTaskDataByID", function (req, res, next) { 
+
+    var taskID = req.body.taskID;
+
+    getTaskDataByID(taskID).then(result => {
+
+        if (result == 0) {
+            res.status(200).json({
+                success: false,
+                error: "Failed to get all_task_data",
+                data: {},
+                msg: ""
+            });
+        } else {
+            res.status(200).json({
+                success: true,
+                error: "",
+                data: result[0],
+                msg: ""
+            });
+    
+    
+        }
+    
+    });
+
+});
+
+
+async function getTaskDataByID(taskID) {
+
+    let sqlQuery = "SELECT * FROM task WHERE Task_ID = '"+taskID+"';" ;
+
+    return new Promise((resolve, reject) => {
+ 
+        pool.query(sqlQuery, (err, result) => {
+            if (err) {
+                reject("Error executing the query: " + JSON.stringify(err));
+                resolve(0);
+            } else {
+                resolve(result); //result contains an array of json objects
+            }
+        });
+    
+    });
+
+}
 
  //detailsTakenBy
 

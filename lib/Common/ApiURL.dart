@@ -28,6 +28,7 @@ class ApiURL {
   static const String allTaskData = 'allTaskData';
   static const String offerDetails = 'offerDetails';
   static const String detailsTakenBy = 'detailsTakenBy';
+  static const String getTaskDataByID = 'getTaskDataByID';
 
   //creating paths
   static String getURL(String url) {

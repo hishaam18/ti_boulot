@@ -10,12 +10,16 @@ import 'package:ti_boulot/Widgets/MyTask/myTaskControllerConstructor.dart';
 
 class ContentMyTaskView extends StatefulWidget {
   myTaskControllerConstructor data;
-  ContentMyTaskView({this.data});
+  final Function loadData;
+  ContentMyTaskView({this.data, this.loadData});
   @override
   _ContentMyTaskViewState createState() => _ContentMyTaskViewState();
 }
 
 class _ContentMyTaskViewState extends State<ContentMyTaskView> {
+  ContentMyTaskController contentMyTaskController =
+      new ContentMyTaskController();
+
   String convertAddress;
   // used in slider
 
@@ -31,9 +35,6 @@ class _ContentMyTaskViewState extends State<ContentMyTaskView> {
   @override
   Widget build(BuildContext context) {
     loadConvertedAddress();
-
-    ContentMyTaskController contentMyTaskController =
-        new ContentMyTaskController();
 
     return Center(
       child: Column(
@@ -97,6 +98,7 @@ class _ContentMyTaskViewState extends State<ContentMyTaskView> {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return popUpView(
+                                      loadData: widget.loadData,
                                       data: widget.data,
                                       address: convertAddress);
                                 });
@@ -122,10 +124,11 @@ class _ContentMyTaskViewState extends State<ContentMyTaskView> {
 }
 
 class popUpView extends StatefulWidget {
-  final myTaskControllerConstructor data;
+  final Function loadData;
+  myTaskControllerConstructor data;
   final String address;
 
-  popUpView({this.data, this.address});
+  popUpView({this.loadData, this.data, this.address});
   @override
   _popUpViewState createState() => _popUpViewState();
 }
@@ -148,7 +151,13 @@ class _popUpViewState extends State<popUpView> {
 
   loadData() async {
     await contentMyTaskController.offerDetails(widget.data.taskID.toString());
+
     setState(() {});
+  }
+
+  refreshData() async {
+    widget.data =
+        await contentMyTaskController.getTaskDataByID(widget.data.taskID);
   }
 
   @override
@@ -243,6 +252,8 @@ class _popUpViewState extends State<popUpView> {
 
                 if (widget.data.takenBy == null)
                   Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         'Assign Task',
@@ -287,14 +298,20 @@ class _popUpViewState extends State<popUpView> {
                             'Assign',
                             style: TextStyle(fontSize: 13),
                           ),
-                          color: Colors.red,
-                          textColor: Colors.white70,
+                          color: Colors.deepPurple,
+                          textColor: Colors.white,
                           padding: EdgeInsets.all(5.0),
                           splashColor: Colors.white70,
                           onPressed: () async {
+                            //sending taskID and user ID to api
                             await contentMyTaskController.detailsTakenBy(
+                                widget.data.taskID.toString(),
                                 contentMyTaskController.offerUser[
                                     contentMyTaskController.selectedValue]);
+                            await widget.loadData();
+                            await refreshData();
+                            setState(() {});
+
                             //  await detailsTakenBy(contentMyTaskController.offerUser[contentMyTaskController.selectedValue]);
                           }),
                       SizedBox(
@@ -306,6 +323,7 @@ class _popUpViewState extends State<popUpView> {
                 if ((widget.data.takenBy != null) &&
                     (widget.data.taskRating == 0))
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         ' Rate: Quality of work (${myValue.toInt().toString()})',
@@ -361,12 +379,42 @@ class _popUpViewState extends State<popUpView> {
                       SizedBox(
                         height: 20.0,
                       ),
+                      RaisedButton(
+                          child: Text(
+                            'Rate',
+                            style: TextStyle(fontSize: 13),
+                          ),
+                          color: Colors.deepPurple,
+                          textColor: Colors.white70,
+                          padding: EdgeInsets.all(5.0),
+                          splashColor: Colors.white70,
+                          onPressed: () async {
+                            contentMyTaskController.taskRating(
+                                widget.data.taskID.toString(),
+                                myValue.toString());
+
+                            contentMyTaskController
+                                .allTaskData(widget.data.taskID.toString());
+
+                            await widget.loadData();
+                            await refreshData();
+                            setState(() {});
+
+                            // Future.delayed(const Duration(milliseconds: 400),
+                            //     () {
+                            //   Navigator.pop(context);
+                            // });
+                          }),
+                      SizedBox(
+                        height: 20.0,
+                      ),
                     ],
                   ),
 
                 if ((widget.data.takenBy != null) &&
                     (widget.data.taskRating != 0))
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         'Task Quality Rating',
@@ -377,9 +425,9 @@ class _popUpViewState extends State<popUpView> {
                       SizedBox(
                         height: 8.0,
                       ),
-                      Text('You have given a rating of ' +
+                      Text('You rated this task ' +
                           widget.data.taskRating.toString() +
-                          'Stars'),
+                          '/5 Stars'),
                       SizedBox(
                         height: 20.0,
                       ),
@@ -388,33 +436,12 @@ class _popUpViewState extends State<popUpView> {
 
                 Row(
                   children: [
-                    RaisedButton(
-                        child: Text(
-                          'Completed',
-                          style: TextStyle(fontSize: 13),
-                        ),
-                        color: Colors.deepPurple,
-                        textColor: Colors.white70,
-                        padding: EdgeInsets.all(5.0),
-                        splashColor: Colors.white70,
-                        onPressed: () {
-                          contentMyTaskController.taskRating(
-                              widget.data.taskID.toString(),
-                              myValue.toString());
-
-                          contentMyTaskController
-                              .allTaskData(widget.data.taskID.toString());
-
-                          Future.delayed(const Duration(milliseconds: 400), () {
-                            Navigator.pop(context);
-                          });
-                        }),
                     SizedBox(
-                      width: 8.0,
+                      width: 180.0,
                     ),
                     RaisedButton(
                         child: Text(
-                          'Cancel',
+                          'Delete this task',
                           style: TextStyle(fontSize: 13),
                         ),
                         color: Colors.red,

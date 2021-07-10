@@ -5,6 +5,7 @@ import 'package:ti_boulot/Common/ApiURL.dart';
 import 'package:ti_boulot/Common/Common.dart';
 import 'package:ti_boulot/Common/ResponseType.dart';
 import 'package:ti_boulot/Widgets/MyTask/Content/offerConstructor.dart';
+import 'package:ti_boulot/Widgets/MyTask/myTaskControllerConstructor.dart';
 
 class ContentMyTaskController {
   List<offerConstructor> offers = new List<offerConstructor>();
@@ -55,7 +56,7 @@ class ContentMyTaskController {
       dropdownItems.clear();
       for (var offer in offers) {
         String offerText =
-            "Pilon offered ${offer.offeringPrice} with comments '${offer.comment}'";
+            "A price of ${offer.offeringPrice} with comments '${offer.comment}'";
         dropdownItems.add(offerText);
         offerUser[offerText] = offer.userID;
       }
@@ -64,12 +65,30 @@ class ContentMyTaskController {
 
   //----------------------------------- sending info for taken_by---------------------------------//
 
-  Future<void> detailsTakenBy(String workerID) async {
+  Future<void> detailsTakenBy(String taskID, workerID) async {
     var body = {
+      "taskID": taskID,
       "workerID": workerID,
     };
 
     ResponseType response =
         await API().post(ApiURL.getURL(ApiURL.detailsTakenBy), body);
+  }
+
+  Future<myTaskControllerConstructor> getTaskDataByID(int taskID) async {
+    var body = {
+      "taskID": taskID.toString(),
+    };
+
+    ResponseType response =
+        await API().post(ApiURL.getURL(ApiURL.getTaskDataByID), body);
+
+    myTaskControllerConstructor taskData;
+
+    if (response.success) {
+      taskData = myTaskControllerConstructor().fromJson(response.data);
+    }
+
+    return taskData;
   }
 }
