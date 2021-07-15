@@ -91,4 +91,14 @@ class ContentMyTaskController {
 
     return taskData;
   }
+
+  Future<void> deleteTask(String taskID) async {
+    var body = {
+      "taskID": taskID,
+    };
+    //deleteTask
+
+    ResponseType response =
+        await API().post(ApiURL.getURL(ApiURL.deleteTaskDetails), body);
+  }
 }

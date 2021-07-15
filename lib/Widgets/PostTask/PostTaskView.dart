@@ -89,8 +89,7 @@ class _PostTaskViewState extends State<PostTaskView> {
         automaticallyImplyLeading: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pushNamed(
-              context, '/MyTaskView'), // returns to previous page
+          onPressed: () => Navigator.pop(context), // returns to previous page
           color: Colors.white,
         ),
       ),

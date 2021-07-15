@@ -16,9 +16,9 @@ class _TaskWidgetState extends State<TaskWidget> {
 
   //function to convert lat lng to address and stores in variable 'address'
   Future<void> loadAddress() async {
-    // String rawAddress = await API().getAddress(
-    //     ApiURL.reverseGeocodingURL, widget.data.lat, widget.data.lng);
-    address = 'rawAddress';
+    String rawAddress = await API().getAddress(
+        ApiURL.reverseGeocodingURL, widget.data.lat, widget.data.lng);
+    address = rawAddress;
   }
 
   @override
@@ -201,7 +201,10 @@ class _TaskWidgetState extends State<TaskWidget> {
                                                 textColor: Colors.white70,
                                                 padding: EdgeInsets.all(5.0),
                                                 splashColor: Colors.white70,
-                                                onPressed: () {}),
+                                                onPressed: () {
+                                                  Navigator.pushNamed(context,
+                                                      '/WorkerOfferView');
+                                                }),
                                           ],
                                         ),
                                       ),

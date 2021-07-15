@@ -1756,6 +1756,59 @@ async function getTaskDataByID(taskID) {
 
 }
 
- //detailsTakenBy
+
+//--------------------------------------------------- deleteTaskDetails ----------------------------------------------------------------//
+
+app.use("/deleteTaskDetails", function (req, res, next) {
+
+//  let sqlQuery = "DELETE FROM task WHERE Task_ID='"+taskID+"'" ;
+
+
+var taskID = req.body.taskID;
+
+deleteTaskDetails(taskID).then(result => {
+
+    if (result == 0) {
+        res.status(200).json({
+            success: false,
+            error: "Failed to get all_task_data",
+            data: {},
+            msg: ""
+        });
+    } else {
+        res.status(200).json({
+            success: true,
+            error: "",
+            data: {},
+            msg: ""
+        });
+
+
+    }
+
+});
+
+
+});
+
+async function deleteTaskDetails(taskID) {
+
+    let sqlQuery = "DELETE FROM task WHERE Task_ID='"+taskID+"' " ;
+
+    return new Promise((resolve, reject) => {
+ 
+        pool.query(sqlQuery, (err, result) => {
+            if (err) {
+                reject("Error executing the query: " + JSON.stringify(err));
+                resolve(0);
+            } else {
+                resolve(result); //result contains an array of json objects
+            }
+        });
+    
+    });
+
+}
+
 
 module.exports = app;

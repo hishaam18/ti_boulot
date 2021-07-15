@@ -323,24 +323,32 @@ class _SettingViewState extends State<SettingView> {
                       title: const Text('LOGOUT'),
                       content: const Text('Are you sure you want to logout ?'),
                       actions: <Widget>[
-                        TextButton(
-                          onPressed: () => Navigator.pop(context, 'Cancel'),
-                          child: const Text(
-                            'Cancel',
-                            style: TextStyle(color: Colors.red, fontSize: 16),
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () =>
+                        RaisedButton(
+                            child: Text(
+                              'Confirm',
+                              style: TextStyle(fontSize: 13),
+                            ),
+                            color: Colors.deepPurple,
+                            textColor: Colors.white,
+                            padding: EdgeInsets.all(5.0),
+                            splashColor: Colors.white70,
+                            onPressed: () {
                               Future.delayed(Duration(milliseconds: 500), () {
-                            Navigator.pushNamed(context, '/Login');
-                          }),
-                          child: const Text(
-                            'Confirm',
-                            style: TextStyle(
-                                color: Colors.deepPurple, fontSize: 16),
-                          ),
-                        ),
+                                Navigator.pushNamed(context, '/Login');
+                              });
+                            }),
+                        RaisedButton(
+                            child: Text(
+                              'Cancel',
+                              style: TextStyle(fontSize: 13),
+                            ),
+                            color: Colors.red,
+                            textColor: Colors.white,
+                            padding: EdgeInsets.all(5.0),
+                            splashColor: Colors.white70,
+                            onPressed: () {
+                              Navigator.pop(context, 'Cancel');
+                            }),
                       ],
                     ),
                   ),

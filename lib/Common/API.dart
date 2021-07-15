@@ -26,7 +26,7 @@ class API {
       },
       "options": {"thumbMaps": false},
       "includeNearestIntersection": true,
-      "includeRoadMetadata": true
+      "includeRoadMetadata": true,
     };
 
     var apiResponse = await http.post(url, body: jsonEncode(body));

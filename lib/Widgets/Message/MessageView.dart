@@ -49,6 +49,7 @@ class _MessageViewState extends State<MessageView> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
+
         title: Padding(
           padding: const EdgeInsets.only(left: 95.0),
           child: Text(

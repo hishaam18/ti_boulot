@@ -46,57 +46,66 @@ class _Rating extends State<Rating> {
       );
     });
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Column(
       children: [
-        Column(
+        Text(
+          'Rate this user',
+          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(height: 50.0),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Row(
-              children: stars,
-            ),
-            SizedBox(height: 15.0),
-            showError
-                ? Text(
-                    "Rating cannot be 0 !",
-                    style: TextStyle(color: Colors.red),
-                  )
-                : Container(),
-            SizedBox(
-              height: 15.0,
-            ),
-            Row(
+            Column(
               children: [
-                RaisedButton(
-                  onPressed: () async {
-                    if (_currentRating == 0) {
-                      setState(() {
-                        showError = true;
-                      });
-                    } else {
-                      await ratingController.sendStars(
-                          widget.workerID, _currentRating, context);
-                    }
-                    setState(() {
-                      _currentRating = 0;
-                    });
-                    this.widget.onRatingSelected(_currentRating);
-                  },
-                  color: Colors.deepPurple,
-                  textColor: Colors.white,
-                  child: Text('Done'),
+                Row(
+                  children: stars,
                 ),
-                SizedBox(width: 20.0),
-                RaisedButton(
-                  onPressed: () {
-                    setState(() {
-                      _currentRating = 0;
-                      if (_currentRating == 0) showError = true;
-                    });
-                    this.widget.onRatingSelected(_currentRating);
-                  },
-                  color: Colors.red,
-                  textColor: Colors.white,
-                  child: Text('Clear'),
+                SizedBox(height: 15.0),
+                showError
+                    ? Text(
+                        "Rating cannot be 0 !",
+                        style: TextStyle(color: Colors.red),
+                      )
+                    : Container(),
+                SizedBox(
+                  height: 15.0,
+                ),
+                Row(
+                  children: [
+                    RaisedButton(
+                      onPressed: () async {
+                        if (_currentRating == 0) {
+                          setState(() {
+                            showError = true;
+                          });
+                        } else {
+                          await ratingController.sendStars(
+                              widget.workerID, _currentRating, context);
+                        }
+                        setState(() {
+                          _currentRating = 0;
+                        });
+                        this.widget.onRatingSelected(_currentRating);
+                      },
+                      color: Colors.deepPurple,
+                      textColor: Colors.white,
+                      child: Text('Done'),
+                    ),
+                    SizedBox(width: 20.0),
+                    RaisedButton(
+                      onPressed: () {
+                        setState(() {
+                          _currentRating = 0;
+                          if (_currentRating == 0) showError = true;
+                        });
+                        this.widget.onRatingSelected(_currentRating);
+                      },
+                      color: Colors.red,
+                      textColor: Colors.white,
+                      child: Text('Clear'),
+                    ),
+                  ],
                 ),
               ],
             ),

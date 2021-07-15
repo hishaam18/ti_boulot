@@ -64,11 +64,15 @@ class _WorkerTaskWidgetState extends State<WorkerTaskWidget> {
                             SizedBox(
                               height: 3.0,
                             ),
-                            Text(
-                              widget.data.taskDescription,
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16.0,
+                            Flexible(
+                              child: Text(
+                                widget.data.taskDescription,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16.0,
+                                ),
                               ),
                             ),
                           ],

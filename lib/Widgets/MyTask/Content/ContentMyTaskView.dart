@@ -27,6 +27,7 @@ class _ContentMyTaskViewState extends State<ContentMyTaskView> {
   Future<void> loadConvertedAddress() async {
     String rawAddress = await API().getAddress(
         ApiURL.reverseGeocodingURL, widget.data.lat, widget.data.lng);
+
     convertAddress = rawAddress;
 
     // print(widget.data.taskID);
@@ -58,30 +59,32 @@ class _ContentMyTaskViewState extends State<ContentMyTaskView> {
                   children: [
                     Container(
                       width: MediaQuery.of(context).size.width * 0.6,
-                      child: SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              widget.data.title,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFF673ab7),
-                                fontSize: 19.0,
-                              ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.data.title,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF673ab7),
+                              fontSize: 19.0,
                             ),
-                            SizedBox(
-                              height: 3.0,
-                            ),
-                            Text(
+                          ),
+                          SizedBox(
+                            height: 3.0,
+                          ),
+                          Flexible(
+                            child: Text(
                               widget.data.taskDescription,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 16.0,
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                     Spacer(),
@@ -449,7 +452,12 @@ class _popUpViewState extends State<popUpView> {
                         padding: EdgeInsets.all(5.0),
                         splashColor: Colors.white70,
                         onPressed: () {
-                          Navigator.pop(context);
+                          contentMyTaskController
+                              .deleteTask(widget.data.taskID.toString());
+
+                          Future.delayed(const Duration(milliseconds: 400), () {
+                            Navigator.pop(context);
+                          });
                         }),
                   ],
                 ),
