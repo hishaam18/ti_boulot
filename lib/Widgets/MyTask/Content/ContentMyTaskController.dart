@@ -55,8 +55,11 @@ class ContentMyTaskController {
 
       dropdownItems.clear();
       for (var offer in offers) {
-        String offerText =
-            "A price of ${offer.offeringPrice} with comments '${offer.comment}'";
+        String offerText = "An offer of ${offer.offeringPrice} was made. " +
+            "\n" +
+            "The worker left the following comments: '${offer.comment}'" +
+            "\n";
+
         dropdownItems.add(offerText);
         offerUser[offerText] = offer.userID;
       }

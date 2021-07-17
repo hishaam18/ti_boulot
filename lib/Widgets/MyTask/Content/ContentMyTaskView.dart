@@ -25,10 +25,10 @@ class _ContentMyTaskViewState extends State<ContentMyTaskView> {
 
   //function to convert lat lng to address and stores in variable 'loadConvertedAddress'
   Future<void> loadConvertedAddress() async {
-    String rawAddress = await API().getAddress(
-        ApiURL.reverseGeocodingURL, widget.data.lat, widget.data.lng);
+    // String rawAddress = await API().getAddress(
+    //     ApiURL.reverseGeocodingURL, widget.data.lat, widget.data.lng);
 
-    convertAddress = rawAddress;
+    convertAddress = 'Royal Road, Chemin-Grenier';
 
     // print(widget.data.taskID);
   }

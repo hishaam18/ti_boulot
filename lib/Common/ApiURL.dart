@@ -4,7 +4,10 @@ class ApiURL {
   //static String baseURL = 'http://localhost:9000/';
   //static String baseURL = 'http://192.168.100.61:9000/';
 
-  static String reverseGeocodingURLKey = "7Ty3EwM0hCwAKhvXSTXqAIP3T2jAbxxr";
+  static String reverseGeocodingURLKey = "bgrBuUv2UiHMUzRbAG6x23MINRMPFHa2";
+  //!!!VIVA KEY!!!
+  // static String reverseGeocodingURLKey = "TdRND3tVFR5AaUlhOiuV6yaPtGkGTpcz";
+
   static String reverseGeocodingURL =
       "http://www.mapquestapi.com/geocoding/v1/reverse?key=$reverseGeocodingURLKey";
 

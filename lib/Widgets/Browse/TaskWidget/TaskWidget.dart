@@ -19,11 +19,19 @@ class _TaskWidgetState extends State<TaskWidget> {
     String rawAddress = await API().getAddress(
         ApiURL.reverseGeocodingURL, widget.data.lat, widget.data.lng);
     address = rawAddress;
+    // address = 'Royal Road, Chemin-Grenier';
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loadAddress();
   }
 
   @override
   Widget build(BuildContext context) {
-    loadAddress(); //function created just above
+    //function created just above
 
     return Center(
       child: Column(
@@ -191,20 +199,44 @@ class _TaskWidgetState extends State<TaskWidget> {
                                             SizedBox(
                                               height: 20.0,
                                             ),
-                                            RaisedButton(
-                                                child: Text(
-                                                  'Make offer',
-                                                  style:
-                                                      TextStyle(fontSize: 13),
+                                            Row(
+                                              children: [
+                                                RaisedButton(
+                                                    child: Text(
+                                                      'Make offer',
+                                                      style: TextStyle(
+                                                          fontSize: 13),
+                                                    ),
+                                                    color: Colors.deepPurple,
+                                                    textColor: Colors.white70,
+                                                    padding:
+                                                        EdgeInsets.all(5.0),
+                                                    splashColor: Colors.white70,
+                                                    onPressed: () {
+                                                      Navigator.pushNamed(
+                                                          context,
+                                                          '/WorkerOfferView');
+                                                    }),
+                                                SizedBox(
+                                                  width: 20,
                                                 ),
-                                                color: Colors.deepPurple,
-                                                textColor: Colors.white70,
-                                                padding: EdgeInsets.all(5.0),
-                                                splashColor: Colors.white70,
-                                                onPressed: () {
-                                                  Navigator.pushNamed(context,
-                                                      '/WorkerOfferView');
-                                                }),
+                                                RaisedButton(
+                                                    child: Text(
+                                                      'Cancel',
+                                                      style: TextStyle(
+                                                          fontSize: 13),
+                                                    ),
+                                                    color: Colors.red,
+                                                    textColor: Colors.white70,
+                                                    padding:
+                                                        EdgeInsets.all(5.0),
+                                                    splashColor: Colors.white70,
+                                                    onPressed: () {
+                                                      Navigator.pop(
+                                                          context, true);
+                                                    }),
+                                              ],
+                                            ),
                                           ],
                                         ),
                                       ),
