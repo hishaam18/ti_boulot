@@ -41,3 +41,5 @@ app.*.symbols
 app.*.map.json
 
 Api/node_modules/
+
+node_modules/
