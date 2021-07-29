@@ -71,53 +71,6 @@ app.use("/login", function (req, res, next) {
     var emailAddress = req.body.emailAddress;
     var password = req.body.password;
 
-
-    /* The function below is calling the checkValidLogIn function: 
-    
-    What the checkValidLogIn does:-  see comments  above the checkValidLogIn far below, not this one.
-    
-    This function takes as parameters emailAddress and password.
-    
-    'result' is received from the checkValidLogIn function and contains emailAddress and password.
-    
-    
-    if result = 1 , that is if the result contains the 2 arguments (emailAddress and password):
-    
-        getUserID() is called -  see comments of the function far below(not immediate) 
-        then: 
-    
-        if:- result=0 that is the result does not contain a stringified User_ID,    
-            - json sent to UI/Flutter 
-                -success false
-                -error message displayed in UI console
-                -data - map form 
-                -msg
-        else:-
-            that is if result =1, 'result' contains a User_ID, 
-                -json is sent to flutter
-                -success true
-                -error message null
-                -data- User_ID
-
-       AND
-
-    getUserType() is called -see comments at getUserType() function -- Far below (not immediate)
-
-
-
-
-    
-    if result = 0, that is the result contains the 2 arguments(emailAddress, password)
-    
-         checkValidEmailAddress() is called -  see comments of the function far below(not immediate) 
-    
-        if:- result = 1, that is the email correponds,
-           send json: error message password does not match
-    
-             result =0, that is email cannot be found in database,
-             send json, error message, account downt exist
-    */
-
     checkValidLogIn(emailAddress, password).then(result => {
 
         // console.log(result); //print user_id
@@ -208,8 +161,6 @@ sqlQuery: if the corresponding User_ID exists in the table worker, (it returns t
     b) User_Type
 
 */
-
-
 
 async function getUserType(User_ID) {
 
@@ -342,9 +293,6 @@ async function checkValidEmailAddress(emailAddress) {
 //---------------------------------postTask----------------------------------------//
 
 app.use("/postTask", function (req, res, next) {
-
-    // console.log(req.body);
-
     var task_ID = req.body.task_ID;
     var User_ID = req.body.User_ID;
     var title = req.body.title;
@@ -357,9 +305,6 @@ app.use("/postTask", function (req, res, next) {
     var taskRating = 0; 
     var completed = false;
     var takenBy = null;
-
-    //console.log(User_ID)
-
 
     postTaskFunction(User_ID, title, task_description, lat, lng, budget, displayDate, displayDeadlineDate, taskRating, completed, takenBy).then(result => {
 
@@ -380,8 +325,6 @@ app.use("/postTask", function (req, res, next) {
                 msg: ""
             });
         }
-
-
     });
 
 });

@@ -6,6 +6,7 @@ import 'package:ti_boulot/Common/Common.dart';
 import 'package:ti_boulot/Widgets/Browse/BrowseControllerConstructor.dart';
 import 'package:ti_boulot/Widgets/MyTask/Content/ContentMyTaskController.dart';
 import 'package:ti_boulot/Widgets/MyTask/Content/offerConstructor.dart';
+import 'package:ti_boulot/Widgets/MyTask/myTaskController.dart';
 import 'package:ti_boulot/Widgets/MyTask/myTaskControllerConstructor.dart';
 
 class ContentMyTaskView extends StatefulWidget {
@@ -42,7 +43,7 @@ class _ContentMyTaskViewState extends State<ContentMyTaskView> {
         children: [
           GestureDetector(
             onTap: () {
-              print("Gesture Detector");
+              // print("Gesture Detector");
             },
             child: Container(
               width: MediaQuery.of(context).size.width * 0.9,
@@ -165,6 +166,8 @@ class _popUpViewState extends State<popUpView> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.data.takenBy);
+
     return Container(
       child: AlertDialog(
         title: Text(
@@ -253,189 +256,188 @@ class _popUpViewState extends State<popUpView> {
                   height: 20.0,
                 ),
 
-                if (widget.data.takenBy == null)
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Assign Task',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                            fontSize: 16.0, fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 8.0,
-                      ),
-                      DropdownButton(
-                        value: contentMyTaskController.selectedValue,
-                        hint: Text("Select an offer"),
-                        icon: Icon(Icons.expand_more),
-                        items: contentMyTaskController.dropdownItems
-                            .map((String items) {
-                          return DropdownMenuItem(
-                              value: items,
-                              child: Container(
-                                width: MediaQuery.of(context).size.width * 0.6,
-                                child: Text(
-                                  items,
-                                ),
-                              ));
-                        }).toList(),
-                        onChanged: (String newValue) {
-                          setState(() {
-                            contentMyTaskController.selectedValue = newValue;
-                            dropdownvalue = newValue;
-                          });
-
-                          //await assignUserToTask(contentMyTaskController.offerUser[contentMyTaskController.selectedValue]);
-                          print(contentMyTaskController.offerUser[
-                              contentMyTaskController.selectedValue]);
-                        },
-                      ),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      RaisedButton(
-                          child: Text(
-                            'Assign',
-                            style: TextStyle(fontSize: 13),
+                widget.data.takenBy == "null" || widget.data.takenBy == null
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Assign Task',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                fontSize: 16.0, fontWeight: FontWeight.bold),
                           ),
-                          color: Colors.deepPurple,
-                          textColor: Colors.white,
-                          padding: EdgeInsets.all(5.0),
-                          splashColor: Colors.white70,
-                          onPressed: () async {
-                            //sending taskID and user ID to api
-                            await contentMyTaskController.detailsTakenBy(
-                                widget.data.taskID.toString(),
-                                contentMyTaskController.offerUser[
-                                    contentMyTaskController.selectedValue]);
-                            await widget.loadData();
-                            await refreshData();
-                            setState(() {});
-
-                            //  await detailsTakenBy(contentMyTaskController.offerUser[contentMyTaskController.selectedValue]);
-                          }),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                    ],
-                  ), //Deadline text
-
-                if ((widget.data.takenBy != null) &&
-                    (widget.data.taskRating == 0))
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        ' Rate: Quality of work (${myValue.toInt().toString()})',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                            fontSize: 16.0, fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 25.0,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Colors.deepPurple.shade500,
-                            borderRadius: BorderRadius.circular(10)),
-                        child: SliderTheme(
-                          data: SliderTheme.of(context).copyWith(
-                            activeTrackColor: Colors.red[700],
-                            inactiveTrackColor: Colors.red[100],
-                            trackShape: RoundedRectSliderTrackShape(),
-                            trackHeight: 4.0,
-                            thumbShape:
-                                RoundSliderThumbShape(enabledThumbRadius: 12.0),
-                            thumbColor: Colors.redAccent,
-                            overlayColor: Colors.red.withAlpha(32),
-                            overlayShape:
-                                RoundSliderOverlayShape(overlayRadius: 28.0),
-                            tickMarkShape: RoundSliderTickMarkShape(),
-                            activeTickMarkColor: Colors.red[700],
-                            inactiveTickMarkColor: Colors.red[100],
-                            valueIndicatorShape:
-                                PaddleSliderValueIndicatorShape(),
-                            valueIndicatorColor: Colors.redAccent,
-                            valueIndicatorTextStyle: TextStyle(
-                              color: Colors.white,
-                            ),
+                          SizedBox(
+                            height: 8.0,
                           ),
-                          child: Slider(
-                            value: myValue,
-                            min: 0,
-                            max: 5,
-                            divisions: 5,
-                            activeColor: Colors.black,
-                            inactiveColor: Colors.white,
-                            label: myValue.round().toString(),
-                            onChanged: (newValue) {
+                          DropdownButton(
+                            value: contentMyTaskController.selectedValue,
+                            hint: Text("Select an offer"),
+                            icon: Icon(Icons.expand_more),
+                            items: contentMyTaskController.dropdownItems
+                                .map((String items) {
+                              return DropdownMenuItem(
+                                  value: items,
+                                  child: Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.6,
+                                    child: Text(
+                                      items,
+                                    ),
+                                  ));
+                            }).toList(),
+                            onChanged: (String newValue) {
                               setState(() {
-                                myValue = newValue;
+                                contentMyTaskController.selectedValue =
+                                    newValue;
+                                dropdownvalue = newValue;
                               });
+
+                              //await assignUserToTask(contentMyTaskController.offerUser[contentMyTaskController.selectedValue]);
+                              // print(contentMyTaskController.offerUser[
+                              //     contentMyTaskController.selectedValue]);
                             },
                           ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      RaisedButton(
-                          child: Text(
-                            'Rate',
-                            style: TextStyle(fontSize: 13),
+                          SizedBox(
+                            height: 20.0,
                           ),
-                          color: Colors.deepPurple,
-                          textColor: Colors.white70,
-                          padding: EdgeInsets.all(5.0),
-                          splashColor: Colors.white70,
-                          onPressed: () async {
-                            contentMyTaskController.taskRating(
-                                widget.data.taskID.toString(),
-                                myValue.toString());
+                          RaisedButton(
+                              child: Text(
+                                'Assign',
+                                style: TextStyle(fontSize: 13),
+                              ),
+                              color: Colors.deepPurple,
+                              textColor: Colors.white,
+                              padding: EdgeInsets.all(5.0),
+                              splashColor: Colors.white70,
+                              onPressed: () async {
+                                //sending taskID and user ID to api
+                                await contentMyTaskController.detailsTakenBy(
+                                    widget.data.taskID.toString(),
+                                    contentMyTaskController.offerUser[
+                                        contentMyTaskController.selectedValue]);
+                                await widget.loadData();
+                                await refreshData();
+                                setState(() {});
 
-                            contentMyTaskController
-                                .allTaskData(widget.data.taskID.toString());
+                                //  await detailsTakenBy(contentMyTaskController.offerUser[contentMyTaskController.selectedValue]);
+                              }),
+                          SizedBox(
+                            height: 20.0,
+                          ),
+                        ],
+                      )
+                    : widget.data.taskRating == 0
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                ' Rate: Quality of work (${myValue.toInt().toString()})',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(
+                                height: 25.0,
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                    color: Colors.deepPurple.shade500,
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: SliderTheme(
+                                  data: SliderTheme.of(context).copyWith(
+                                    activeTrackColor: Colors.red[700],
+                                    inactiveTrackColor: Colors.red[100],
+                                    trackShape: RoundedRectSliderTrackShape(),
+                                    trackHeight: 4.0,
+                                    thumbShape: RoundSliderThumbShape(
+                                        enabledThumbRadius: 12.0),
+                                    thumbColor: Colors.redAccent,
+                                    overlayColor: Colors.red.withAlpha(32),
+                                    overlayShape: RoundSliderOverlayShape(
+                                        overlayRadius: 28.0),
+                                    tickMarkShape: RoundSliderTickMarkShape(),
+                                    activeTickMarkColor: Colors.red[700],
+                                    inactiveTickMarkColor: Colors.red[100],
+                                    valueIndicatorShape:
+                                        PaddleSliderValueIndicatorShape(),
+                                    valueIndicatorColor: Colors.redAccent,
+                                    valueIndicatorTextStyle: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  child: Slider(
+                                    value: myValue,
+                                    min: 0,
+                                    max: 5,
+                                    divisions: 5,
+                                    activeColor: Colors.black,
+                                    inactiveColor: Colors.white,
+                                    label: myValue.round().toString(),
+                                    onChanged: (newValue) {
+                                      setState(() {
+                                        myValue = newValue;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 20.0,
+                              ),
+                              RaisedButton(
+                                  child: Text(
+                                    'Rate',
+                                    style: TextStyle(fontSize: 13),
+                                  ),
+                                  color: Colors.deepPurple,
+                                  textColor: Colors.white70,
+                                  padding: EdgeInsets.all(5.0),
+                                  splashColor: Colors.white70,
+                                  onPressed: () async {
+                                    contentMyTaskController.taskRating(
+                                        widget.data.taskID.toString(),
+                                        myValue.toString());
 
-                            await widget.loadData();
-                            await refreshData();
-                            setState(() {});
+                                    contentMyTaskController.allTaskData(
+                                        widget.data.taskID.toString());
 
-                            // Future.delayed(const Duration(milliseconds: 400),
-                            //     () {
-                            //   Navigator.pop(context);
-                            // });
-                          }),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                    ],
-                  ),
+                                    await widget.loadData();
+                                    await refreshData();
+                                    setState(() {});
 
-                if ((widget.data.takenBy != null) &&
-                    (widget.data.taskRating != 0))
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Task Quality Rating',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                            fontSize: 16.0, fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 8.0,
-                      ),
-                      Text('You rated this task ' +
-                          widget.data.taskRating.toString() +
-                          '/5 Stars'),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                    ],
-                  ),
+                                    // Future.delayed(const Duration(milliseconds: 400),
+                                    //     () {
+                                    //   Navigator.pop(context);
+                                    // });
+                                  }),
+                              SizedBox(
+                                height: 20.0,
+                              ),
+                            ],
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Task Quality Rating',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(
+                                height: 8.0,
+                              ),
+                              Text('You rated this task ' +
+                                  widget.data.taskRating.toString() +
+                                  '/5 Stars'),
+                              SizedBox(
+                                height: 20.0,
+                              ),
+                            ],
+                          ),
 
                 Row(
                   children: [

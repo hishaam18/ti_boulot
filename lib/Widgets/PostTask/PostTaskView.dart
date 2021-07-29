@@ -6,6 +6,7 @@ import "package:latlong/latlong.dart" as latLng;
 import 'package:ti_boulot/Common/API.dart';
 import 'package:ti_boulot/Common/ApiURL.dart';
 import 'package:ti_boulot/Widgets/Browse/BrowseController.dart';
+import 'package:validators/validators.dart';
 import 'PostTaskController.dart';
 
 class PostTaskView extends StatefulWidget {
@@ -31,20 +32,22 @@ class _PostTaskViewState extends State<PostTaskView> {
 
   //move to next step
   next() {
-    if (currentStep == 0) {
-      print(postTaskViewController.droppedPinLocation.latitude.toString() +
-          ", " +
-          postTaskViewController.droppedPinLocation.longitude.toString());
+    if (postTaskViewController.PostTaskKey.currentState.validate()) {
+      if (currentStep == 0) {
+        print(postTaskViewController.droppedPinLocation.latitude.toString() +
+            ", " +
+            postTaskViewController.droppedPinLocation.longitude.toString());
 
-      API().getAddress(
-          ApiURL.reverseGeocodingURL, //converting lat lng to readable address
-          postTaskViewController.droppedPinLocation.latitude,
-          postTaskViewController.droppedPinLocation.longitude);
+        API().getAddress(
+            ApiURL.reverseGeocodingURL, //converting lat lng to readable address
+            postTaskViewController.droppedPinLocation.latitude,
+            postTaskViewController.droppedPinLocation.longitude);
+      }
+
+      currentStep + 1 != 3
+          ? goTo(currentStep + 1)
+          : setState(() => complete = true);
     }
-
-    currentStep + 1 != 3
-        ? goTo(currentStep + 1)
-        : setState(() => complete = true);
   }
 
   //cancels current step
@@ -151,6 +154,12 @@ class _PostTaskViewState extends State<PostTaskView> {
                                   ],
                                   controller: postTaskViewController
                                       .taskTitleController,
+                                  validator: (title) {
+                                    if (title.isEmpty) {
+                                      return "Task Title cannot be empty!";
+                                    }
+                                    return null;
+                                  },
                                   style: TextStyle(
                                     fontSize: 16.0,
                                     fontWeight: FontWeight.bold,
@@ -186,6 +195,12 @@ class _PostTaskViewState extends State<PostTaskView> {
                                 TextFormField(
                                   controller: postTaskViewController
                                       .taskDescriptionController,
+                                  validator: (description) {
+                                    if (description.isEmpty) {
+                                      return "Task Description cannot be empty!";
+                                    }
+                                    return null;
+                                  },
                                   maxLines: 10,
                                   style: TextStyle(
                                     fontSize: 16.0,
@@ -410,6 +425,12 @@ class _PostTaskViewState extends State<PostTaskView> {
                                   ],
                                   controller:
                                       postTaskViewController.budgetController,
+                                  validator: (budget) {
+                                    if (budget.isEmpty) {
+                                      return "Budget cannot be empty!";
+                                    }
+                                    return null;
+                                  },
                                   style: TextStyle(
                                     fontSize: 16.0,
                                     fontWeight: FontWeight.bold,

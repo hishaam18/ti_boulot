@@ -4,9 +4,10 @@ class ApiURL {
   //static String baseURL = 'http://localhost:9000/';
   //static String baseURL = 'http://192.168.100.61:9000/';
 
-  static String reverseGeocodingURLKey = "bgrBuUv2UiHMUzRbAG6x23MINRMPFHa2";
   //!!!VIVA KEY!!!
   // static String reverseGeocodingURLKey = "TdRND3tVFR5AaUlhOiuV6yaPtGkGTpcz";
+
+  static String reverseGeocodingURLKey = "bgrBuUv2UiHMUzRbAG6x23MINRMPFHa2";
 
   static String reverseGeocodingURL =
       "http://www.mapquestapi.com/geocoding/v1/reverse?key=$reverseGeocodingURLKey";
@@ -33,7 +34,6 @@ class ApiURL {
   static const String detailsTakenBy = 'detailsTakenBy';
   static const String getTaskDataByID = 'getTaskDataByID';
   static const String deleteTaskDetails = 'deleteTaskDetails';
-
   //creating paths
   static String getURL(String url) {
     return baseURL + url.toString();

@@ -64,6 +64,12 @@ class _WorkerOfferViewState extends State<WorkerOfferView> {
                     TextFormField(
                       controller: workerOfferController
                           .offeringPriceController, // to get variable created in controller
+                      validator: (price) {
+                        if (price.isEmpty) {
+                          return "Offering Price cannot be empty!";
+                        }
+                        return null;
+                      },
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
@@ -97,6 +103,12 @@ class _WorkerOfferViewState extends State<WorkerOfferView> {
                     TextFormField(
                         controller: workerOfferController
                             .commentController, //to get variable created in controller
+                        validator: (comment) {
+                          if (comment.isEmpty) {
+                            return "Comment cannot be empty!";
+                          }
+                          return null;
+                        },
                         maxLines: 6,
                         style: TextStyle(
                           fontSize: 16.0,
@@ -229,17 +241,22 @@ class _WorkerOfferViewState extends State<WorkerOfferView> {
                             padding: EdgeInsets.all(10.0),
                             splashColor: Colors.white70,
                             onPressed: () async {
-                              await workerOfferController.sendOffer(
-                                widget.taskId,
-                                widget.taskUserId,
-                                workerOfferController
-                                    .offeringPriceController.text,
-                                workerOfferController.commentController.text,
-                                workerOfferController.workerDisplayDate,
-                                workerOfferController.workerDisplayDeadlineDate,
-                              );
+                              if (workerOfferController
+                                  .WorkerOfferKey.currentState
+                                  .validate()) {
+                                await workerOfferController.sendOffer(
+                                  widget.taskId,
+                                  widget.taskUserId,
+                                  workerOfferController
+                                      .offeringPriceController.text,
+                                  workerOfferController.commentController.text,
+                                  workerOfferController.workerDisplayDate,
+                                  workerOfferController
+                                      .workerDisplayDeadlineDate,
+                                );
 
-                              Navigator.pushNamed(context, '/MessageView');
+                                Navigator.pushNamed(context, '/MessageView');
+                              } //validate
                             }),
                         SizedBox(
                           width: 20.0,
